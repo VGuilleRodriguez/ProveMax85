@@ -11,6 +11,12 @@ public class Compra {
     public Compra() {
     }
 
+    public Compra(int idCompra, Proveedor proveedor, LocalDate fecha) {
+        this.idCompra = idCompra;
+        this.proveedor = proveedor;
+        this.fecha = fecha;
+    }
+
     public Compra(Proveedor proveedor, LocalDate fecha) {
         this.proveedor = proveedor;
         this.fecha = fecha;
@@ -39,7 +45,11 @@ public class Compra {
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Compra{" + "idCompra=" + idCompra + ", proveedor=" + proveedor + ", fecha=" + fecha + '}';
+    }
     
     
 }

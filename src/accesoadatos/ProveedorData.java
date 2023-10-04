@@ -5,7 +5,15 @@
  */
 package accesoadatos;
 
+import entidad.Proveedor;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,9 +23,128 @@ public class ProveedorData {
     
     private Connection conex;
 
-    public ProveedorData(Connection conex) {
+    public ProveedorData() {
         this.conex = Conexion.getConnection();
     }
     
+    public void nuevoProveedor(Proveedor proveedor) {
+        try {
+            String sql = "INSERT INTO proveedor "
+                    + "(razonSocial, domicilio, telefono, estado) "
+                    + "VALUES (?, ?, ?, ?)";
+            
+            PreparedStatement ps = conex.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, proveedor.getRazonSocial());
+            ps.setString(2, proveedor.getDomicilio());
+            ps.setInt(3, proveedor.getTelefono());
+            ps.setBoolean(4, proveedor.isEstado());
+            ps.executeUpdate();
+            
+            ResultSet rs = ps.getGeneratedKeys();
+            
+            if (rs.next()) {
+                proveedor.setIdProveedor(rs.getInt(1));
+                JOptionPane.showMessageDialog(null, "¡Nuevo proveedor añadido con exito!");
+            }
+            
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla proveedor. " + ex.getMessage());
+        }
+    }
     
+    public void eliminarProveedor(int id) {
+        try {
+            String sql = "DELETE FROM proveedor WHERE idProveedor = ? AND estado = 1";
+            
+            PreparedStatement ps = conex.prepareStatement(sql);
+            ps.setInt(1, id);
+            
+            int resultado = ps.executeUpdate();
+            
+            if (resultado == 1) {
+                JOptionPane.showMessageDialog(null, "El proveedor se eliminó exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al eliminar el proveedor.");
+            }
+            
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla proveedor. " + ex.getMessage());
+        }
+    }
+    
+    public void cambiarEstadoProveedor(int id) {
+        try {
+            String sql = "UPDATE proveedor SET estado = 0 WHERE idProveedor = ?";
+            
+            PreparedStatement ps = conex.prepareStatement(sql);
+            ps.setInt(1, id);
+            
+            int resultado = ps.executeUpdate();
+            
+            if (resultado == 1) {
+                JOptionPane.showMessageDialog(null, "El proveedor se dió de baja exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al dar de baja el proveedor.");
+            }
+            
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla producto. " + ex.getMessage());
+        }
+    }
+    
+    public Proveedor buscarProveedor(int id) {
+        Proveedor proveedor = null;
+        try {
+            String busqueda = "SELECT * FROM proveedor WHERE idProveedor = ? AND estado = 1";
+            
+            PreparedStatement ps = conex.prepareStatement(busqueda);
+            ps.setInt(1, id);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                proveedor = new Proveedor();
+                proveedor.setIdProveedor(id); // Setea el id que recibe por parametro
+                proveedor.setRazonSocial(rs.getString("razonSocial"));
+                proveedor.setDomicilio(rs.getString("domicilio"));
+                proveedor.setTelefono(rs.getInt("telefono"));
+                proveedor.setEstado(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe el proveedor.");
+            }
+            
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla proveedor. " + ex.getMessage());
+        }
+        return proveedor;
+    }
+    
+    public List<Proveedor> listarProveedor() {
+        List<Proveedor> proveedores = new ArrayList();
+        try {
+            String listar = "SELECT * FROM materia";
+            
+            PreparedStatement ps = conex.prepareStatement(listar);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                Proveedor proveedor = new Proveedor();
+                proveedor.setIdProveedor(rs.getInt("idProveedor"));
+                proveedor.setRazonSocial(rs.getString("razonSocial"));
+                proveedor.setDomicilio(rs.getString("domicilio"));
+                proveedor.setTelefono(rs.getInt("telefono"));
+                proveedor.setEstado(true);
+                proveedores.add(proveedor); // Se agregar la proveedor creado arriba al arraylist.
+            }
+            
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla producto. " + ex.getMessage());
+        }
+        return proveedores;
+    }
 }
