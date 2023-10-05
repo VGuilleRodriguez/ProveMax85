@@ -1,4 +1,8 @@
 
+import com.formdev.flatlaf.FlatLightLaf;
+import javax.swing.UIManager;
+import vistas.LoginF;
+
 import accesoadatos.CompraData;
 import accesoadatos.Conexion;
 import accesoadatos.ProductoData;
@@ -24,6 +28,19 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        /* FlatLaf setup */
+        try {
+            UIManager.setLookAndFeel(new FlatLightLaf());
+        } catch (Exception ex) {
+            System.err.println("Failed to initialize LaF");
+        }
+        
+        LoginF loginView = new LoginF();
+        loginView.setVisible(true);
+        loginView.setLocationRelativeTo(null);
+        
+        /****************************/
         Conexion.getConnection();
         
         ProductoData prodat = new ProductoData();
