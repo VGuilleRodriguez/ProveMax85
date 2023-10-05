@@ -40,7 +40,8 @@ public class Main {
         loginView.setVisible(true);
         loginView.setLocationRelativeTo(null);
         
-        /****************************/
+        /********************* PRUEBAS DE LA CLASES DATA *********************/
+        /*
         Conexion.getConnection();
         
         ProductoData prodat = new ProductoData();
@@ -64,7 +65,9 @@ public class Main {
         
         //proveedor1.setIdProveedor(1);
         
-        //Proveedor proveedor2 = new Proveedor("Corrupcion SRL", "La esquina", 23489, true);
+        Proveedor proveedor3 = new Proveedor("Con SRL", "Lana", 23482, true);
+        
+        proveedor3.setIdProveedor(6);
         
         //provdat.nuevoProveedor(proveedor1);
         
@@ -78,12 +81,12 @@ public class Main {
         
         CompraData comdat = new CompraData();
         
-        //Compra compra = new Compra(proveedor1, LocalDate.of(2000, 12, 24));
+        Compra compra = new Compra(proveedor3, LocalDate.of(2020, 10, 14));
         
-        //comdat.nuevaCompra(compra);
+        comdat.nuevaCompra(compra);
         
         //System.out.println(comdat.buscarCompra(2));
-        
+        */
     }
     
 }

@@ -45,7 +45,7 @@ public class CompraData {
                 compra.setIdCompra(rs.getInt(1));
                 JOptionPane.showMessageDialog(null, "¡Nueva compra añadida con exito!");
             }
-            
+
             ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla compra. " + ex.getMessage());
