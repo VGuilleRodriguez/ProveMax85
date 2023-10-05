@@ -1,6 +1,7 @@
 
-package vistas;
+package vista;
 
+import vista.adm.AdmCompra;
 import vista.adm.AdmProducto;
 import vista.adm.AdmProveedor;
 import vista.tabla.TablaProducto;
@@ -12,13 +13,17 @@ import vista.tabla.TablaProveedor;
  */
 public class MenuView extends javax.swing.JFrame {
     
+    TablaProveedor tablaprov;
+    TablaProducto tablaprod;
+        
     /**
      * Creates new form Menu
      */
     public MenuView() {
         initComponents();
+        this.tablaprov = new TablaProveedor();    
+        this.tablaprod = new TablaProducto();
         cargarAdm();
-        cargarTablas();
     }
     
     /**
@@ -39,6 +44,8 @@ public class MenuView extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaProveedores = new javax.swing.JTable();
         menuCompras = new javax.swing.JPanel();
+        tabCompra = new javax.swing.JTabbedPane();
+        tabAdministrarCompra = new javax.swing.JPanel();
         menuProductos = new javax.swing.JPanel();
         tabProducto = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
@@ -60,6 +67,11 @@ public class MenuView extends javax.swing.JFrame {
         menuProveedores.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
 
         tabProveedor.setBackground(new java.awt.Color(255, 255, 255));
+        tabProveedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabProveedorMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout tabAdministrarProveedoresLayout = new javax.swing.GroupLayout(tabAdministrarProveedores);
         tabAdministrarProveedores.setLayout(tabAdministrarProveedoresLayout);
@@ -113,22 +125,41 @@ public class MenuView extends javax.swing.JFrame {
 
         tabMenu.addTab("Proveedores", new javax.swing.ImageIcon(getClass().getResource("/vista/img/usuario.png")), menuProveedores); // NOI18N
 
-        menuCompras.setBackground(new java.awt.Color(204, 255, 204));
+        menuCompras.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout tabAdministrarCompraLayout = new javax.swing.GroupLayout(tabAdministrarCompra);
+        tabAdministrarCompra.setLayout(tabAdministrarCompraLayout);
+        tabAdministrarCompraLayout.setHorizontalGroup(
+            tabAdministrarCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 805, Short.MAX_VALUE)
+        );
+        tabAdministrarCompraLayout.setVerticalGroup(
+            tabAdministrarCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 449, Short.MAX_VALUE)
+        );
+
+        tabCompra.addTab("Administrar", tabAdministrarCompra);
 
         javax.swing.GroupLayout menuComprasLayout = new javax.swing.GroupLayout(menuCompras);
         menuCompras.setLayout(menuComprasLayout);
         menuComprasLayout.setHorizontalGroup(
             menuComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 810, Short.MAX_VALUE)
+            .addComponent(tabCompra)
         );
         menuComprasLayout.setVerticalGroup(
             menuComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 476, Short.MAX_VALUE)
+            .addComponent(tabCompra)
         );
 
         tabMenu.addTab("Compras", new javax.swing.ImageIcon(getClass().getResource("/vista/img/carrito-de-compras.png")), menuCompras); // NOI18N
 
         menuProductos.setBackground(new java.awt.Color(255, 255, 255));
+
+        tabProducto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabProductoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -245,6 +276,14 @@ public class MenuView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void tabProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabProveedorMouseClicked
+        tabProveedor.setComponentAt(1, tablaprov);
+    }//GEN-LAST:event_tabProveedorMouseClicked
+
+    private void tabProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabProductoMouseClicked
+        tabProducto.setComponentAt(1, tablaprod);
+    }//GEN-LAST:event_tabProductoMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
@@ -257,7 +296,9 @@ public class MenuView extends javax.swing.JFrame {
     private javax.swing.JPanel menuCompras;
     private javax.swing.JPanel menuProductos;
     private javax.swing.JPanel menuProveedores;
+    private javax.swing.JPanel tabAdministrarCompra;
     private javax.swing.JPanel tabAdministrarProveedores;
+    private javax.swing.JTabbedPane tabCompra;
     private javax.swing.JTabbedPane tabMenu;
     private javax.swing.JTabbedPane tabProducto;
     private javax.swing.JTabbedPane tabProveedor;
@@ -265,21 +306,14 @@ public class MenuView extends javax.swing.JFrame {
     private javax.swing.JTable tablaProveedores;
     // End of variables declaration//GEN-END:variables
 
-    private void cargarTablas() {
-        TablaProveedor tablaprov = new TablaProveedor();
-        tabProveedor.setComponentAt(1, tablaprov);
-        
-        TablaProducto tablaprod = new TablaProducto();
-        tabProducto.setComponentAt(1, tablaprod);
-        
-        
-    }
-    
     private void cargarAdm() {
         AdmProducto admprod = new AdmProducto();
         tabProducto.setComponentAt(0, admprod);
         
         AdmProveedor admprov = new AdmProveedor();
         tabProveedor.setComponentAt(0, admprov);
+        
+        AdmCompra admcomp = new AdmCompra();
+        tabCompra.setComponentAt(0, admcomp);
     }
 }

@@ -6,7 +6,6 @@
 package vistas;
 
 import entidad.Login;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class LoginF extends javax.swing.JFrame {
@@ -57,19 +56,9 @@ public class LoginF extends javax.swing.JFrame {
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, -1, 20));
 
         txtUsername.setBorder(null);
-        txtUsername.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUsernameActionPerformed(evt);
-            }
-        });
         jPanel2.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 190, -1));
 
         txtPassword.setBorder(null);
-        txtPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPasswordActionPerformed(evt);
-            }
-        });
         jPanel2.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, 190, -1));
 
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
@@ -113,14 +102,6 @@ public class LoginF extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsernameActionPerformed
-
-    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPasswordActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String user = txtUsername.getText();
         String pass = txtPassword.getText();
@@ -130,7 +111,7 @@ public class LoginF extends javax.swing.JFrame {
             txtUsername.setText("");
             txtPassword.setText("");
             this.dispose();
-            MenuPrincipal desktopView = new MenuPrincipal();
+            MenuView desktopView = new MenuView();
             desktopView.setVisible(true);
             desktopView.setLocationRelativeTo(null);
         } else {

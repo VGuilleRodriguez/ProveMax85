@@ -128,7 +128,7 @@ public class ProductoData {
     public List<Producto> listarProducto() {
         List<Producto> productos = new ArrayList();
         try {
-            String listar = "SELECT * FROM materia";
+            String listar = "SELECT * FROM producto";
             
             PreparedStatement ps = conex.prepareStatement(listar);
             ResultSet rs = ps.executeQuery();

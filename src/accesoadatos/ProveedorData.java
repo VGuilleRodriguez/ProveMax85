@@ -126,7 +126,7 @@ public class ProveedorData {
     public List<Proveedor> listarProveedor() {
         List<Proveedor> proveedores = new ArrayList();
         try {
-            String listar = "SELECT * FROM materia";
+            String listar = "SELECT * FROM proveedor";
             
             PreparedStatement ps = conex.prepareStatement(listar);
             ResultSet rs = ps.executeQuery();

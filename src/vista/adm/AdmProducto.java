@@ -5,6 +5,11 @@
  */
 package vista.adm;
 
+import accesoadatos.ProductoData;
+import entidad.Producto;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author nicolas
@@ -26,103 +31,156 @@ public class AdmProducto extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        txtCodigo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        txtDescripcion = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        txtPrecioActual = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
+        checkEstado = new javax.swing.JCheckBox();
+        btnRegistrar = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        txtStock = new javax.swing.JTextField();
 
-        jTextField1.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+        setLayout(new java.awt.GridBagLayout());
 
-        jTextField2.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
-
-        jTextField3.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
-
-        jTextField4.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
-
-        jCheckBox1.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
-        jCheckBox1.setText("Inactivo");
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Registrar producto", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 18))); // NOI18N
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
         jLabel1.setText("Código");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, -1, -1));
+
+        txtCodigo.setEditable(false);
+        txtCodigo.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+        jPanel1.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 240, -1));
 
         jLabel2.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
-        jLabel2.setText("Razón social");
+        jLabel2.setText("Nombre");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, -1, -1));
+
+        txtNombre.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 240, -1));
 
         jLabel3.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
-        jLabel3.setText("Domicilio");
+        jLabel3.setText("Descripción");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, -1, -1));
+
+        txtDescripcion.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+        jPanel1.add(txtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, 240, -1));
 
         jLabel4.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
-        jLabel4.setText("Teléfono");
+        jLabel4.setText("Precio actual");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, -1, -1));
+
+        txtPrecioActual.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+        txtPrecioActual.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioActualKeyTyped(evt);
+            }
+        });
+        jPanel1.add(txtPrecioActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 270, 240, -1));
 
         jLabel5.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
         jLabel5.setText("Estado");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 370, -1, 20));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(68, 68, 68)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
-                .addGap(69, 69, 69)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
-                    .addComponent(jTextField2)
-                    .addComponent(jTextField3)
-                    .addComponent(jTextField4))
-                .addContainerGap(164, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(87, 87, 87)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jLabel5))
-                .addContainerGap(218, Short.MAX_VALUE))
-        );
+        checkEstado.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+        checkEstado.setText("Inactivo");
+        jPanel1.add(checkEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 360, -1, 40));
+
+        btnRegistrar.setBackground(new java.awt.Color(27, 117, 73));
+        btnRegistrar.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        btnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegistrar.setText("Registrar");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 420, -1, -1));
+
+        jLabel6.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
+        jLabel6.setText("Stock");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 310, -1, -1));
+
+        txtStock.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+        txtStock.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtStockKeyTyped(evt);
+            }
+        });
+        jPanel1.add(txtStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 330, 240, -1));
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 88;
+        gridBagConstraints.ipady = 28;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(12, 104, 12, 107);
+        add(jPanel1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtPrecioActualKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioActualKeyTyped
+        char caracter = evt.getKeyChar();
+        if((caracter < '0') || (caracter > '9')){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPrecioActualKeyTyped
+
+    private void txtStockKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtStockKeyTyped
+        char caracter = evt.getKeyChar();
+        if((caracter < '0') || (caracter > '9')){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtStockKeyTyped
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        ProductoData dataprod = new ProductoData();
+        
+        ImageIcon icon = new ImageIcon("vista.img/agregar.png");
+        
+        try {
+            if (txtNombre.getText().isEmpty() || txtDescripcion.getText().isEmpty() || txtPrecioActual.getText().isEmpty() || txtStock.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe completar todos los campos.", "Error al registrar",HEIGHT, icon);
+            } else {
+                Producto producto = new Producto(
+                    txtNombre.getText(),
+                    txtDescripcion.getText(),
+                    Double.parseDouble(txtPrecioActual.getText()),
+                    Integer.parseInt(txtStock.getText()),
+                    true
+                );
+                dataprod.nuevoProducto(producto);
+            }
+        } catch (NumberFormatException ex) {
+            
+        }
+        
+    }//GEN-LAST:event_btnRegistrarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JButton btnRegistrar;
+    private javax.swing.JCheckBox checkEstado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField txtCodigo;
+    private javax.swing.JTextField txtDescripcion;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtPrecioActual;
+    private javax.swing.JTextField txtStock;
     // End of variables declaration//GEN-END:variables
 }

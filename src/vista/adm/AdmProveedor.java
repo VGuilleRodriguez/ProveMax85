@@ -1,9 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package vista.adm;
+
+import accesoadatos.ProveedorData;
+import entidad.Proveedor;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,16 +31,16 @@ public class AdmProveedor extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtCodigo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtRazonSocial = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtDomicilio = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        txtTelefono = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jButton1 = new javax.swing.JButton();
+        checkEstado = new javax.swing.JCheckBox();
+        btnRegistrar = new javax.swing.JButton();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -50,43 +51,56 @@ public class AdmProveedor extends javax.swing.JPanel {
         jLabel1.setText("Código");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, -1, -1));
 
-        jTextField1.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 240, -1));
+        txtCodigo.setEditable(false);
+        txtCodigo.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+        jPanel1.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 240, -1));
 
         jLabel2.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
         jLabel2.setText("Razón social");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, -1, -1));
 
-        jTextField2.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 240, -1));
+        txtRazonSocial.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+        jPanel1.add(txtRazonSocial, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 240, -1));
 
         jLabel3.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
         jLabel3.setText("Domicilio");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, -1, -1));
 
-        jTextField3.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
-        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, 240, -1));
+        txtDomicilio.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+        jPanel1.add(txtDomicilio, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, 240, -1));
 
         jLabel4.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
         jLabel4.setText("Teléfono");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, -1, -1));
 
-        jTextField4.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
-        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 270, 240, -1));
+        txtTelefono.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
+        });
+        jPanel1.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 270, 240, -1));
 
         jLabel5.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
         jLabel5.setText("Estado");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 310, -1, 20));
 
-        jCheckBox1.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
-        jCheckBox1.setText("Inactivo");
-        jPanel1.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 300, -1, 40));
+        checkEstado.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+        checkEstado.setSelected(true);
+        checkEstado.setText("Activo");
+        checkEstado.setEnabled(false);
+        jPanel1.add(checkEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 300, -1, 40));
 
-        jButton1.setBackground(new java.awt.Color(27, 117, 73));
-        jButton1.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Registrar");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 360, -1, -1));
+        btnRegistrar.setBackground(new java.awt.Color(27, 117, 73));
+        btnRegistrar.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        btnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegistrar.setText("Registrar");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 360, -1, -1));
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -98,19 +112,49 @@ public class AdmProveedor extends javax.swing.JPanel {
         add(jPanel1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        ProveedorData dataprov = new ProveedorData();
+        
+        ImageIcon icon = new ImageIcon("vista.img/agregar.png");
+        
+        try {
+            if (txtRazonSocial.getText().isEmpty() || txtDomicilio.getText().isEmpty() || txtTelefono.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe completar todos los campos.", "Error al registrar",HEIGHT, icon);
+            } else {
+                Proveedor proveedor = new Proveedor(
+                        txtRazonSocial.getText(),
+                        txtDomicilio.getText(),
+                        Integer.parseInt(txtTelefono.getText()),
+                        true
+                );
+                dataprov.nuevoProveedor(proveedor);
+            }
+        } catch (NumberFormatException ex) {
+            
+        }
+        
+    }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        char caracter = evt.getKeyChar();
+        if((caracter < '0') || (caracter > '9')){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtTelefonoKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JButton btnRegistrar;
+    private javax.swing.JCheckBox checkEstado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField txtCodigo;
+    private javax.swing.JTextField txtDomicilio;
+    private javax.swing.JTextField txtRazonSocial;
+    private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }
