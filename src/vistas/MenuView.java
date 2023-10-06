@@ -1,5 +1,5 @@
 
-package vista;
+package vistas;
 
 import vista.adm.AdmCompra;
 import vista.adm.AdmProducto;
