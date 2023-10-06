@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 03-10-2023 a las 03:52:57
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 06-10-2023 a las 23:39:18
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `provemax85`
 --
+CREATE DATABASE IF NOT EXISTS `provemax85` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `provemax85`;
 
 -- --------------------------------------------------------
 
@@ -36,10 +38,10 @@ CREATE TABLE `compra` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `detalleCompra`
+-- Estructura de tabla para la tabla `detallecompra`
 --
 
-CREATE TABLE `detalleCompra` (
+CREATE TABLE `detallecompra` (
   `idDetalleCompra` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL,
   `precioCosto` double NOT NULL,
@@ -62,6 +64,14 @@ CREATE TABLE `producto` (
   `estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `producto`
+--
+
+INSERT INTO `producto` (`idProducto`, `nombreProducto`, `descripcion`, `precioActual`, `stock`, `estado`) VALUES
+(1, 'Televisor', '42\" LED', 275000, 6, 1),
+(2, 'PC Escritorio', 'Core I5', 550000, 2, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -72,8 +82,16 @@ CREATE TABLE `proveedor` (
   `idProveedor` int(11) NOT NULL,
   `razonSocial` varchar(30) NOT NULL,
   `domicilio` varchar(30) NOT NULL,
-  `telefono` int(11) NOT NULL
+  `telefono` int(11) NOT NULL,
+  `estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `proveedor`
+--
+
+INSERT INTO `proveedor` (`idProveedor`, `razonSocial`, `domicilio`, `telefono`, `estado`) VALUES
+(1, 'Alfa Vet S.A.', 'Av. San Martin 857', 4536272, 1);
 
 --
 -- Índices para tablas volcadas
@@ -87,9 +105,9 @@ ALTER TABLE `compra`
   ADD UNIQUE KEY `idProveedor` (`idProveedor`);
 
 --
--- Indices de la tabla `detalleCompra`
+-- Indices de la tabla `detallecompra`
 --
-ALTER TABLE `detalleCompra`
+ALTER TABLE `detallecompra`
   ADD PRIMARY KEY (`idDetalleCompra`),
   ADD UNIQUE KEY `idCompra` (`idCompra`,`idProducto`),
   ADD KEY `idProducto` (`idProducto`);
@@ -117,22 +135,22 @@ ALTER TABLE `compra`
   MODIFY `idCompra` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `detalleCompra`
+-- AUTO_INCREMENT de la tabla `detallecompra`
 --
-ALTER TABLE `detalleCompra`
+ALTER TABLE `detallecompra`
   MODIFY `idDetalleCompra` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
 --
 ALTER TABLE `proveedor`
-  MODIFY `idProveedor` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas
@@ -145,9 +163,9 @@ ALTER TABLE `compra`
   ADD CONSTRAINT `compra_ibfk_1` FOREIGN KEY (`idProveedor`) REFERENCES `proveedor` (`idProveedor`);
 
 --
--- Filtros para la tabla `detalleCompra`
+-- Filtros para la tabla `detallecompra`
 --
-ALTER TABLE `detalleCompra`
+ALTER TABLE `detallecompra`
   ADD CONSTRAINT `detalleCompra_ibfk_1` FOREIGN KEY (`idCompra`) REFERENCES `compra` (`idCompra`),
   ADD CONSTRAINT `detalleCompra_ibfk_2` FOREIGN KEY (`idProducto`) REFERENCES `producto` (`idProducto`);
 COMMIT;
