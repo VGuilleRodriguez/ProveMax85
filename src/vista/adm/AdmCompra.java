@@ -1,9 +1,16 @@
 
 package vista.adm;
 
+import accesoadatos.ProductoData;
+import accesoadatos.ProveedorData;
+import entidad.Producto;
+import entidad.Proveedor;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,10 +20,21 @@ public class AdmCompra extends javax.swing.JPanel {
 
     /**
      * Creates new form AdmCompra
+     * 
      */
+    
+    DefaultTableModel modelo = new DefaultTableModel(){
+        public boolean isCellEditable(int fila, int columna){
+            return false;
+        }
+    };
+            
     public AdmCompra() {
         initComponents();
-        ((JTextField) this.jDateChooser1.getDateEditor()).setEditable(false);
+        ((JTextField) this.jDateChooserCompra.getDateEditor()).setEditable(false);
+        armarCabecera();
+        cargarComboProveedor();
+        cargarComboProducto();
     }
 
     /**
@@ -32,45 +50,44 @@ public class AdmCompra extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtProveedor = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtNombreProducto = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtCantidad = new javax.swing.JTextField();
         btnRegistrar = new javax.swing.JButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jDateChooserCompra = new com.toedter.calendar.JDateChooser();
         jLabel5 = new javax.swing.JLabel();
+        jComboProveedor = new javax.swing.JComboBox<>();
+        jComboProducto = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtCompra = new javax.swing.JTable();
+        jLabel7 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        txtPrecioTotal = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        txtPrecioCosto = new javax.swing.JTextField();
+        jbCargar = new javax.swing.JButton();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Registrar compra", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 18))); // NOI18N
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
         jLabel1.setText("Código");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, -1, -1));
 
         txtCodigo.setEditable(false);
         txtCodigo.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
-        jPanel1.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 240, -1));
+        jPanel1.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 110, -1));
 
         jLabel2.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
         jLabel2.setText("Proveedor");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, -1, -1));
-
-        txtProveedor.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
-        jPanel1.add(txtProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 240, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
-        jLabel3.setText("Nombre del producto");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, -1, -1));
-
-        txtNombreProducto.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
-        jPanel1.add(txtNombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, 240, -1));
+        jLabel3.setText("Producto");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
         jLabel4.setText("Fecha de compra");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 370, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, -1, -1));
 
         txtCantidad.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
         txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -78,7 +95,7 @@ public class AdmCompra extends javax.swing.JPanel {
                 txtCantidadKeyTyped(evt);
             }
         });
-        jPanel1.add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 270, 240, -1));
+        jPanel1.add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 100, 100, -1));
 
         btnRegistrar.setBackground(new java.awt.Color(27, 117, 73));
         btnRegistrar.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
@@ -89,40 +106,69 @@ public class AdmCompra extends javax.swing.JPanel {
                 btnRegistrarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 440, -1, -1));
+        jPanel1.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 570, -1, -1));
 
-        jDateChooser1.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
-        jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 390, 240, -1));
+        jDateChooserCompra.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+        jPanel1.add(jDateChooserCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 50, 240, -1));
 
         jLabel5.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
         jLabel5.setText("Cantidad");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 100, -1, -1));
 
-        jLabel6.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
-        jLabel6.setText("Precio costo");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 310, -1, -1));
+        jPanel1.add(jComboProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 230, -1));
 
-        txtPrecioCosto.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
-        txtPrecioCosto.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtPrecioCostoKeyTyped(evt);
+        jPanel1.add(jComboProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 150, 230, -1));
+
+        jtCompra.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
+            }
+        ));
+        jScrollPane1.setViewportView(jtCompra);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 770, 140));
+
+        jLabel7.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel7.setText("Detalle de Compra");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 210, -1, -1));
+
+        jButton1.setText("Eliminar Producto");
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 570, -1, 40));
+        jPanel1.add(txtPrecioTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(653, 400, 130, -1));
+
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel6.setText("Total");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 400, -1, -1));
+
+        jbCargar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jbCargar.setText("Cargar");
+        jbCargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCargarActionPerformed(evt);
             }
         });
-        jPanel1.add(txtPrecioCosto, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 330, 240, -1));
+        jPanel1.add(jbCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 142, 100, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(111, 111, 111)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 824, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 627, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -139,9 +185,7 @@ public class AdmCompra extends javax.swing.JPanel {
 
         ImageIcon icon = new ImageIcon("vista.img/agregar.png");
 
-        if (txtProveedor.getText().isEmpty() || txtNombreProducto.getText().isEmpty() || 
-            txtCantidad.getText().isEmpty() || txtPrecioCosto.getText().isEmpty() ||
-            jDateChooser1 == null) 
+        if (txtCantidad.getText().isEmpty()|| jDateChooserCompra == null) 
         {
             JOptionPane.showMessageDialog(this, "Debe completar todos los campos.", "Error al registrar",HEIGHT, icon);
         } else {
@@ -149,30 +193,103 @@ public class AdmCompra extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
-    private void txtPrecioCostoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioCostoKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPrecioCostoKeyTyped
+    private void jbCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCargarActionPerformed
+        limpiarFilas();
+        Producto produ = (Producto)jComboProducto.getSelectedItem();
+        double subtotal = Double.parseDouble(txtCantidad.getText())*(produ.getPrecioActual());
+        modelo.addRow(new Object[]{produ.getIdProducto(),
+        produ.getNombreProducto(),
+        txtCantidad.getText(),
+        produ.getPrecioActual(),
+        subtotal
+        });
+    }//GEN-LAST:event_jbCargarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistrar;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<Producto> jComboProducto;
+    private javax.swing.JComboBox<Proveedor> jComboProveedor;
+    private com.toedter.calendar.JDateChooser jDateChooserCompra;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbCargar;
+    private javax.swing.JTable jtCompra;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtNombreProducto;
-    private javax.swing.JTextField txtPrecioCosto;
-    private javax.swing.JTextField txtProveedor;
+    private javax.swing.JTextField txtPrecioTotal;
     // End of variables declaration//GEN-END:variables
 
     /*
     Realizar las Compras a proveedores: Los usuarios podrán registrar compras de productos a los proveedores. Deberán
     especificar el producto solicitado, la cantidad y la fecha del pedido.
     */
-}
+ 
+    private void armarCabecera(){
+        modelo.addColumn("ID");
+        modelo.addColumn("PRODUCTO");
+        modelo.addColumn("CANTIDAD");
+        modelo.addColumn("PRECIO");
+        modelo.addColumn("SUB-TOTAL");
+        jtCompra.setModel(modelo);
+        
+        
+    }
+    
+    private void cargarComboProveedor(){
+    
+        ProveedorData proveData = new ProveedorData();
+     
+        for(Proveedor proveedor : proveData.listarProveedor()){
+        
+            jComboProveedor.addItem(proveedor);
+            
+        }
+    }
+    
+    private void cargarComboProducto(){
+    
+        ProductoData produData = new ProductoData();
+     
+        for(Producto producto : produData.listarProducto()){
+        
+            jComboProducto.addItem(producto);
+            
+        }
+    }
+    
+     private void limpiarFilas() {
+        for (int i = modelo.getRowCount() - 1; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+    }
+     
+     private void refrescarTabla(){
+    
+        limpiarFilas();
+        ProductoData produData = new ProductoData();
+        Producto producto = (Producto) jComboProducto.getSelectedItem();
+        List<Producto> lista = new ArrayList<>();
+        lista = produData.listarProducto();
+
+        
+        for (Producto insc : lista) {
+            modelo.addRow(new Object[]{
+                insc.getIdProducto(),
+                insc.getNombreProducto(),
+                txtCantidad.getText(),
+                
+                
+            });
+        }
+    
+    }
+}  
