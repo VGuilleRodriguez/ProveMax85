@@ -17,11 +17,8 @@ import javax.swing.table.DefaultTableModel;
  * @author nicolas
  */
 public class AdmCompra extends javax.swing.JPanel {
-
-    /**
-     * Creates new form AdmCompra
-     * 
-     */
+    
+    private double total = 0;
     
     DefaultTableModel modelo = new DefaultTableModel(){
         public boolean isCellEditable(int fila, int columna){
@@ -61,7 +58,7 @@ public class AdmCompra extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtCompra = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnEliminarProdu = new javax.swing.JButton();
         txtPrecioTotal = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jbCargar = new javax.swing.JButton();
@@ -101,12 +98,16 @@ public class AdmCompra extends javax.swing.JPanel {
         btnRegistrar.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
         btnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistrar.setText("Registrar");
+        btnRegistrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRegistrar.setMaximumSize(new java.awt.Dimension(150, 32));
+        btnRegistrar.setMinimumSize(new java.awt.Dimension(150, 32));
+        btnRegistrar.setPreferredSize(new java.awt.Dimension(150, 38));
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistrarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 570, -1, -1));
+        jPanel1.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 470, -1, -1));
 
         jDateChooserCompra.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
         jPanel1.add(jDateChooserCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 50, 240, -1));
@@ -138,8 +139,20 @@ public class AdmCompra extends javax.swing.JPanel {
         jLabel7.setText("Detalle de Compra");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 210, -1, -1));
 
-        jButton1.setText("Eliminar Producto");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 570, -1, 40));
+        btnEliminarProdu.setBackground(new java.awt.Color(193, 4, 4));
+        btnEliminarProdu.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        btnEliminarProdu.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminarProdu.setText("Eliminar Producto");
+        btnEliminarProdu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarProduActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnEliminarProdu, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 460, -1, 40));
+
+        txtPrecioTotal.setEditable(false);
+        txtPrecioTotal.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        txtPrecioTotal.setText(total + "");
         jPanel1.add(txtPrecioTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(653, 400, 130, -1));
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -168,47 +181,65 @@ public class AdmCompra extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 627, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
         char caracter = evt.getKeyChar();
-        if((caracter < '0') || (caracter > '9')){
+        if ((caracter < '0') || (caracter > '9')){
             evt.consume();
         }
     }//GEN-LAST:event_txtCantidadKeyTyped
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
 
-
-        ImageIcon icon = new ImageIcon("vista.img/agregar.png");
-
-        if (txtCantidad.getText().isEmpty()|| jDateChooserCompra == null) 
-        {
-            JOptionPane.showMessageDialog(this, "Debe completar todos los campos.", "Error al registrar",HEIGHT, icon);
+        if (total == 0 && jDateChooserCompra == null) {
+            JOptionPane.showMessageDialog(this, "Debe completar todos los campos.", "Error al registrar", HEIGHT);
         } else {
-            
+            //Falta el código
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void jbCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCargarActionPerformed
-        limpiarFilas();
+
         Producto produ = (Producto)jComboProducto.getSelectedItem();
-        double subtotal = Double.parseDouble(txtCantidad.getText())*(produ.getPrecioActual());
-        modelo.addRow(new Object[]{produ.getIdProducto(),
-        produ.getNombreProducto(),
-        txtCantidad.getText(),
-        produ.getPrecioActual(),
-        subtotal
+        double subtotal;
+        
+        if (txtCantidad.getText().isEmpty()|| jDateChooserCompra == null) 
+        {
+            JOptionPane.showMessageDialog(this, "Debe completar todos los campos.", "Error al registrar", HEIGHT);
+        } else {
+            subtotal = Double.parseDouble(txtCantidad.getText())*(produ.getPrecioActual());
+            
+            modelo.addRow(new Object[]{
+            produ.getIdProducto(),
+            produ.getNombreProducto(),
+            txtCantidad.getText(),
+            produ.getPrecioActual(),
+            subtotal
         });
+
+        txtPrecioTotal.setText((total += subtotal) + "");
+        txtCantidad.setText("");
+        }
     }//GEN-LAST:event_jbCargarActionPerformed
 
+    private void btnEliminarProduActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProduActionPerformed
+
+        try {
+            total -= (double)modelo.getValueAt(jtCompra.getSelectedRow(), 4);
+            txtPrecioTotal.setText(total + "");
+            modelo.removeRow(jtCompra.getSelectedRow());
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            JOptionPane.showMessageDialog(this, "No ha seleccionado ningún producto para eliminar.");
+        }
+    }//GEN-LAST:event_btnEliminarProduActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEliminarProdu;
     private javax.swing.JButton btnRegistrar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<Producto> jComboProducto;
     private javax.swing.JComboBox<Proveedor> jComboProveedor;
     private com.toedter.calendar.JDateChooser jDateChooserCompra;
@@ -228,20 +259,13 @@ public class AdmCompra extends javax.swing.JPanel {
     private javax.swing.JTextField txtPrecioTotal;
     // End of variables declaration//GEN-END:variables
 
-    /*
-    Realizar las Compras a proveedores: Los usuarios podrán registrar compras de productos a los proveedores. Deberán
-    especificar el producto solicitado, la cantidad y la fecha del pedido.
-    */
- 
     private void armarCabecera(){
-        modelo.addColumn("ID");
+        modelo.addColumn("CÓDIGO");
         modelo.addColumn("PRODUCTO");
         modelo.addColumn("CANTIDAD");
         modelo.addColumn("PRECIO");
         modelo.addColumn("SUB-TOTAL");
         jtCompra.setModel(modelo);
-        
-        
     }
     
     private void cargarComboProveedor(){
@@ -249,9 +273,7 @@ public class AdmCompra extends javax.swing.JPanel {
         ProveedorData proveData = new ProveedorData();
      
         for(Proveedor proveedor : proveData.listarProveedor()){
-        
             jComboProveedor.addItem(proveedor);
-            
         }
     }
     
@@ -260,13 +282,12 @@ public class AdmCompra extends javax.swing.JPanel {
         ProductoData produData = new ProductoData();
      
         for(Producto producto : produData.listarProducto()){
-        
             jComboProducto.addItem(producto);
-            
         }
     }
     
      private void limpiarFilas() {
+         
         for (int i = modelo.getRowCount() - 1; i >= 0; i--) {
             modelo.removeRow(i);
         }
@@ -279,17 +300,13 @@ public class AdmCompra extends javax.swing.JPanel {
         Producto producto = (Producto) jComboProducto.getSelectedItem();
         List<Producto> lista = new ArrayList<>();
         lista = produData.listarProducto();
-
         
         for (Producto insc : lista) {
             modelo.addRow(new Object[]{
                 insc.getIdProducto(),
                 insc.getNombreProducto(),
                 txtCantidad.getText(),
-                
-                
             });
         }
-    
     }
 }  
