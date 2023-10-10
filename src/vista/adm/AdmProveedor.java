@@ -102,6 +102,7 @@ public class AdmProveedor extends javax.swing.JPanel {
         btnRegistrar.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
         btnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistrar.setText("Registrar");
+        btnRegistrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistrarActionPerformed(evt);
@@ -112,6 +113,7 @@ public class AdmProveedor extends javax.swing.JPanel {
         btnBaja.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
         btnBaja.setForeground(java.awt.Color.white);
         btnBaja.setText("Dar de baja");
+        btnBaja.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBaja.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBajaActionPerformed(evt);
@@ -122,6 +124,7 @@ public class AdmProveedor extends javax.swing.JPanel {
         btnEliminar.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
         btnEliminar.setForeground(java.awt.Color.white);
         btnEliminar.setText("Eliminar");
+        btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
@@ -132,9 +135,10 @@ public class AdmProveedor extends javax.swing.JPanel {
         jLabel6.setText("Buscar por razón social");
 
         txtBuscar.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        txtBuscar.setPreferredSize(new java.awt.Dimension(300, 26));
         txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtBuscarKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
             }
         });
 
@@ -143,16 +147,16 @@ public class AdmProveedor extends javax.swing.JPanel {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(44, 44, 44)
+                .addContainerGap()
                 .addComponent(btnRegistrar)
                 .addGap(18, 18, 18)
                 .addComponent(btnBaja)
                 .addGap(18, 18, 18)
                 .addComponent(btnEliminar)
-                .addGap(64, 64, 64)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -164,7 +168,8 @@ public class AdmProveedor extends javax.swing.JPanel {
                     .addComponent(btnRegistrar)
                     .addComponent(btnEliminar)
                     .addComponent(jLabel6)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tableProveedor.setModel(new javax.swing.table.DefaultTableModel(
@@ -188,18 +193,18 @@ public class AdmProveedor extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1))
+                .addComponent(jScrollPane1)
+                .addContainerGap())
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(74, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -208,7 +213,7 @@ public class AdmProveedor extends javax.swing.JPanel {
         
         try {
             if (txtRazonSocial.getText().isEmpty() || txtDomicilio.getText().isEmpty() || txtTelefono.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Debe completar todos los campos.", "Error al registrar",HEIGHT);
+                JOptionPane.showMessageDialog(this, "Debe completar todos los campos.", "Error al registrar", HEIGHT);
             } else {
                 Proveedor proveedor = new Proveedor(
                         txtRazonSocial.getText(),
@@ -233,22 +238,6 @@ public class AdmProveedor extends javax.swing.JPanel {
             evt.consume();
         }
     }//GEN-LAST:event_txtTelefonoKeyTyped
-
-    private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
-        eliminarFilas();
-        ProveedorData provData = new ProveedorData();
-        for (Proveedor proveedor : provData.listarProveedor()) {
-            if (proveedor.getRazonSocial().startsWith(txtBuscar.getText())) {
-                tableModel.addRow(new Object[] {
-                    proveedor.getIdProveedor(),
-                    proveedor.getRazonSocial(),
-                    proveedor.getDomicilio(),
-                    proveedor.getTelefono(),
-                    proveedor.isEstado()
-                });
-            }
-        }
-    }//GEN-LAST:event_txtBuscarKeyTyped
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         try {
@@ -281,6 +270,22 @@ public class AdmProveedor extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "No ha seleccionado ningún proveedor para dar de baja.");
         }
     }//GEN-LAST:event_btnBajaActionPerformed
+
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        eliminarFilas();
+        ProveedorData provData = new ProveedorData();
+        for (Proveedor proveedor : provData.listarProveedor()) {
+            if (proveedor.getRazonSocial().startsWith(txtBuscar.getText())) {
+                tableModel.addRow(new Object[] {
+                    proveedor.getIdProveedor(),
+                    proveedor.getRazonSocial(),
+                    proveedor.getDomicilio(),
+                    proveedor.getTelefono(),
+                    proveedor.isEstado()
+                });
+            }
+        }
+    }//GEN-LAST:event_txtBuscarKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
