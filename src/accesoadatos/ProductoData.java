@@ -151,4 +151,25 @@ public class ProductoData {
         return productos;
     }
     
+    public List<String> cantidadProducto() {
+        List productos = new ArrayList();
+        try {
+            String cant = "SELECT nombreProducto, stock FROM producto WHERE stock < 10";
+
+            PreparedStatement ps = conex.prepareStatement(cant);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                Producto producto = new Producto();
+                producto.setNombreProducto(rs.getString("nombreProducto"));
+                producto.setStock(rs.getInt("stock"));
+                productos.add("* El stock del producto " + producto.getNombreProducto() + " esta por debajo del minimo. Stock : " + producto.getStock());
+            }
+
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla producto. " + ex.getMessage());
+        }
+        return productos;
+    }
 }

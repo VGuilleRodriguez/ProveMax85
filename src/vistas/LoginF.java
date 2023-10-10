@@ -107,7 +107,7 @@ public class LoginF extends javax.swing.JFrame {
         String pass = txtPassword.getText();
         this.access = Login.isLogged(user, pass);
         if (this.access == true) {
-            JOptionPane.showMessageDialog(this, "Bienvenido al sistema.");
+            //JOptionPane.showMessageDialog(this, "Bienvenido al sistema.");
             txtUsername.setText("");
             txtPassword.setText("");
             this.dispose();

@@ -5,9 +5,9 @@ import accesoadatos.ProductoData;
 import accesoadatos.ProveedorData;
 import entidad.Producto;
 import entidad.Proveedor;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -18,7 +18,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class AdmCompra extends javax.swing.JPanel {
     
-    private double total = 0;
+    private double total;
+    
+    DecimalFormat df = new DecimalFormat("###,###,###.##");
     
     DefaultTableModel modelo = new DefaultTableModel(){
         public boolean isCellEditable(int fila, int columna){
@@ -28,11 +30,11 @@ public class AdmCompra extends javax.swing.JPanel {
             
     public AdmCompra() {
         initComponents();
-        ((JTextField) this.jDateChooserCompra.getDateEditor()).setEditable(false);
         armarCabecera();
         cargarComboProveedor();
         cargarComboProducto();
-    }
+        ((JTextField) this.jDateChooserCompra.getDateEditor()).setEditable(false);
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -205,33 +207,40 @@ public class AdmCompra extends javax.swing.JPanel {
     private void jbCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCargarActionPerformed
 
         Producto produ = (Producto)jComboProducto.getSelectedItem();
-        double subtotal;
         
-        if (txtCantidad.getText().isEmpty()|| jDateChooserCompra == null) 
-        {
-            JOptionPane.showMessageDialog(this, "Debe completar todos los campos.", "Error al registrar", HEIGHT);
+        if (txtCantidad.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Indique la cantidad.", "Error al registrar", HEIGHT);
         } else {
-            subtotal = Double.parseDouble(txtCantidad.getText())*(produ.getPrecioActual());
-            
-            modelo.addRow(new Object[]{
-            produ.getIdProducto(),
-            produ.getNombreProducto(),
-            txtCantidad.getText(),
-            produ.getPrecioActual(),
-            subtotal
-        });
+            double subtotal = Double.parseDouble(txtCantidad.getText()) * (produ.getPrecioActual());
 
-        txtPrecioTotal.setText((total += subtotal) + "");
-        txtCantidad.setText("");
+            modelo.addRow(new Object[]{
+                produ.getIdProducto(),
+                produ.getNombreProducto(),
+                txtCantidad.getText(),
+                df.format(produ.getPrecioActual()),
+                subtotal
+            });
+            
+            total += subtotal;
+            txtPrecioTotal.setText(df.format(total) + "");
+            txtCantidad.setText("");
         }
     }//GEN-LAST:event_jbCargarActionPerformed
 
     private void btnEliminarProduActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProduActionPerformed
-
         try {
-            total -= (double)modelo.getValueAt(jtCompra.getSelectedRow(), 4);
-            txtPrecioTotal.setText(total + "");
-            modelo.removeRow(jtCompra.getSelectedRow());
+            //row: Para guardar la fila seleccionada.
+            int row = jtCompra.getSelectedRow();
+
+            //Redondea el total a 2 decimales
+            total = Math.round(total * 100.0) / 100.0;
+
+            //Resta al total el subtotal de la fila seleccionada
+            total -= (double) modelo.getValueAt(row, 4);
+
+            //El TextField recibe el nuevo total y se formatea con decimales
+            txtPrecioTotal.setText(df.format(total) + "");
+            modelo.removeRow(row);
         } catch (ArrayIndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(this, "No ha seleccionado ningún producto para eliminar.");
         }

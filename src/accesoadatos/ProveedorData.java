@@ -55,7 +55,7 @@ public class ProveedorData {
     
     public void eliminarProveedor(int id) {
         try {
-            String sql = "DELETE FROM proveedor WHERE idProveedor = ? AND estado = 1";
+            String sql = "DELETE FROM proveedor WHERE idProveedor = ?";
             
             PreparedStatement ps = conex.prepareStatement(sql);
             ps.setInt(1, id);
@@ -111,7 +111,7 @@ public class ProveedorData {
                 proveedor.setRazonSocial(rs.getString("razonSocial"));
                 proveedor.setDomicilio(rs.getString("domicilio"));
                 proveedor.setTelefono(rs.getInt("telefono"));
-                proveedor.setEstado(true);
+                proveedor.setEstado(rs.getBoolean("estado"));
             } else {
                 JOptionPane.showMessageDialog(null, "No existe el proveedor.");
             }
@@ -137,7 +137,7 @@ public class ProveedorData {
                 proveedor.setRazonSocial(rs.getString("razonSocial"));
                 proveedor.setDomicilio(rs.getString("domicilio"));
                 proveedor.setTelefono(rs.getInt("telefono"));
-                proveedor.setEstado(true);
+                proveedor.setEstado(rs.getBoolean("estado"));
                 proveedores.add(proveedor); // Se agregar la proveedor creado arriba al arraylist.
             }
             
