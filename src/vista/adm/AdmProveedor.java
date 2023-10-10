@@ -21,6 +21,7 @@ public class AdmProveedor extends javax.swing.JPanel {
     public AdmProveedor() {
         initComponents();
         cargarModeloTabla();
+        refrescarTabla();
     }
 
     /**

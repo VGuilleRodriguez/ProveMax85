@@ -65,6 +65,7 @@ public class AdmCompra extends javax.swing.JPanel {
         txtPrecioTotal = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jbCargar = new javax.swing.JButton();
+        btnHistorial = new javax.swing.JButton();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -153,7 +154,7 @@ public class AdmCompra extends javax.swing.JPanel {
                 btnEliminarProduActionPerformed(evt);
             }
         });
-        jPanel1.add(btnEliminarProdu, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 460, -1, 40));
+        jPanel1.add(btnEliminarProdu, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 470, -1, 40));
 
         txtPrecioTotal.setEditable(false);
         txtPrecioTotal.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
@@ -171,6 +172,16 @@ public class AdmCompra extends javax.swing.JPanel {
             }
         });
         jPanel1.add(jbCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 142, 100, 40));
+
+        btnHistorial.setBackground(new java.awt.Color(27, 117, 73));
+        btnHistorial.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
+        btnHistorial.setText("Historial de compras");
+        btnHistorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistorialActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 470, 180, 40));
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -239,8 +250,13 @@ public class AdmCompra extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnEliminarProduActionPerformed
 
+    private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
+        
+    }//GEN-LAST:event_btnHistorialActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminarProdu;
+    private javax.swing.JButton btnHistorial;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JComboBox<Producto> jComboProducto;
     private javax.swing.JComboBox<Proveedor> jComboProveedor;
