@@ -5,6 +5,7 @@ import accesoadatos.ProductoData;
 import accesoadatos.ProveedorData;
 import entidad.Producto;
 import entidad.Proveedor;
+import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -194,7 +195,7 @@ public class AdmCompra extends javax.swing.JPanel {
 
     private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
         char caracter = evt.getKeyChar();
-        if ((caracter < '0') || (caracter > '9')){
+        if ((caracter < '0') || (caracter > '9') && (caracter != KeyEvent.VK_BACK_SPACE)){
             evt.consume();
         }
     }//GEN-LAST:event_txtCantidadKeyTyped
