@@ -273,10 +273,12 @@ public class AdmProveedor extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-        eliminarFilas();
+       eliminarFilas();
         ProveedorData provData = new ProveedorData();
+        String textoBuscar = txtBuscar.getText().toLowerCase(); // Convierte el texto de busqueda a minuscula
         for (Proveedor proveedor : provData.listarProveedor()) {
-            if (proveedor.getRazonSocial().startsWith(txtBuscar.getText())) {
+            String razonSocial = proveedor.getRazonSocial().toLowerCase(); // Convierte el texto de la base de datos a minuscula
+            if (razonSocial.startsWith(textoBuscar)) {
                 tableModel.addRow(new Object[] {
                     proveedor.getIdProveedor(),
                     proveedor.getRazonSocial(),

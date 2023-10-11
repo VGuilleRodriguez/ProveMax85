@@ -298,10 +298,12 @@ public class AdmProducto extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-        eliminarFilas();
+         eliminarFilas();
         ProductoData prodData = new ProductoData();
+        String productoBuscar = txtBuscar.getText().toLowerCase(); // Convierte el texto en minuscula 
         for (Producto producto : prodData.listarProducto()) {
-            if (producto.getNombreProducto().startsWith(txtBuscar.getText())) {
+            String nombreProducto = producto.getNombreProducto().toLowerCase(); // Convierte el texto de la base de datos a minuscula
+            if (nombreProducto.startsWith(productoBuscar)) {
                 tableModel.addRow(new Object[] {
                     producto.getIdProducto(),
                     producto.getNombreProducto(),
