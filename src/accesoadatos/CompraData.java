@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package accesoadatos;
 
 import entidad.Compra;
@@ -122,5 +117,28 @@ public class CompraData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla compra. " + ex.getMessage());
         }
         return compras;
+    }
+    
+    public int obtenerUltimaCompra() {
+        int idCompra = 0;
+        
+        try {
+            String busqueda = "SELECT idCompra FROM compra ORDER BY idCompra DESC LIMIT 1";
+            
+            PreparedStatement ps = conex.prepareStatement(busqueda);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                idCompra = rs.getInt("idCompra");
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe la compra.");
+            }
+            
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla compra. " + ex.getMessage());
+        }
+        return idCompra;
     }
 }

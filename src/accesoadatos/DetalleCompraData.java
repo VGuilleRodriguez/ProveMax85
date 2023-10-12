@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package accesoadatos;
 
 import entidad.DetalleCompra;
@@ -29,8 +24,8 @@ public class DetalleCompraData {
     
     public void nuevoDetalleCompra(DetalleCompra detallecompra) {
         try {
-            String sql = "INSERT INTO detalleCompra "
-                    + "(cantida, precioCosto, idCompra, idProducto) "
+            String sql = "INSERT INTO detallecompra "
+                    + "(cantidad, precioCosto, idCompra, idProducto) "
                     + "VALUES (?, ?, ?, ?)";
             
             PreparedStatement ps = conex.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -55,7 +50,7 @@ public class DetalleCompraData {
     
     public void eliminarDetalleCompra(int id) {
         try {
-            String sql = "DELETE FROM detalleCompra WHERE idDetalleCompra = ?";
+            String sql = "DELETE FROM detallecompra WHERE idDetalleCompra = ?";
             
             PreparedStatement ps = conex.prepareStatement(sql);
             ps.setInt(1, id);
@@ -76,7 +71,7 @@ public class DetalleCompraData {
     
     public void cambiarEstadoDetalleCompra(int id) {
         try {
-            String sql = "UPDATE detalleCompra SET estado = 0 WHERE idDetalleCompra = ?";
+            String sql = "UPDATE detallecompra SET estado = 0 WHERE idDetalleCompra = ?";
             
             PreparedStatement ps = conex.prepareStatement(sql);
             ps.setInt(1, id);
@@ -98,7 +93,7 @@ public class DetalleCompraData {
     public DetalleCompra buscarProducto(int id) {
         DetalleCompra detallecompra = null;
         try {
-            String busqueda = "SELECT * FROM detalleCompra WHERE idDetalleCompra = ?";
+            String busqueda = "SELECT * FROM detallecompra WHERE idDetalleCompra = ?";
             
             PreparedStatement ps = conex.prepareStatement(busqueda);
             ps.setInt(1, id);
@@ -128,7 +123,7 @@ public class DetalleCompraData {
     public List<DetalleCompra> listarProducto() {
         List<DetalleCompra> detallecompras = new ArrayList();
         try {
-            String listar = "SELECT * FROM detalleCompra";
+            String listar = "SELECT * FROM detallecompra";
             
             PreparedStatement ps = conex.prepareStatement(listar);
             ResultSet rs = ps.executeQuery();

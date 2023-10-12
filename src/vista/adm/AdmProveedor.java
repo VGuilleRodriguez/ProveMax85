@@ -1,4 +1,3 @@
-
 package vista.adm;
 
 import accesoadatos.ProveedorData;
@@ -6,10 +5,6 @@ import entidad.Proveedor;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author nicolas
- */
 public class AdmProveedor extends javax.swing.JPanel {
 
     private DefaultTableModel tableModel = new DefaultTableModel() {
@@ -273,13 +268,13 @@ public class AdmProveedor extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-       eliminarFilas();
+        eliminarFilas();
         ProveedorData provData = new ProveedorData();
         String textoBuscar = txtBuscar.getText().toLowerCase(); // Convierte el texto de busqueda a minuscula
         for (Proveedor proveedor : provData.listarProveedor()) {
             String razonSocial = proveedor.getRazonSocial().toLowerCase(); // Convierte el texto de la base de datos a minuscula
             if (razonSocial.startsWith(textoBuscar)) {
-                tableModel.addRow(new Object[] {
+                tableModel.addRow(new Object[]{
                     proveedor.getIdProveedor(),
                     proveedor.getRazonSocial(),
                     proveedor.getDomicilio(),
@@ -289,7 +284,6 @@ public class AdmProveedor extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_txtBuscarKeyReleased
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBaja;

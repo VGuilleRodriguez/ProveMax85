@@ -1,22 +1,20 @@
-
 package vista.adm;
 
+import accesoadatos.CompraData;
+import accesoadatos.DetalleCompraData;
 import accesoadatos.ProductoData;
 import accesoadatos.ProveedorData;
-import entidad.Producto;
-import entidad.Proveedor;
-import java.awt.event.KeyEvent;
+import entidad.*;
+import java.sql.Date;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author nicolas
- */
 public class AdmCompra extends javax.swing.JPanel {
     
     private double total;
@@ -32,9 +30,10 @@ public class AdmCompra extends javax.swing.JPanel {
     public AdmCompra() {
         initComponents();
         armarCabecera();
-        cargarComboProveedor();
         cargarComboProducto();
+        cargarComboProveedor();
         ((JTextField) this.jDateChooserCompra.getDateEditor()).setEditable(false);
+        this.jDateChooserCompra.setDate(Date.valueOf(LocalDate.now(ZoneId.systemDefault())));
 }
 
     /**
@@ -117,14 +116,26 @@ public class AdmCompra extends javax.swing.JPanel {
         jPanel1.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 470, -1, -1));
 
         jDateChooserCompra.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+        jDateChooserCompra.setMaxSelectableDate(Date.valueOf(LocalDate.now(ZoneId.systemDefault()))
+        );
         jPanel1.add(jDateChooserCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 50, 240, -1));
 
         jLabel5.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
         jLabel5.setText("Cantidad");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 100, -1, -1));
 
+        jComboProveedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jComboProveedorMousePressed(evt);
+            }
+        });
         jPanel1.add(jComboProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 230, -1));
 
+        jComboProducto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jComboProductoMousePressed(evt);
+            }
+        });
         jPanel1.add(jComboProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 150, 230, -1));
 
         jtCompra.setModel(new javax.swing.table.DefaultTableModel(
@@ -175,14 +186,15 @@ public class AdmCompra extends javax.swing.JPanel {
         jPanel1.add(jbCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 142, 100, 40));
 
         btnHistorial.setBackground(new java.awt.Color(27, 117, 73));
-        btnHistorial.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
+        btnHistorial.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        btnHistorial.setForeground(java.awt.Color.white);
         btnHistorial.setText("Historial de compras");
         btnHistorial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHistorialActionPerformed(evt);
             }
         });
-        jPanel1.add(btnHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 470, 180, 40));
+        jPanel1.add(btnHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 470, 200, 40));
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -195,17 +207,51 @@ public class AdmCompra extends javax.swing.JPanel {
 
     private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
         char caracter = evt.getKeyChar();
-        if ((caracter < '0') || (caracter > '9') && (caracter != KeyEvent.VK_BACK_SPACE)){
+        if ((caracter < '0') || (caracter > '9')){
             evt.consume();
         }
     }//GEN-LAST:event_txtCantidadKeyTyped
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
 
-        if (total == 0 && jDateChooserCompra == null) {
+        if (total == 0 || jDateChooserCompra.getDate() == null) {
             JOptionPane.showMessageDialog(this, "Debe completar todos los campos.", "Error al registrar", HEIGHT);
         } else {
-            //Falta el código
+            // Se instancian las clases del paquete Data
+            CompraData compraData = new CompraData();
+            DetalleCompraData detalleData = new DetalleCompraData();
+            
+            // Se toma los datos para compra
+            Proveedor proveedor = (Proveedor)jComboProveedor.getSelectedItem();
+            LocalDate fecha = jDateChooserCompra.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            
+            // Se instancia una compra con los datos tomados de arriba
+            Compra compra = new Compra(proveedor, fecha);
+            
+            // Se manda la compra de arriba a la base de datos
+            compraData.nuevaCompra(compra);
+            
+            // Se toma los datos para detalle-compra
+            int cantidad = jtCompra.getRowCount();
+            
+            /**
+             * A la compra creada mas arriba como no tiene id porque solo se le
+             * paso dos datos, se busca ese id que se genero automaticamente 
+             * en la base de datos con el metodo obtenerUltimaCompra() y se le
+             * asigna con el set a la compra anterior, entonces la compra quedaria
+             * con todos los datos y se la pasariamos al contructor de detalle
+             * Si no se le setea el id a la compra al momento de crear un nuevo
+             * detalle en la base de datos tiraria un NullPointerException
+             */
+            compra.setIdCompra(compraData.obtenerUltimaCompra());
+            
+            Producto producto = (Producto)jComboProducto.getSelectedItem();
+            
+            // Se instancia un detalle-compra con los datos anteriores
+            DetalleCompra detalle = new DetalleCompra(cantidad, total, compra, producto);
+            
+            // Se manda el detalle-compra a la base de datos
+            detalleData.nuevoDetalleCompra(detalle);
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
@@ -255,6 +301,14 @@ public class AdmCompra extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnHistorialActionPerformed
 
+    private void jComboProductoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboProductoMousePressed
+        cargarComboProducto();
+    }//GEN-LAST:event_jComboProductoMousePressed
+
+    private void jComboProveedorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboProveedorMousePressed
+        cargarComboProveedor();
+    }//GEN-LAST:event_jComboProveedorMousePressed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminarProdu;
     private javax.swing.JButton btnHistorial;
@@ -287,8 +341,11 @@ public class AdmCompra extends javax.swing.JPanel {
         jtCompra.setModel(modelo);
     }
     
-    private void cargarComboProveedor(){
-    
+    public void cargarComboProveedor(){
+        for (int i = jComboProveedor.getItemCount() - 1; i >= 0; i--) {
+            jComboProveedor.removeItemAt(i);
+        }
+        
         ProveedorData proveData = new ProveedorData();
      
         for(Proveedor proveedor : proveData.listarProveedor()){
@@ -296,8 +353,11 @@ public class AdmCompra extends javax.swing.JPanel {
         }
     }
     
-    private void cargarComboProducto(){
-    
+    public void cargarComboProducto(){
+        for (int i = jComboProducto.getItemCount() - 1; i >= 0; i--) {
+            jComboProducto.removeItemAt(i);
+        }
+        
         ProductoData produData = new ProductoData();
      
         for(Producto producto : produData.listarProducto()){
@@ -305,15 +365,13 @@ public class AdmCompra extends javax.swing.JPanel {
         }
     }
     
-     private void limpiarFilas() {
-         
+    private void limpiarFilas() {
         for (int i = modelo.getRowCount() - 1; i >= 0; i--) {
             modelo.removeRow(i);
         }
     }
      
-     private void refrescarTabla(){
-    
+    private void refrescarTabla() {
         limpiarFilas();
         ProductoData produData = new ProductoData();
         Producto producto = (Producto) jComboProducto.getSelectedItem();

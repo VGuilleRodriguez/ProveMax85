@@ -5,10 +5,6 @@ import entidad.Producto;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author nicolas
- */
 public class AdmProducto extends javax.swing.JPanel {
 
     private DefaultTableModel tableModel = new DefaultTableModel() {
@@ -192,14 +188,12 @@ public class AdmProducto extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(5, 5, 5)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnBaja)
-                        .addComponent(btnRegistrar)
-                        .addComponent(btnEliminar)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBaja)
+                    .addComponent(btnRegistrar)
+                    .addComponent(btnEliminar)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -254,7 +248,7 @@ public class AdmProducto extends javax.swing.JPanel {
                     true
                 );//end Producto constructor
                 
-                dataprod.nuevoProducto(producto);
+                dataprod.nuevoProducto(producto);            
                 refrescarTabla();
             }//end if-else
         } catch (NumberFormatException ex) {
@@ -262,7 +256,6 @@ public class AdmProducto extends javax.swing.JPanel {
         } finally {
             limpiarCampos();
         }
-        
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
@@ -298,7 +291,7 @@ public class AdmProducto extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-         eliminarFilas();
+        eliminarFilas();
         ProductoData prodData = new ProductoData();
         String productoBuscar = txtBuscar.getText().toLowerCase(); // Convierte el texto en minuscula 
         for (Producto producto : prodData.listarProducto()) {
@@ -315,7 +308,6 @@ public class AdmProducto extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_txtBuscarKeyReleased
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBaja;
