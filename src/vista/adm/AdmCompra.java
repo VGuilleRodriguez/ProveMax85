@@ -18,6 +18,9 @@ import javax.swing.table.DefaultTableModel;
 public class AdmCompra extends javax.swing.JPanel {
     
     private double total;
+    private ProductoData produData;
+    CompraData compraData;
+    DetalleCompraData detalleData;
     
     DecimalFormat df = new DecimalFormat("###,###,###.##");
     
@@ -30,6 +33,9 @@ public class AdmCompra extends javax.swing.JPanel {
     public AdmCompra() {
         initComponents();
         armarCabecera();
+        this.produData = new ProductoData();
+        compraData = new CompraData();
+        detalleData = new DetalleCompraData();
         cargarComboProducto();
         cargarComboProveedor();
         ((JTextField) this.jDateChooserCompra.getDateEditor()).setEditable(false);
@@ -217,10 +223,6 @@ public class AdmCompra extends javax.swing.JPanel {
         if (total == 0 || jDateChooserCompra.getDate() == null) {
             JOptionPane.showMessageDialog(this, "Debe completar todos los campos.", "Error al registrar", HEIGHT);
         } else {
-            // Se instancian las clases del paquete Data
-            CompraData compraData = new CompraData();
-            DetalleCompraData detalleData = new DetalleCompraData();
-            
             // Se toma los datos para compra
             Proveedor proveedor = (Proveedor)jComboProveedor.getSelectedItem();
             LocalDate fecha = jDateChooserCompra.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -230,9 +232,6 @@ public class AdmCompra extends javax.swing.JPanel {
             
             // Se manda la compra de arriba a la base de datos
             compraData.nuevaCompra(compra);
-            
-            // Se toma los datos para detalle-compra
-            int cantidad = jtCompra.getRowCount();
             
             /**
              * A la compra creada mas arriba como no tiene id porque solo se le
@@ -245,13 +244,18 @@ public class AdmCompra extends javax.swing.JPanel {
              */
             compra.setIdCompra(compraData.obtenerUltimaCompra());
             
-            Producto producto = (Producto)jComboProducto.getSelectedItem();
-            
-            // Se instancia un detalle-compra con los datos anteriores
-            DetalleCompra detalle = new DetalleCompra(cantidad, total, compra, producto);
-            
-            // Se manda el detalle-compra a la base de datos
-            detalleData.nuevoDetalleCompra(detalle);
+            // Se toma los datos para detalle-compra
+            for (int i = 0; i < jtCompra.getRowCount(); i++) {
+                Producto producto = produData.buscarProducto((int) jtCompra.getValueAt(i, 0));
+                int cantidad = Integer.parseInt((String) jtCompra.getValueAt(i, 2));
+                double subtotal = (double) jtCompra.getValueAt(i, 4);
+
+                // Se instancia un detalle-compra con los datos anteriores
+                DetalleCompra detalle = new DetalleCompra(cantidad, subtotal, compra, producto);
+
+                // Se manda el detalle-compra a la base de datos
+                detalleData.nuevoDetalleCompra(detalle);
+            }
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
@@ -298,7 +302,8 @@ public class AdmCompra extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEliminarProduActionPerformed
 
     private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
-        
+        int idCompra = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese el Código de la compra"));
+        refrescarTabla(idCompra);
     }//GEN-LAST:event_btnHistorialActionPerformed
 
     private void jComboProductoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboProductoMousePressed
@@ -357,9 +362,7 @@ public class AdmCompra extends javax.swing.JPanel {
         for (int i = jComboProducto.getItemCount() - 1; i >= 0; i--) {
             jComboProducto.removeItemAt(i);
         }
-        
-        ProductoData produData = new ProductoData();
-     
+
         for(Producto producto : produData.listarProducto()){
             jComboProducto.addItem(producto);
         }
@@ -371,18 +374,19 @@ public class AdmCompra extends javax.swing.JPanel {
         }
     }
      
-    private void refrescarTabla() {
+    private void refrescarTabla(int id) {
         limpiarFilas();
-        ProductoData produData = new ProductoData();
-        Producto producto = (Producto) jComboProducto.getSelectedItem();
-        List<Producto> lista = new ArrayList<>();
-        lista = produData.listarProducto();
+        //Producto producto = (Producto) jComboProducto.getSelectedItem();
+        List<DetalleCompra> lista = new ArrayList<>();
+        lista = detalleData.listarProductosPorCompra(id);
         
-        for (Producto insc : lista) {
+        for (DetalleCompra producto : lista) {
             modelo.addRow(new Object[]{
-                insc.getIdProducto(),
-                insc.getNombreProducto(),
-                txtCantidad.getText(),
+                producto.getIdDetalleCompra(),
+                producto.getCantidad(),
+                producto.getPrecioCosto(),
+                producto.getCompra().getIdCompra(),
+                producto.getProducto().getNombreProducto()
             });
         }
     }

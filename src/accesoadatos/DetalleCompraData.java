@@ -10,10 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author nicolas
- */
 public class DetalleCompraData {
     
     private Connection conex;
@@ -39,7 +35,9 @@ public class DetalleCompraData {
             
             if (rs.next()) {
                 detallecompra.setIdDetalleCompra(rs.getInt(1));
-                JOptionPane.showMessageDialog(null, "¡Nuevo detalle-compra añadido con exito!");
+                //JOptionPane.showMessageDialog(null, "¡Nuevo detalle-compra añadido con exito!");
+            } else {
+                JOptionPane.showMessageDialog(null, "¡Error al crear un nuevo detalle-compra!");
             }
             
             ps.close();
@@ -126,6 +124,35 @@ public class DetalleCompraData {
             String listar = "SELECT * FROM detallecompra";
             
             PreparedStatement ps = conex.prepareStatement(listar);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                CompraData compra = new CompraData();
+                ProductoData producto = new ProductoData();
+                DetalleCompra detallecompra = new DetalleCompra();
+                detallecompra.setIdDetalleCompra(rs.getInt("idDetalleCompra"));
+                detallecompra.setCantidad(rs.getInt("cantidad"));
+                detallecompra.setPrecioCosto(rs.getDouble("precioCosto"));
+                detallecompra.setCompra(compra.buscarCompra(rs.getInt("idCompra")));
+                detallecompra.setProducto(producto.buscarProducto(rs.getInt("idProducto")));
+                detallecompras.add(detallecompra); // Se agregar la producto creada arriba al arraylist.
+            }
+            
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla producto. " + ex.getMessage());
+        }
+        return detallecompras;
+    }
+    
+    public List<DetalleCompra> listarProductosPorCompra(int idCompra) {
+        List<DetalleCompra> detallecompras = new ArrayList();
+        try {
+            String listar = "SELECT * FROM detallecompra WHERE idCompra = ?";
+            
+            PreparedStatement ps = conex.prepareStatement(listar);
+            ps.setInt(1, idCompra);
+            
             ResultSet rs = ps.executeQuery();
             
             while (rs.next()) {
