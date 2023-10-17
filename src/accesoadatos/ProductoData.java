@@ -182,7 +182,7 @@ public class ProductoData {
             ps.setInt(1, stock);
             ResultSet rs = ps.executeQuery();
             
-            while (rs.next()) {
+            if(rs.next()) {
                 Producto producto = new Producto();
                 producto.setIdProducto(rs.getInt("idProducto"));
                 producto.setNombreProducto(rs.getString("nombreProducto"));
