@@ -176,13 +176,13 @@ public class ProductoData {
     public List<Producto> listarStockMinimo(int stock) {
         List<Producto> productos = new ArrayList();
         try {
-            String listar = "SELECT * FROM producto WHERE stock = ?";
+            String listar = "SELECT * FROM producto WHERE stock < ?";
             
             PreparedStatement ps = conex.prepareStatement(listar);
             ps.setInt(1, stock);
             ResultSet rs = ps.executeQuery();
             
-            if(rs.next()) {
+            while(rs.next()) {
                 Producto producto = new Producto();
                 producto.setIdProducto(rs.getInt("idProducto"));
                 producto.setNombreProducto(rs.getString("nombreProducto"));

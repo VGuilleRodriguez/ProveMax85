@@ -23,6 +23,7 @@ public class MenuView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        admDetalleCompra1 = new vista.adm.AdmDetalleCompra();
         jPanel1 = new javax.swing.JPanel();
         tabMenu = new javax.swing.JTabbedPane();
         admProveedor1 = new vista.adm.AdmProveedor();
@@ -152,6 +153,7 @@ public class MenuView extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private vista.adm.AdmCompra admCompra1;
+    private vista.adm.AdmDetalleCompra admDetalleCompra1;
     private vista.adm.AdmProducto admProducto1;
     private vista.adm.AdmProveedor admProveedor1;
     private javax.swing.JLabel jLabel1;

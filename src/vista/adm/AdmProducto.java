@@ -337,7 +337,7 @@ public class AdmProducto extends javax.swing.JPanel {
             });
         } 
        }else{
-           eliminarFilas();
+           refrescarTabla();
        }
     }//GEN-LAST:event_checkStockActionPerformed
 
