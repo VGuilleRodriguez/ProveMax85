@@ -172,4 +172,31 @@ public class ProductoData {
         }
         return productos;
     }
+    
+    public List<Producto> listarStockMinimo(int stock) {
+        List<Producto> productos = new ArrayList();
+        try {
+            String listar = "SELECT * FROM producto WHERE stock = ?";
+            
+            PreparedStatement ps = conex.prepareStatement(listar);
+            ps.setInt(1, stock);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                Producto producto = new Producto();
+                producto.setIdProducto(rs.getInt("idProducto"));
+                producto.setNombreProducto(rs.getString("nombreProducto"));
+                producto.setDescripcion(rs.getString("descripcion"));
+                producto.setPrecioActual(rs.getDouble("precioActual"));
+                producto.setStock(rs.getInt("stock"));
+                producto.setEstado(rs.getBoolean("estado"));
+                productos.add(producto); // Se agregar la producto creada arriba al arraylist.
+            }
+            
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla producto. " + ex.getMessage());
+        }
+        return productos;
+    }
 }
