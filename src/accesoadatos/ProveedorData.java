@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,6 +28,13 @@ public class ProveedorData {
     public ProveedorData() {
         this.conex = Conexion.getConnection();
     }
+    
+    private void mensaje(String mensaje){
+        JOptionPane.showMessageDialog(null, mensaje);
+    }
+    
+    
+    
     
     public void nuevoProveedor(Proveedor proveedor) {
         try {
@@ -147,4 +156,32 @@ public class ProveedorData {
         }
         return proveedores;
     }
+    
+   
+    
+    public void modificarProveedor(Proveedor Proveedor){
+         try {
+        String sql = "UPDATE Proveedor SET razonSocial=?, domicilio=?, telefono=?, estado=? WHERE idProveedor=?";
+        
+        PreparedStatement ps = conex.prepareStatement(sql);
+            ps.setString(1, Proveedor.getRazonSocial());
+            ps.setString(2, Proveedor.getDomicilio());
+            ps.setInt(3, Proveedor.getTelefono());      
+            ps.setBoolean(4,Proveedor.isEstado());
+            ps.setInt(5, Proveedor.getIdProveedor());
+            int exito = ps.executeUpdate();
+            if (exito == 1) {               
+                mensaje("Proveedor modificado");
+                
+            } else {
+                mensaje("El proveedor NO existe");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductoData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+           
+    }
+    
+    
 }

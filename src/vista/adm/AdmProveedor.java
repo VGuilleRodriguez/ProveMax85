@@ -13,6 +13,9 @@ public class AdmProveedor extends javax.swing.JPanel {
         }
     };
     
+    ProveedorData proveData = new ProveedorData();
+    
+    
     public AdmProveedor() {
         initComponents();
         cargarModeloTabla();
@@ -39,12 +42,14 @@ public class AdmProveedor extends javax.swing.JPanel {
         txtTelefono = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         checkEstado = new javax.swing.JCheckBox();
+        jbGuardarCambio = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         btnRegistrar = new javax.swing.JButton();
         btnBaja = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
+        btnModificar1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableProveedor = new javax.swing.JTable();
 
@@ -94,6 +99,17 @@ public class AdmProveedor extends javax.swing.JPanel {
         checkEstado.setEnabled(false);
         jPanel1.add(checkEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 300, -1, 40));
 
+        jbGuardarCambio.setBackground(new java.awt.Color(27, 117, 73));
+        jbGuardarCambio.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        jbGuardarCambio.setForeground(new java.awt.Color(255, 255, 255));
+        jbGuardarCambio.setText("Guardar cambios");
+        jbGuardarCambio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbGuardarCambioActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jbGuardarCambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 370, -1, -1));
+
         btnRegistrar.setBackground(new java.awt.Color(27, 117, 73));
         btnRegistrar.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
         btnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
@@ -138,6 +154,17 @@ public class AdmProveedor extends javax.swing.JPanel {
             }
         });
 
+        btnModificar1.setBackground(new java.awt.Color(204, 0, 0));
+        btnModificar1.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        btnModificar1.setForeground(java.awt.Color.white);
+        btnModificar1.setText("Modificar");
+        btnModificar1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnModificar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificar1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -145,11 +172,13 @@ public class AdmProveedor extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnRegistrar)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBaja)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnModificar1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEliminar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -164,7 +193,8 @@ public class AdmProveedor extends javax.swing.JPanel {
                     .addComponent(btnRegistrar)
                     .addComponent(btnEliminar)
                     .addComponent(jLabel6)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnModificar1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -285,9 +315,52 @@ public class AdmProveedor extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtBuscarKeyReleased
 
+    private void btnModificar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificar1ActionPerformed
+        
+        int seleccionar = tableProveedor.getSelectedRow();
+        
+        if(seleccionar != -1){
+            
+            int codigo = (int)tableModel.getValueAt(seleccionar, 0);
+            String razonSocial = tableModel.getValueAt(seleccionar, 1).toString();
+            String domicilio = tableModel.getValueAt(seleccionar, 2).toString();
+            int telefono = (int)tableModel.getValueAt(seleccionar, 3);
+            boolean estado = (boolean) tableModel.getValueAt(seleccionar, 4);
+           
+  
+            
+            
+            
+            txtCodigo.setText(codigo+"");
+            txtRazonSocial.setText(razonSocial);
+            txtDomicilio.setText(domicilio);
+            txtTelefono.setText(telefono+"");
+
+        
+        
+        }   
+        
+        
+        
+    }//GEN-LAST:event_btnModificar1ActionPerformed
+
+    private void jbGuardarCambioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarCambioActionPerformed
+        int codigo = Integer.parseInt(txtCodigo.getText());
+        String RazonSocial =  txtRazonSocial.getText();
+        String Domicilio = txtDomicilio.getText();
+        int Telefono = Integer.parseInt(txtTelefono.getText());
+        boolean estado = checkEstado.isSelected();
+
+        Proveedor  prov = new Proveedor(codigo, RazonSocial, Domicilio, Telefono, estado);
+        proveData.modificarProveedor(prov);
+        refrescarTabla();
+        limpiarCampos();
+    }//GEN-LAST:event_jbGuardarCambioActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBaja;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnModificar1;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JCheckBox checkEstado;
     private javax.swing.JLabel jLabel1;
@@ -299,6 +372,7 @@ public class AdmProveedor extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbGuardarCambio;
     private javax.swing.JTable tableProveedor;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCodigo;
