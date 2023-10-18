@@ -70,7 +70,6 @@ public class AdmDetalleCompra extends javax.swing.JPanel {
         });//end addActionDateChooserListener
         
         cargarModeloTabla();
-        cargarComboProducto();
     }//end constructor
 
     @SuppressWarnings("unchecked")
@@ -88,6 +87,8 @@ public class AdmDetalleCompra extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         txtDate = new javax.swing.JTextField();
         btnBuscarProducto = new javax.swing.JButton();
+        btnBuscarCodigo = new javax.swing.JButton();
+        btnBuscarProveedor = new javax.swing.JButton();
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -110,9 +111,9 @@ public class AdmDetalleCompra extends javax.swing.JPanel {
         jLabel3.setText("Proveedor:");
 
         comboProveedor.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
-        comboProveedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboProveedorActionPerformed(evt);
+        comboProveedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                comboProveedorMousePressed(evt);
             }
         });
 
@@ -135,25 +136,45 @@ public class AdmDetalleCompra extends javax.swing.JPanel {
             }
         });
 
+        btnBuscarCodigo.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+        btnBuscarCodigo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/busqueda.png"))); // NOI18N
+        btnBuscarCodigo.setBorder(null);
+        btnBuscarCodigo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        btnBuscarProveedor.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+        btnBuscarProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/busqueda.png"))); // NOI18N
+        btnBuscarProveedor.setBorder(null);
+        btnBuscarProveedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBuscarProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarProveedorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(comboProveedor, 0, 211, Short.MAX_VALUE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextField1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(comboProveedor, 0, 221, Short.MAX_VALUE)
                     .addComponent(txtDate, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(comboProducto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBuscarProducto)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                    .addComponent(jTextField1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(comboProducto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnBuscarCodigo)
+                    .addComponent(btnBuscarProducto)
+                    .addComponent(btnBuscarProveedor))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 706, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -166,7 +187,9 @@ public class AdmDetalleCompra extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscarCodigo))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -174,7 +197,9 @@ public class AdmDetalleCompra extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(comboProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscarProveedor))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -184,10 +209,6 @@ public class AdmDetalleCompra extends javax.swing.JPanel {
                 .addContainerGap(26, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void comboProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboProveedorActionPerformed
-        cargarComboProveedor();
-    }//GEN-LAST:event_comboProveedorActionPerformed
 
     private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
         tableModel.setRowCount(0);
@@ -208,9 +229,30 @@ public class AdmDetalleCompra extends javax.swing.JPanel {
         cargarComboProducto();
     }//GEN-LAST:event_comboProductoMousePressed
 
+    private void comboProveedorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboProveedorMousePressed
+        cargarComboProveedor();
+    }//GEN-LAST:event_comboProveedorMousePressed
+
+    private void btnBuscarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProveedorActionPerformed
+        tableModel.setRowCount(0);
+        
+        for (DetalleCompra detalle : detalleData.listarPorProveedor((Proveedor) comboProveedor.getSelectedItem())) {
+            tableModel.addRow(new Object[]{
+                detalle.getIdDetalleCompra(),
+                detalle.getCompra().getProveedor(),
+                detalle.getCompra().getFecha(),
+                detalle.getProducto().getNombreProducto(),
+                detalle.getCantidad(),
+                detalle.getPrecioCosto()
+            });
+        }//end for
+    }//GEN-LAST:event_btnBuscarProveedorActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscarCodigo;
     private javax.swing.JButton btnBuscarProducto;
+    private javax.swing.JButton btnBuscarProveedor;
     private javax.swing.JComboBox<Producto> comboProducto;
     private javax.swing.JComboBox<Proveedor> comboProveedor;
     private javax.swing.JLabel jLabel1;
@@ -234,7 +276,8 @@ public class AdmDetalleCompra extends javax.swing.JPanel {
     }
     
     private void cargarComboProveedor() {
-        comboProducto.removeAllItems();
+        System.out.println("Se ha cargado el combo de proveedor");
+        comboProveedor.removeAllItems();
 
         ProveedorData provData = new ProveedorData();
 

@@ -66,6 +66,10 @@ public class DetalleCompra {
         this.producto = producto;
     }
 
-    
-    
+    @Override
+    public String toString() {
+        return "DetalleCompra{" + "idDetalleCompra=" + idDetalleCompra + ", cantidad=" + cantidad + ", precioCosto=" + precioCosto + ", compra=" + compra + ", producto=" + producto + '}';
+    }
+
+
 }

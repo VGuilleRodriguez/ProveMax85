@@ -17,7 +17,7 @@ public class DetalleCompraData {
     private Connection conex;
     CompraData compraData = new CompraData();
     ProductoData productoData = new ProductoData();
-    DetalleCompra detalleData = new DetalleCompra();
+    DetalleCompra detalle;
 
     public DetalleCompraData() {
         this.conex = Conexion.getConnection();
@@ -129,12 +129,13 @@ public class DetalleCompraData {
             ResultSet rs = ps.executeQuery();
             
             while (rs.next()) {
-                detalleData.setIdDetalleCompra(rs.getInt("idDetalleCompra"));
-                detalleData.setCantidad(rs.getInt("cantidad"));
-                detalleData.setPrecioCosto(rs.getDouble("precioCosto"));
-                detalleData.setCompra(compraData.buscarCompra(rs.getInt("idCompra")));
-                detalleData.setProducto(productoData.buscarProducto(rs.getInt("idProducto")));
-                detallecompras.add(detalleData); // Se agregar la producto creada arriba al arraylist.
+                detalle = new DetalleCompra();
+                detalle.setIdDetalleCompra(rs.getInt("idDetalleCompra"));
+                detalle.setCantidad(rs.getInt("cantidad"));
+                detalle.setPrecioCosto(rs.getDouble("precioCosto"));
+                detalle.setCompra(compraData.buscarCompra(rs.getInt("idCompra")));
+                detalle.setProducto(productoData.buscarProducto(rs.getInt("idProducto")));
+                detallecompras.add(detalle); // Se agregar la producto creada arriba al arraylist.
             }
             
             ps.close();
@@ -155,12 +156,13 @@ public class DetalleCompraData {
             ResultSet rs = ps.executeQuery();
             
             while (rs.next()) {
-                detalleData.setIdDetalleCompra(rs.getInt("idDetalleCompra"));
-                detalleData.setCantidad(rs.getInt("cantidad"));
-                detalleData.setPrecioCosto(rs.getDouble("precioCosto"));
-                detalleData.setCompra(compraData.buscarCompra(rs.getInt("idCompra")));
-                detalleData.setProducto(productoData.buscarProducto(rs.getInt("idProducto")));
-                detallecompras.add(detalleData); // Se agregar la producto creada arriba al arraylist.
+                detalle = new DetalleCompra();
+                detalle.setIdDetalleCompra(rs.getInt("idDetalleCompra"));
+                detalle.setCantidad(rs.getInt("cantidad"));
+                detalle.setPrecioCosto(rs.getDouble("precioCosto"));
+                detalle.setCompra(compraData.buscarCompra(rs.getInt("idCompra")));
+                detalle.setProducto(productoData.buscarProducto(rs.getInt("idProducto")));
+                detallecompras.add(detalle); // Se agregar la producto creada arriba al arraylist.
             }
             
             ps.close();
@@ -181,12 +183,13 @@ public class DetalleCompraData {
             ResultSet rs = ps.executeQuery();
             
             while (rs.next()) {
-                detalleData.setIdDetalleCompra(rs.getInt("idDetalleCompra"));
-                detalleData.setCompra(compraData.buscarCompra(rs.getInt("idCompra")));
-                detalleData.setProducto(productoData.buscarProducto(rs.getInt("idProducto")));
-                detalleData.setCantidad(rs.getInt("cantidad"));
-                detalleData.setPrecioCosto(rs.getDouble("precioCosto"));
-                detallecompras.add(detalleData); // Se agregar la producto creada arriba al arraylist.
+                detalle = new DetalleCompra();
+                detalle.setIdDetalleCompra(rs.getInt("idDetalleCompra"));
+                detalle.setCompra(compraData.buscarCompra(rs.getInt("idCompra")));
+                detalle.setProducto(productoData.buscarProducto(rs.getInt("idProducto")));
+                detalle.setCantidad(rs.getInt("cantidad"));
+                detalle.setPrecioCosto(rs.getDouble("precioCosto"));
+                detallecompras.add(detalle); // Se agregar la producto creada arriba al arraylist.
             }
             
             ps.close();
@@ -199,20 +202,22 @@ public class DetalleCompraData {
     public List<DetalleCompra> listarPorProveedor(Proveedor proveedor) {
         List<DetalleCompra> detallecompras = new ArrayList();
         try {
-            String listar = "SELECT idDetalleCompra, idCompra, idProducto, cantidad, precioCosto "
-                    + "FROM proveedor JOIN detallecompra ON (detallecompra.idCompra = compra.idCompra) "
+            String listar = "SELECT idDetalleCompra, detallecompra.idCompra, idProducto, cantidad, precioCosto "
+                    + "FROM proveedor JOIN compra ON (compra.idProveedor = proveedor.idProveedor) "
+                    + "JOIN detallecompra ON (detallecompra.idCompra = compra.idCompra) "
                     + "WHERE proveedor.idProveedor = " + proveedor.getIdProveedor();
 
             PreparedStatement ps = conex.prepareStatement(listar);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                detalleData.setIdDetalleCompra(rs.getInt("idDetalleCompra"));
-                detalleData.setCompra(compraData.buscarCompra(rs.getInt("idCompra")));
-                detalleData.setProducto(productoData.buscarProducto(rs.getInt("idProducto")));
-                detalleData.setCantidad(rs.getInt("cantidad"));
-                detalleData.setPrecioCosto(rs.getDouble("precioCosto"));
-                detallecompras.add(detalleData); // Se agregar la producto creada arriba al arraylist.
+                detalle = new DetalleCompra();
+                detalle.setIdDetalleCompra(rs.getInt("idDetalleCompra"));
+                detalle.setCompra(compraData.buscarCompra(rs.getInt("idCompra")));
+                detalle.setProducto(productoData.buscarProducto(rs.getInt("idProducto")));
+                detalle.setCantidad(rs.getInt("cantidad"));
+                detalle.setPrecioCosto(rs.getDouble("precioCosto"));
+                detallecompras.add(detalle); // Se agregar la producto creada arriba al arraylist.
             }
 
             ps.close();
@@ -233,12 +238,13 @@ public class DetalleCompraData {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                detalleData.setIdDetalleCompra(rs.getInt("idDetalleCompra"));
-                detalleData.setCompra(compraData.buscarCompra(rs.getInt("idCompra")));
-                detalleData.setProducto(productoData.buscarProducto(rs.getInt("idProducto")));
-                detalleData.setCantidad(rs.getInt("cantidad"));
-                detalleData.setPrecioCosto(rs.getDouble("precioCosto"));
-                detallecompras.add(detalleData); // Se agregar la producto creada arriba al arraylist.
+                detalle = new DetalleCompra();
+                detalle.setIdDetalleCompra(rs.getInt("idDetalleCompra"));
+                detalle.setCompra(compraData.buscarCompra(rs.getInt("idCompra")));
+                detalle.setProducto(productoData.buscarProducto(rs.getInt("idProducto")));
+                detalle.setCantidad(rs.getInt("cantidad"));
+                detalle.setPrecioCosto(rs.getDouble("precioCosto"));
+                detallecompras.add(detalle); // Se agregar la producto creada arriba al arraylist.
             }
 
             ps.close();
