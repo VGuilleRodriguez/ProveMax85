@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,6 +27,10 @@ public class ProductoData {
 
     public ProductoData() {
         this.conex = Conexion.getConnection();
+    }
+    
+    private void mensaje(String mensaje){
+        JOptionPane.showMessageDialog(null, mensaje);
     }
     
     public void nuevoProducto(Producto producto) {
@@ -198,5 +204,30 @@ public class ProductoData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla producto. " + ex.getMessage());
         }
         return productos;
+    }
+    
+    public void modificarProducto(Producto producto){
+         try {
+        String sql = "UPDATE producto SET nombreProducto=?, descripcion=?, precioActual=?, stock=?, estado=? WHERE idProducto=?";
+        
+        PreparedStatement ps = conex.prepareStatement(sql);
+            ps.setString(1, producto.getNombreProducto());
+            ps.setString(2, producto.getDescripcion());
+            ps.setDouble(3, producto.getPrecioActual());
+            ps.setInt(4, producto.getStock());
+            ps.setBoolean(5, producto.isEstado());
+            ps.setInt(6, producto.getIdProducto());
+            int exito = ps.executeUpdate();
+            if (exito == 1) {               
+                mensaje("Producto modificado");
+                
+            } else {
+                mensaje("El producto NO existe");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductoData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+           
     }
 }

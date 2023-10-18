@@ -13,6 +13,8 @@ public class AdmProducto extends javax.swing.JPanel {
         }
     };
     
+    ProductoData produData = new ProductoData();
+    
     public AdmProducto() {
         initComponents();
         cargarModeloTabla();
@@ -51,7 +53,8 @@ public class AdmProducto extends javax.swing.JPanel {
         btnEliminar = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        jbGuardarCambios = new javax.swing.JButton();
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -181,9 +184,15 @@ public class AdmProducto extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(27, 117, 73));
-        jButton1.setFont(new java.awt.Font("Lucida Sans", 0, 18)); // NOI18N
-        jButton1.setText("Modificar");
+        btnModificar.setBackground(new java.awt.Color(27, 117, 73));
+        btnModificar.setFont(new java.awt.Font("Lucida Sans", 0, 18)); // NOI18N
+        btnModificar.setForeground(new java.awt.Color(255, 255, 255));
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -193,7 +202,7 @@ public class AdmProducto extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(btnRegistrar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(btnModificar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBaja)
                 .addGap(12, 12, 12)
@@ -210,7 +219,7 @@ public class AdmProducto extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(1, 1, 1))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnBaja)
@@ -220,6 +229,16 @@ public class AdmProducto extends javax.swing.JPanel {
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jbGuardarCambios.setBackground(new java.awt.Color(27, 117, 73));
+        jbGuardarCambios.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        jbGuardarCambios.setForeground(new java.awt.Color(255, 255, 255));
+        jbGuardarCambios.setText("Guardar cambios");
+        jbGuardarCambios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbGuardarCambiosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -231,6 +250,10 @@ public class AdmProducto extends javax.swing.JPanel {
                 .addComponent(jScrollPane1)
                 .addContainerGap())
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(97, 97, 97)
+                .addComponent(jbGuardarCambios)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,7 +263,9 @@ public class AdmProducto extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbGuardarCambios)
+                .addContainerGap(31, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -353,13 +378,53 @@ public class AdmProducto extends javax.swing.JPanel {
        }
     }//GEN-LAST:event_checkStockActionPerformed
 
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        int seleccionar =tableProducto.getSelectedRow();
+        
+        if(seleccionar != -1){
+            //Obtenemos los valores de la fila seleccionada
+            int codigo = (int)tableModel.getValueAt(seleccionar, 0);
+            String nombre = tableModel.getValueAt(seleccionar, 1).toString();
+            String descripcion = tableModel.getValueAt(seleccionar, 2).toString();
+            double precio = (double)tableModel.getValueAt(seleccionar, 3);
+            int stock = (int)tableModel.getValueAt(seleccionar, 4);
+            String estado = tableModel.getValueAt(seleccionar, 5).toString();
+            
+            //Mostramos los datos en los texfields
+            
+            txtCodigo.setText(codigo+"");
+            txtNombre.setText(nombre);
+            txtDescripcion.setText(descripcion);
+            txtPrecioActual.setText(precio+"");
+            txtStock.setText(stock+"");
+            boolean estadoV = Boolean.parseBoolean(estado); //Establecemos el estado del check
+            checkEstado.setSelected(estadoV);
+            
+            
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void jbGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarCambiosActionPerformed
+        int codigo = Integer.parseInt(txtCodigo.getText());
+            String nombre = txtNombre.getText();
+            String descripcion = txtDescripcion.getText();
+            double precio = Double.parseDouble(txtPrecioActual.getText());
+            int stock = Integer.parseInt(txtStock.getText());
+            boolean estado = checkEstado.isSelected();
+            
+            Producto pro = new Producto(codigo, nombre, descripcion, precio, stock, estado);
+            produData.modificarProducto(pro);
+            refrescarTabla();
+            limpiarCampos();
+    }//GEN-LAST:event_jbGuardarCambiosActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBaja;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JCheckBox checkEstado;
     private javax.swing.JCheckBox checkStock;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -371,6 +436,7 @@ public class AdmProducto extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbGuardarCambios;
     private javax.swing.JTable tableProducto;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCodigo;
