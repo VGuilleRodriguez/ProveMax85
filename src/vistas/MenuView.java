@@ -29,6 +29,7 @@ public class MenuView extends javax.swing.JFrame {
         admProveedor1 = new vista.adm.AdmProveedor();
         admProducto1 = new vista.adm.AdmProducto();
         admCompra1 = new vista.adm.AdmCompra();
+        admDetalleCompra1 = new vista.adm.AdmDetalleCompra();
         jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -47,6 +48,7 @@ public class MenuView extends javax.swing.JFrame {
         tabMenu.addTab("Proveedores", new javax.swing.ImageIcon(getClass().getResource("/vista/img/usuario.png")), admProveedor1); // NOI18N
         tabMenu.addTab("Productos", new javax.swing.ImageIcon(getClass().getResource("/vista/img/caja-alt.png")), admProducto1); // NOI18N
         tabMenu.addTab("Compras", new javax.swing.ImageIcon(getClass().getResource("/vista/img/carrito-de-compras.png")), admCompra1); // NOI18N
+        tabMenu.addTab("tab4", admDetalleCompra1);
 
         jPanel1.add(tabMenu, java.awt.BorderLayout.CENTER);
 
@@ -116,7 +118,7 @@ public class MenuView extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
         );
 
         pack();
