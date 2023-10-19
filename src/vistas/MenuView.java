@@ -23,7 +23,7 @@ public class MenuView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        admDetalleCompra1 = new vista.adm.AdmDetalleCompra();
+        admDetalleCompra2 = new vista.adm.AdmDetalleCompra();
         jPanel1 = new javax.swing.JPanel();
         tabMenu = new javax.swing.JTabbedPane();
         admProveedor1 = new vista.adm.AdmProveedor();
@@ -48,7 +48,7 @@ public class MenuView extends javax.swing.JFrame {
         tabMenu.addTab("Proveedores", new javax.swing.ImageIcon(getClass().getResource("/vista/img/usuario.png")), admProveedor1); // NOI18N
         tabMenu.addTab("Productos", new javax.swing.ImageIcon(getClass().getResource("/vista/img/caja-alt.png")), admProducto1); // NOI18N
         tabMenu.addTab("Compras", new javax.swing.ImageIcon(getClass().getResource("/vista/img/carrito-de-compras.png")), admCompra1); // NOI18N
-        tabMenu.addTab("tab4", admDetalleCompra1);
+        tabMenu.addTab("Detalle", new javax.swing.ImageIcon(getClass().getResource("/vista/img/informacion.png")), admDetalleCompra1); // NOI18N
 
         jPanel1.add(tabMenu, java.awt.BorderLayout.CENTER);
 
@@ -114,7 +114,7 @@ public class MenuView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1197, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,6 +156,7 @@ public class MenuView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private vista.adm.AdmCompra admCompra1;
     private vista.adm.AdmDetalleCompra admDetalleCompra1;
+    private vista.adm.AdmDetalleCompra admDetalleCompra2;
     private vista.adm.AdmProducto admProducto1;
     private vista.adm.AdmProveedor admProveedor1;
     private javax.swing.JLabel jLabel1;

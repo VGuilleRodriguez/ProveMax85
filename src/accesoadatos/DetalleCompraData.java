@@ -72,27 +72,6 @@ public class DetalleCompraData {
         }
     }
     
-    public void cambiarEstadoDetalleCompra(int id) {
-        try {
-            String sql = "UPDATE detallecompra SET estado = 0 WHERE idDetalleCompra = ?";
-            
-            PreparedStatement ps = conex.prepareStatement(sql);
-            ps.setInt(1, id);
-            
-            int resultado = ps.executeUpdate();
-            
-            if (resultado == 1) {
-                JOptionPane.showMessageDialog(null, "El detalle-compra se dió de baja exitosamente.");
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al dar de baja el detalle-compra.");
-            }
-            
-            ps.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla detalle-compra. " + ex.getMessage());
-        }
-    }
-    
     public DetalleCompra buscarProducto(int id) {
         DetalleCompra detallecompra = null;
         try {
@@ -120,7 +99,7 @@ public class DetalleCompraData {
         return detallecompra;
     }
     
-    public List<DetalleCompra> listarProducto() {
+    public List<DetalleCompra> listarDetalles() {
         List<DetalleCompra> detallecompras = new ArrayList();
         try {
             String listar = "SELECT * FROM detallecompra";
@@ -148,7 +127,9 @@ public class DetalleCompraData {
     public List<DetalleCompra> listarProductosPorCompra(int idCompra) {
         List<DetalleCompra> detallecompras = new ArrayList();
         try {
-            String listar = "SELECT * FROM detallecompra WHERE idCompra = ?";
+            String listar = "SELECT idDetalleCompra, compra.idCompra, idProducto, cantidad, precioCosto "
+                    + "FROM compra JOIN detallecompra ON (detallecompra.idCompra = compra.idCompra) "
+                    + "WHERE compra.idCompra = ?";
             
             PreparedStatement ps = conex.prepareStatement(listar);
             ps.setInt(1, idCompra);
@@ -250,6 +231,34 @@ public class DetalleCompraData {
             ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla producto o detalle-compra. " + ex.getMessage());
+        }
+        return detallecompras;
+    }
+    
+    public List<DetalleCompra> obtenerUltimaCompra() {
+        List<DetalleCompra> detallecompras = new ArrayList();
+        try {
+            String listar = "SELECT idDetalleCompra, compra.idCompra, idProducto, cantidad, precioCosto "
+                        + "FROM compra JOIN detallecompra ON (detallecompra.idCompra = compra.idCompra) "
+                        + "WHERE detallecompra.idCompra = (SELECT MAX(detallecompra.idCompra) FROM detallecompra)";
+            
+            PreparedStatement ps = conex.prepareStatement(listar);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                detalle = new DetalleCompra();
+                detalle.setIdDetalleCompra(rs.getInt("idDetalleCompra"));
+                detalle.setCompra(compraData.buscarCompra(rs.getInt("idCompra")));
+                detalle.setProducto(productoData.buscarProducto(rs.getInt("idProducto")));
+                detalle.setCantidad(rs.getInt("cantidad"));
+                detalle.setPrecioCosto(rs.getDouble("precioCosto"));
+                detallecompras.add(detalle); // Se agregar la producto creada arriba al arraylist.
+            }
+            
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla compra. " + ex.getMessage());
         }
         return detallecompras;
     }
