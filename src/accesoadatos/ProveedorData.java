@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package accesoadatos;
 
 import entidad.Proveedor;
@@ -13,14 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author nicolas
- */
 public class ProveedorData {
     
     private Connection conex;
@@ -32,10 +21,7 @@ public class ProveedorData {
     private void mensaje(String mensaje){
         JOptionPane.showMessageDialog(null, mensaje);
     }
-    
-    
-    
-    
+
     public void nuevoProveedor(Proveedor proveedor) {
         try {
             String sql = "INSERT INTO proveedor "
@@ -100,7 +86,7 @@ public class ProveedorData {
             
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla producto. " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla proveedor. " + ex.getMessage());
         }
     }
     
@@ -152,36 +138,34 @@ public class ProveedorData {
             
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla producto. " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla proveedor. " + ex.getMessage());
         }
         return proveedores;
     }
-    
-   
-    
-    public void modificarProveedor(Proveedor Proveedor){
-         try {
-        String sql = "UPDATE Proveedor SET razonSocial=?, domicilio=?, telefono=?, estado=? WHERE idProveedor=?";
-        
-        PreparedStatement ps = conex.prepareStatement(sql);
-            ps.setString(1, Proveedor.getRazonSocial());
-            ps.setString(2, Proveedor.getDomicilio());
-            ps.setInt(3, Proveedor.getTelefono());      
-            ps.setBoolean(4,Proveedor.isEstado());
-            ps.setInt(5, Proveedor.getIdProveedor());
+
+    public void modificarProveedor(Proveedor proveedor) {
+        try {
+            String sql = "UPDATE proveedor SET razonSocial = ?, domicilio = ?, telefono = ?, estado = ? "
+                    + "WHERE idProveedor = ?";
+
+            PreparedStatement ps = conex.prepareStatement(sql);
+            ps.setString(1, proveedor.getRazonSocial());
+            ps.setString(2, proveedor.getDomicilio());
+            ps.setInt(3, proveedor.getTelefono());
+            ps.setBoolean(4, proveedor.isEstado());
+            ps.setInt(5, proveedor.getIdProveedor());
+
             int exito = ps.executeUpdate();
-            if (exito == 1) {               
+            if (exito == 1) {
                 mensaje("Proveedor modificado");
-                
             } else {
-                mensaje("El proveedor NO existe");
+                mensaje("Error al modificar el proveedor");
             }
+            
             ps.close();
         } catch (SQLException ex) {
-            Logger.getLogger(ProductoData.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla proveedor. " + ex.getMessage());
         }
-           
     }
-    
-    
+
 }

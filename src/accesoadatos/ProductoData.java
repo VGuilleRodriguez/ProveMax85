@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package accesoadatos;
 
 import entidad.Producto;
@@ -13,14 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author nicolas
- */
 public class ProductoData {
     
     private Connection conex;
@@ -206,11 +195,11 @@ public class ProductoData {
         return productos;
     }
     
-    public void modificarProducto(Producto producto){
-         try {
-        String sql = "UPDATE producto SET nombreProducto=?, descripcion=?, precioActual=?, stock=?, estado=? WHERE idProducto=?";
-        
-        PreparedStatement ps = conex.prepareStatement(sql);
+    public void modificarProducto(Producto producto) {
+        try {
+            String sql = "UPDATE producto SET nombreProducto=?, descripcion=?, precioActual=?, stock=?, estado=? WHERE idProducto=?";
+
+            PreparedStatement ps = conex.prepareStatement(sql);
             ps.setString(1, producto.getNombreProducto());
             ps.setString(2, producto.getDescripcion());
             ps.setDouble(3, producto.getPrecioActual());
@@ -218,16 +207,35 @@ public class ProductoData {
             ps.setBoolean(5, producto.isEstado());
             ps.setInt(6, producto.getIdProducto());
             int exito = ps.executeUpdate();
-            if (exito == 1) {               
+            if (exito == 1) {
                 mensaje("Producto modificado");
-                
+
             } else {
                 mensaje("El producto NO existe");
             }
             ps.close();
         } catch (SQLException ex) {
-            Logger.getLogger(ProductoData.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla producto. " + ex.getMessage());
         }
-           
+    }
+    
+    public void actualizarStock(int idProducto, int cantidad) {
+        try {
+            String sql = "UPDATE producto SET stock = "+ cantidad +" WHERE idProducto = "+ idProducto;
+
+            PreparedStatement ps = conex.prepareStatement(sql);
+            int exito = ps.executeUpdate();
+            
+            if (exito == 1) {
+                mensaje("El stock del producto fue actualizado.");
+
+            } else {
+                mensaje("Error al actualizar el stock del producto.");
+            }
+            
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla producto. " + ex.getMessage());
+        }
     }
 }
