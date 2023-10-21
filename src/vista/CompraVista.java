@@ -108,7 +108,7 @@ public class CompraVista extends javax.swing.JPanel {
         btnEliminarProdu.setBackground(new java.awt.Color(193, 4, 4));
         btnEliminarProdu.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
         btnEliminarProdu.setForeground(new java.awt.Color(255, 255, 255));
-        btnEliminarProdu.setText("Eliminar Producto");
+        btnEliminarProdu.setText("Eliminar producto");
         btnEliminarProdu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEliminarProdu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -213,6 +213,9 @@ public class CompraVista extends javax.swing.JPanel {
         btnCargar.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
         btnCargar.setText("Cargar");
         btnCargar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCargar.setMaximumSize(new java.awt.Dimension(78, 29));
+        btnCargar.setMinimumSize(new java.awt.Dimension(78, 29));
+        btnCargar.setPreferredSize(new java.awt.Dimension(78, 29));
         btnCargar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCargarActionPerformed(evt);
@@ -287,13 +290,13 @@ public class CompraVista extends javax.swing.JPanel {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(164, Short.MAX_VALUE)
+                .addContainerGap(165, Short.MAX_VALUE)
                 .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnLimpiarTabla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnEliminarProdu)
-                .addContainerGap(164, Short.MAX_VALUE))
+                .addContainerGap(165, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -305,7 +308,7 @@ public class CompraVista extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)

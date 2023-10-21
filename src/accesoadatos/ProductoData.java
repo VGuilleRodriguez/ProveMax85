@@ -94,7 +94,7 @@ public class ProductoData {
     public Producto buscarProducto(int id) {
         Producto producto = null;
         try {
-            String busqueda = "SELECT * FROM producto WHERE idProducto = ? AND estado = 1";
+            String busqueda = "SELECT * FROM producto WHERE idProducto = ?";
             
             PreparedStatement ps = conex.prepareStatement(busqueda);
             ps.setInt(1, id);
@@ -124,6 +124,32 @@ public class ProductoData {
         List<Producto> productos = new ArrayList();
         try {
             String listar = "SELECT * FROM producto";
+            
+            PreparedStatement ps = conex.prepareStatement(listar);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                Producto producto = new Producto();
+                producto.setIdProducto(rs.getInt("idProducto"));
+                producto.setNombreProducto(rs.getString("nombreProducto"));
+                producto.setDescripcion(rs.getString("descripcion"));
+                producto.setPrecioActual(rs.getDouble("precioActual"));
+                producto.setStock(rs.getInt("stock"));
+                producto.setEstado(rs.getBoolean("estado"));
+                productos.add(producto); // Se agregar la producto creada arriba al arraylist.
+            }
+            
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla producto. " + ex.getMessage());
+        }
+        return productos;
+    }
+    
+    public List<Producto> listarProductoEstado(int estado) {
+        List<Producto> productos = new ArrayList();
+        try {
+            String listar = "SELECT * FROM producto WHERE estado = "+ estado;
             
             PreparedStatement ps = conex.prepareStatement(listar);
             ResultSet rs = ps.executeQuery();

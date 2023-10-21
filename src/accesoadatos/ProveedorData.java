@@ -93,7 +93,7 @@ public class ProveedorData {
     public Proveedor buscarProveedor(int id) {
         Proveedor proveedor = null;
         try {
-            String busqueda = "SELECT * FROM proveedor WHERE idProveedor = ? AND estado = 1";
+            String busqueda = "SELECT * FROM proveedor WHERE idProveedor = ?";
             
             PreparedStatement ps = conex.prepareStatement(busqueda);
             ps.setInt(1, id);
@@ -122,6 +122,31 @@ public class ProveedorData {
         List<Proveedor> proveedores = new ArrayList();
         try {
             String listar = "SELECT * FROM proveedor";
+            
+            PreparedStatement ps = conex.prepareStatement(listar);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                Proveedor proveedor = new Proveedor();
+                proveedor.setIdProveedor(rs.getInt("idProveedor"));
+                proveedor.setRazonSocial(rs.getString("razonSocial"));
+                proveedor.setDomicilio(rs.getString("domicilio"));
+                proveedor.setTelefono(rs.getInt("telefono"));
+                proveedor.setEstado(rs.getBoolean("estado"));
+                proveedores.add(proveedor); // Se agregar la proveedor creado arriba al arraylist.
+            }
+            
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla proveedor. " + ex.getMessage());
+        }
+        return proveedores;
+    }
+    
+    public List<Proveedor> listarProveedorEstado(int estado) {
+        List<Proveedor> proveedores = new ArrayList();
+        try {
+            String listar = "SELECT * FROM proveedor WHERE estado = "+ estado;
             
             PreparedStatement ps = conex.prepareStatement(listar);
             ResultSet rs = ps.executeQuery();

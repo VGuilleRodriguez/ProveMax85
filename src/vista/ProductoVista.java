@@ -19,6 +19,7 @@ public class ProductoVista extends javax.swing.JPanel {
         initComponents();
         cargarModeloTabla();
         refrescarTabla();
+        agruparRadioButton();
     }
 
     /**
@@ -30,6 +31,7 @@ public class ProductoVista extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
@@ -39,11 +41,9 @@ public class ProductoVista extends javax.swing.JPanel {
         txtDescripcion = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtPrecioActual = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
         checkEstado = new javax.swing.JCheckBox();
         jLabel6 = new javax.swing.JLabel();
         txtStock = new javax.swing.JTextField();
-        checkStock = new javax.swing.JCheckBox();
         jLabel9 = new javax.swing.JLabel();
         btnLimpiarCampos = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -55,6 +55,11 @@ public class ProductoVista extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
         btnModificar = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        btnStockMinimo = new javax.swing.JRadioButton();
+        btnActivo = new javax.swing.JRadioButton();
+        btnInactivo = new javax.swing.JRadioButton();
+        btnMostrarProductos = new javax.swing.JRadioButton();
 
         jLabel1.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
         jLabel1.setText("Código");
@@ -82,9 +87,6 @@ public class ProductoVista extends javax.swing.JPanel {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
-        jLabel5.setText("Mostrar stock minimo");
-
         checkEstado.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
         checkEstado.setSelected(true);
         checkEstado.setText("Activo");
@@ -97,12 +99,6 @@ public class ProductoVista extends javax.swing.JPanel {
         txtStock.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtStockKeyTyped(evt);
-            }
-        });
-
-        checkStock.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkStockActionPerformed(evt);
             }
         });
 
@@ -128,6 +124,10 @@ public class ProductoVista extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addGap(112, 112, 112)
+                                .addComponent(checkEstado))
                             .addComponent(jLabel1)
                             .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
@@ -137,18 +137,7 @@ public class ProductoVista extends javax.swing.JPanel {
                             .addComponent(jLabel4)
                             .addComponent(txtPrecioActual, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6)
-                            .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel9)
-                                        .addGap(112, 112, 112))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(18, 18, 18)))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(checkEstado)
-                                    .addComponent(checkStock)))))
+                            .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(85, 85, 85)
                         .addComponent(btnLimpiarCampos)))
@@ -157,7 +146,7 @@ public class ProductoVista extends javax.swing.JPanel {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addGap(0, 0, 0)
                 .addComponent(jLabel1)
                 .addGap(3, 3, 3)
                 .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -177,17 +166,13 @@ public class ProductoVista extends javax.swing.JPanel {
                 .addComponent(jLabel6)
                 .addGap(3, 3, 3)
                 .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(checkEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(checkStock))
-                .addGap(18, 18, 18)
+                    .addComponent(checkEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(btnLimpiarCampos))
         );
 
@@ -300,12 +285,78 @@ public class ProductoVista extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Consultas", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 14))); // NOI18N
+
+        btnStockMinimo.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+        btnStockMinimo.setText("Mostrar productos con stock minimo");
+        btnStockMinimo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStockMinimoActionPerformed(evt);
+            }
+        });
+
+        btnActivo.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+        btnActivo.setText("Mostrar productos activos");
+        btnActivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActivoActionPerformed(evt);
+            }
+        });
+
+        btnInactivo.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+        btnInactivo.setText("Mostrar productos inactivos");
+        btnInactivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInactivoActionPerformed(evt);
+            }
+        });
+
+        btnMostrarProductos.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+        btnMostrarProductos.setSelected(true);
+        btnMostrarProductos.setText("Mostrar todos los productos");
+        btnMostrarProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostrarProductosActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnActivo)
+                    .addComponent(btnInactivo)
+                    .addComponent(btnMostrarProductos)
+                    .addComponent(btnStockMinimo))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnMostrarProductos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnActivo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnInactivo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnStockMinimo)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1)
                 .addContainerGap())
@@ -315,11 +366,14 @@ public class ProductoVista extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, 0))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -339,7 +393,7 @@ public class ProductoVista extends javax.swing.JPanel {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         ProductoData dataprod = new ProductoData();
-
+        
         try {
             if (txtNombre.getText().isEmpty() || txtDescripcion.getText().isEmpty() || txtPrecioActual.getText().isEmpty() || txtStock.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Debe completar todos los campos.", "Error al registrar", HEIGHT);
@@ -354,6 +408,7 @@ public class ProductoVista extends javax.swing.JPanel {
                 
                 dataprod.nuevoProducto(producto);            
                 refrescarTabla();
+                btnMostrarProductos.setSelected(true);
             }//end if-else
         } catch (NumberFormatException ex) {
             
@@ -374,6 +429,7 @@ public class ProductoVista extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "El producto ya está dado de baja.");
             }
             refrescarTabla();
+            btnMostrarProductos.setSelected(true);
         } catch (ArrayIndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(this, "No ha seleccionado ningún producto para dar de baja.");
         } finally {
@@ -391,6 +447,7 @@ public class ProductoVista extends javax.swing.JPanel {
                 prodData.darAltaProducto(id);
             }
             refrescarTabla();
+            btnMostrarProductos.setSelected(true);
         } catch (ArrayIndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(this, "No ha seleccionado ningún producto.");
         } finally {
@@ -400,6 +457,8 @@ public class ProductoVista extends javax.swing.JPanel {
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
         tableModel.setRowCount(0); // Limpia la tabla.
+        buttonGroup1.clearSelection();
+        
         ProductoData prodData = new ProductoData();
         String productoBuscar = txtBuscar.getText().toLowerCase(); // Convierte el texto en minuscula 
         for (Producto producto : prodData.listarProducto()) {
@@ -417,25 +476,6 @@ public class ProductoVista extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtBuscarKeyReleased
 
-    private void checkStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkStockActionPerformed
-       if(checkStock.isSelected()){
-        tableModel.setRowCount(0); // Limpia la tabla.
-        ProductoData prodData = new ProductoData();
-        for (Producto producto : prodData.listarStockMinimo(10)) {
-            tableModel.addRow(new Object[]{
-                producto.getIdProducto(),
-                producto.getNombreProducto(),
-                producto.getDescripcion(),
-                producto.getPrecioActual(),
-                producto.getStock(),
-                producto.isEstado()
-            });
-        } 
-       }else{
-           refrescarTabla();
-       }
-    }//GEN-LAST:event_checkStockActionPerformed
-
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         int codigo = Integer.parseInt(txtCodigo.getText());
         String nombre = txtNombre.getText();
@@ -447,6 +487,7 @@ public class ProductoVista extends javax.swing.JPanel {
         Producto pro = new Producto(codigo, nombre, descripcion, precio, stock, estado);
         produData.modificarProducto(pro);
         refrescarTabla();
+        btnMostrarProductos.setSelected(true);
         limpiarCampos();
         MenuVista.notificacion();
     }//GEN-LAST:event_btnModificarActionPerformed
@@ -479,24 +520,81 @@ public class ProductoVista extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_tableProductoMousePressed
 
+    private void btnInactivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInactivoActionPerformed
+        tableModel.setRowCount(0);
+        ProductoData prodData = new ProductoData();
+        for (Producto producto : prodData.listarProductoEstado(0)) {
+            tableModel.addRow(new Object[]{
+                producto.getIdProducto(),
+                producto.getNombreProducto(),
+                producto.getDescripcion(),
+                producto.getPrecioActual(),
+                producto.getStock(),
+                producto.isEstado()
+            });
+        }
+    }//GEN-LAST:event_btnInactivoActionPerformed
+
+    private void btnActivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivoActionPerformed
+        tableModel.setRowCount(0);
+        ProductoData prodData = new ProductoData();
+        for (Producto producto : prodData.listarProductoEstado(1)) {
+            tableModel.addRow(new Object[]{
+                producto.getIdProducto(),
+                producto.getNombreProducto(),
+                producto.getDescripcion(),
+                producto.getPrecioActual(),
+                producto.getStock(),
+                producto.isEstado()
+            });
+        }
+    }//GEN-LAST:event_btnActivoActionPerformed
+
+    private void btnMostrarProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarProductosActionPerformed
+        refrescarTabla();
+    }//GEN-LAST:event_btnMostrarProductosActionPerformed
+
+    private void btnStockMinimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStockMinimoActionPerformed
+        if (btnStockMinimo.isSelected()) {
+            tableModel.setRowCount(0); // Limpia la tabla.
+            ProductoData prodData = new ProductoData();
+            for (Producto producto : prodData.listarStockMinimo(10)) {
+                tableModel.addRow(new Object[]{
+                    producto.getIdProducto(),
+                    producto.getNombreProducto(),
+                    producto.getDescripcion(),
+                    producto.getPrecioActual(),
+                    producto.getStock(),
+                    producto.isEstado()
+                });
+            }
+        } else {
+            refrescarTabla();
+        }
+    }//GEN-LAST:event_btnStockMinimoActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton btnActivo;
     private javax.swing.JButton btnAlta;
     private javax.swing.JButton btnBaja;
+    private javax.swing.JRadioButton btnInactivo;
     private javax.swing.JButton btnLimpiarCampos;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JRadioButton btnMostrarProductos;
     private javax.swing.JButton btnRegistrar;
+    private javax.swing.JRadioButton btnStockMinimo;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JCheckBox checkEstado;
-    private javax.swing.JCheckBox checkStock;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableProducto;
     private javax.swing.JTextField txtBuscar;
@@ -538,5 +636,12 @@ public class ProductoVista extends javax.swing.JPanel {
         txtDescripcion.setText("");
         txtPrecioActual.setText("");
         txtStock.setText("");
+    }
+    
+    private void agruparRadioButton() {
+        buttonGroup1.add(btnMostrarProductos);
+        buttonGroup1.add(btnActivo);
+        buttonGroup1.add(btnInactivo);
+        buttonGroup1.add(btnStockMinimo);
     }
 }
