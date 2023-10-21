@@ -49,9 +49,9 @@ public class ProductoData {
         }
     }
     
-    public void eliminarProducto(int id) {
+    public void darAltaProducto(int id) {
         try {
-            String sql = "DELETE FROM producto WHERE idProducto = ?";
+            String sql = "UPDATE producto SET estado = 1 WHERE idProducto = ?";
             
             PreparedStatement ps = conex.prepareStatement(sql);
             ps.setInt(1, id);
@@ -59,9 +59,9 @@ public class ProductoData {
             int resultado = ps.executeUpdate();
             
             if (resultado == 1) {
-                JOptionPane.showMessageDialog(null, "El producto se eliminó exitosamente.");
+                JOptionPane.showMessageDialog(null, "El producto se dió de alta exitosamente.");
             } else {
-                JOptionPane.showMessageDialog(null, "Error al eliminar el producto.");
+                JOptionPane.showMessageDialog(null, "Error al dar de alta el producto.");
             }
             
             ps.close();

@@ -41,14 +41,14 @@ public class ProveedorVista extends javax.swing.JPanel {
         txtTelefono = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         checkEstado = new javax.swing.JCheckBox();
-        btnGuardarCambio = new javax.swing.JButton();
+        btnLimpiarCampos = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         btnRegistrar = new javax.swing.JButton();
         btnBaja = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
+        btnAlta = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
-        btnModificar1 = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableProveedor = new javax.swing.JTable();
 
@@ -86,13 +86,13 @@ public class ProveedorVista extends javax.swing.JPanel {
         checkEstado.setText("Activo");
         checkEstado.setEnabled(false);
 
-        btnGuardarCambio.setBackground(new java.awt.Color(255, 204, 102));
-        btnGuardarCambio.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
-        btnGuardarCambio.setText("Guardar cambios");
-        btnGuardarCambio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnGuardarCambio.addActionListener(new java.awt.event.ActionListener() {
+        btnLimpiarCampos.setBackground(new java.awt.Color(255, 204, 102));
+        btnLimpiarCampos.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        btnLimpiarCampos.setText("Limpiar campos");
+        btnLimpiarCampos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLimpiarCampos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarCambioActionPerformed(evt);
+                btnLimpiarCamposActionPerformed(evt);
             }
         });
 
@@ -104,7 +104,7 @@ public class ProveedorVista extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(85, 85, 85)
-                        .addComponent(btnGuardarCambio))
+                        .addComponent(btnLimpiarCampos))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,7 +148,7 @@ public class ProveedorVista extends javax.swing.JPanel {
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(checkEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnGuardarCambio))
+                .addComponent(btnLimpiarCampos))
         );
 
         btnRegistrar.setBackground(new java.awt.Color(27, 117, 73));
@@ -173,14 +173,14 @@ public class ProveedorVista extends javax.swing.JPanel {
             }
         });
 
-        btnEliminar.setBackground(new java.awt.Color(204, 0, 0));
-        btnEliminar.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
-        btnEliminar.setForeground(java.awt.Color.white);
-        btnEliminar.setText("Eliminar");
-        btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+        btnAlta.setBackground(new java.awt.Color(204, 0, 0));
+        btnAlta.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        btnAlta.setForeground(java.awt.Color.white);
+        btnAlta.setText("Dar de alta");
+        btnAlta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAlta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
+                btnAltaActionPerformed(evt);
             }
         });
 
@@ -195,14 +195,14 @@ public class ProveedorVista extends javax.swing.JPanel {
             }
         });
 
-        btnModificar1.setBackground(new java.awt.Color(0, 102, 204));
-        btnModificar1.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
-        btnModificar1.setForeground(java.awt.Color.white);
-        btnModificar1.setText("Modificar");
-        btnModificar1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnModificar1.addActionListener(new java.awt.event.ActionListener() {
+        btnModificar.setBackground(new java.awt.Color(0, 102, 204));
+        btnModificar.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        btnModificar.setForeground(java.awt.Color.white);
+        btnModificar.setText("Modificar");
+        btnModificar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificar1ActionPerformed(evt);
+                btnModificarActionPerformed(evt);
             }
         });
 
@@ -214,11 +214,11 @@ public class ProveedorVista extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(btnRegistrar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnModificar1)
+                .addComponent(btnModificar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBaja)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEliminar)
+                .addComponent(btnAlta)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -232,10 +232,10 @@ public class ProveedorVista extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBaja)
                     .addComponent(btnRegistrar)
-                    .addComponent(btnEliminar)
+                    .addComponent(btnAlta)
                     .addComponent(jLabel6)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnModificar1))
+                    .addComponent(btnModificar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -251,6 +251,11 @@ public class ProveedorVista extends javax.swing.JPanel {
             }
         ));
         tableProveedor.getTableHeader().setReorderingAllowed(false);
+        tableProveedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tableProveedorMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableProveedor);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -306,20 +311,24 @@ public class ProveedorVista extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtTelefonoKeyTyped
 
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+    private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
         try {
             int row = tableProveedor.getSelectedRow();
             int id = (int)tableProveedor.getValueAt(row, 0);
         
-            if (row != -1) {
+            if (row != -1 && (boolean)tableProveedor.getValueAt(row, 4) == false) {
                 ProveedorData provData = new ProveedorData();
-                provData.eliminarProveedor(id);
+                provData.darAltaProveedor(id);
+            } else {
+                JOptionPane.showMessageDialog(this, "El proveedor ya está dado de alta.");
             }
             refrescarTabla();
         } catch (ArrayIndexOutOfBoundsException ex) {
-            JOptionPane.showMessageDialog(this, "No ha seleccionado ningún proveedor para eliminar.");
+            JOptionPane.showMessageDialog(this, "No ha seleccionado ningún proveedor.");
+        } finally {
+            limpiarCampos();
         }
-    }//GEN-LAST:event_btnEliminarActionPerformed
+    }//GEN-LAST:event_btnAltaActionPerformed
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
         try {
@@ -335,6 +344,8 @@ public class ProveedorVista extends javax.swing.JPanel {
             refrescarTabla();
         } catch (ArrayIndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(this, "No ha seleccionado ningún proveedor para dar de baja.");
+        } finally {
+            limpiarCampos();
         }
     }//GEN-LAST:event_btnBajaActionPerformed
 
@@ -356,8 +367,24 @@ public class ProveedorVista extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtBuscarKeyReleased
 
-    private void btnModificar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificar1ActionPerformed
-        
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        int codigo = Integer.parseInt(txtCodigo.getText());
+        String RazonSocial =  txtRazonSocial.getText();
+        String Domicilio = txtDomicilio.getText();
+        int Telefono = Integer.parseInt(txtTelefono.getText());
+        boolean estado = checkEstado.isSelected();
+
+        Proveedor  prov = new Proveedor(codigo, RazonSocial, Domicilio, Telefono, estado);
+        proveData.modificarProveedor(prov);
+        refrescarTabla();
+        limpiarCampos();
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnLimpiarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarCamposActionPerformed
+        limpiarCampos();
+    }//GEN-LAST:event_btnLimpiarCamposActionPerformed
+
+    private void tableProveedorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableProveedorMousePressed
         int seleccionar = tableProveedor.getSelectedRow();
         
         if(seleccionar != -1){
@@ -371,27 +398,15 @@ public class ProveedorVista extends javax.swing.JPanel {
             txtRazonSocial.setText(razonSocial);
             txtDomicilio.setText(domicilio);
             txtTelefono.setText(telefono+"");
+            checkEstado.setSelected(estado);
         }
-    }//GEN-LAST:event_btnModificar1ActionPerformed
-
-    private void btnGuardarCambioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCambioActionPerformed
-        int codigo = Integer.parseInt(txtCodigo.getText());
-        String RazonSocial =  txtRazonSocial.getText();
-        String Domicilio = txtDomicilio.getText();
-        int Telefono = Integer.parseInt(txtTelefono.getText());
-        boolean estado = checkEstado.isSelected();
-
-        Proveedor  prov = new Proveedor(codigo, RazonSocial, Domicilio, Telefono, estado);
-        proveData.modificarProveedor(prov);
-        refrescarTabla();
-        limpiarCampos();
-    }//GEN-LAST:event_btnGuardarCambioActionPerformed
+    }//GEN-LAST:event_tableProveedorMousePressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAlta;
     private javax.swing.JButton btnBaja;
-    private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnGuardarCambio;
-    private javax.swing.JButton btnModificar1;
+    private javax.swing.JButton btnLimpiarCampos;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JCheckBox checkEstado;
     private javax.swing.JLabel jLabel1;

@@ -45,13 +45,13 @@ public class ProductoVista extends javax.swing.JPanel {
         txtStock = new javax.swing.JTextField();
         checkStock = new javax.swing.JCheckBox();
         jLabel9 = new javax.swing.JLabel();
-        btnGuardarCambios = new javax.swing.JButton();
+        btnLimpiarCampos = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableProducto = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         btnRegistrar = new javax.swing.JButton();
         btnBaja = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
+        btnAlta = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
         btnModificar = new javax.swing.JButton();
@@ -109,13 +109,13 @@ public class ProductoVista extends javax.swing.JPanel {
         jLabel9.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
         jLabel9.setText("Estado");
 
-        btnGuardarCambios.setBackground(new java.awt.Color(255, 204, 102));
-        btnGuardarCambios.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
-        btnGuardarCambios.setText("Guardar cambios");
-        btnGuardarCambios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnGuardarCambios.addActionListener(new java.awt.event.ActionListener() {
+        btnLimpiarCampos.setBackground(new java.awt.Color(255, 204, 102));
+        btnLimpiarCampos.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        btnLimpiarCampos.setText("Limpiar campos");
+        btnLimpiarCampos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLimpiarCampos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarCambiosActionPerformed(evt);
+                btnLimpiarCamposActionPerformed(evt);
             }
         });
 
@@ -151,7 +151,7 @@ public class ProductoVista extends javax.swing.JPanel {
                                     .addComponent(checkStock)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(85, 85, 85)
-                        .addComponent(btnGuardarCambios)))
+                        .addComponent(btnLimpiarCampos)))
                 .addGap(50, 50, 50))
         );
         jPanel1Layout.setVerticalGroup(
@@ -188,7 +188,7 @@ public class ProductoVista extends javax.swing.JPanel {
                         .addComponent(checkEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(checkStock))
                 .addGap(18, 18, 18)
-                .addComponent(btnGuardarCambios))
+                .addComponent(btnLimpiarCampos))
         );
 
         tableProducto.setModel(new javax.swing.table.DefaultTableModel(
@@ -203,6 +203,11 @@ public class ProductoVista extends javax.swing.JPanel {
             }
         ));
         tableProducto.getTableHeader().setReorderingAllowed(false);
+        tableProducto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tableProductoMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableProducto);
 
         btnRegistrar.setBackground(new java.awt.Color(27, 117, 73));
@@ -227,14 +232,14 @@ public class ProductoVista extends javax.swing.JPanel {
             }
         });
 
-        btnEliminar.setBackground(new java.awt.Color(204, 0, 0));
-        btnEliminar.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
-        btnEliminar.setForeground(java.awt.Color.white);
-        btnEliminar.setText("Eliminar");
-        btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+        btnAlta.setBackground(new java.awt.Color(204, 0, 0));
+        btnAlta.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        btnAlta.setForeground(java.awt.Color.white);
+        btnAlta.setText("Dar de alta");
+        btnAlta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAlta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
+                btnAltaActionPerformed(evt);
             }
         });
 
@@ -273,8 +278,8 @@ public class ProductoVista extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBaja)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEliminar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addComponent(btnAlta)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -289,7 +294,7 @@ public class ProductoVista extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnBaja)
                         .addComponent(btnRegistrar)
-                        .addComponent(btnEliminar)
+                        .addComponent(btnAlta)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -371,23 +376,27 @@ public class ProductoVista extends javax.swing.JPanel {
             refrescarTabla();
         } catch (ArrayIndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(this, "No ha seleccionado ningún producto para dar de baja.");
+        } finally {
+            limpiarCampos();
         }
     }//GEN-LAST:event_btnBajaActionPerformed
 
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+    private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
         try {
             int row = tableProducto.getSelectedRow();
             int id = (int)tableProducto.getValueAt(row, 0);
 
-            if (row != -1) {
+            if (row != -1 && (boolean)tableProducto.getValueAt(row, 5) == false) {
                 ProductoData prodData = new ProductoData();
-                prodData.eliminarProducto(id);
+                prodData.darAltaProducto(id);
             }
             refrescarTabla();
         } catch (ArrayIndexOutOfBoundsException ex) {
-            JOptionPane.showMessageDialog(this, "No ha seleccionado ningún producto para eliminar.");
+            JOptionPane.showMessageDialog(this, "No ha seleccionado ningún producto.");
+        } finally {
+            limpiarCampos();
         }
-    }//GEN-LAST:event_btnEliminarActionPerformed
+    }//GEN-LAST:event_btnAltaActionPerformed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
         tableModel.setRowCount(0); // Limpia la tabla.
@@ -428,6 +437,25 @@ public class ProductoVista extends javax.swing.JPanel {
     }//GEN-LAST:event_checkStockActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        int codigo = Integer.parseInt(txtCodigo.getText());
+        String nombre = txtNombre.getText();
+        String descripcion = txtDescripcion.getText();
+        double precio = Double.parseDouble(txtPrecioActual.getText());
+        int stock = Integer.parseInt(txtStock.getText());
+        boolean estado = checkEstado.isSelected();
+
+        Producto pro = new Producto(codigo, nombre, descripcion, precio, stock, estado);
+        produData.modificarProducto(pro);
+        refrescarTabla();
+        limpiarCampos();
+        MenuVista.notificacion();
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnLimpiarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarCamposActionPerformed
+        limpiarCampos();
+    }//GEN-LAST:event_btnLimpiarCamposActionPerformed
+
+    private void tableProductoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableProductoMousePressed
         int seleccionar =tableProducto.getSelectedRow();
         
         if(seleccionar != -1){
@@ -449,27 +477,12 @@ public class ProductoVista extends javax.swing.JPanel {
             boolean estadoV = Boolean.parseBoolean(estado); //Establecemos el estado del check
             checkEstado.setSelected(estadoV);
         }
-    }//GEN-LAST:event_btnModificarActionPerformed
-
-    private void btnGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCambiosActionPerformed
-        int codigo = Integer.parseInt(txtCodigo.getText());
-        String nombre = txtNombre.getText();
-        String descripcion = txtDescripcion.getText();
-        double precio = Double.parseDouble(txtPrecioActual.getText());
-        int stock = Integer.parseInt(txtStock.getText());
-        boolean estado = checkEstado.isSelected();
-
-        Producto pro = new Producto(codigo, nombre, descripcion, precio, stock, estado);
-        produData.modificarProducto(pro);
-        refrescarTabla();
-        limpiarCampos();
-        MenuVista.notificacion();
-    }//GEN-LAST:event_btnGuardarCambiosActionPerformed
+    }//GEN-LAST:event_tableProductoMousePressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAlta;
     private javax.swing.JButton btnBaja;
-    private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnGuardarCambios;
+    private javax.swing.JButton btnLimpiarCampos;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JCheckBox checkEstado;

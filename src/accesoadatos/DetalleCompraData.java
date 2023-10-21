@@ -51,27 +51,6 @@ public class DetalleCompraData {
         }
     }
     
-    public void eliminarDetalleCompra(int id) {
-        try {
-            String sql = "DELETE FROM detallecompra WHERE idDetalleCompra = ?";
-            
-            PreparedStatement ps = conex.prepareStatement(sql);
-            ps.setInt(1, id);
-            
-            int resultado = ps.executeUpdate();
-            
-            if (resultado == 1) {
-                JOptionPane.showMessageDialog(null, "El detalle-compra se eliminó exitosamente.");
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al eliminar el detalle-compra.");
-            }
-            
-            ps.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla detalle-compra. " + ex.getMessage());
-        }
-    }
-    
     public DetalleCompra buscarProducto(int id) {
         DetalleCompra detallecompra = null;
         try {

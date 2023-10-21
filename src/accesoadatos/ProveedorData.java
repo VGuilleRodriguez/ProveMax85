@@ -48,9 +48,9 @@ public class ProveedorData {
         }
     }
     
-    public void eliminarProveedor(int id) {
+    public void darAltaProveedor(int id) {
         try {
-            String sql = "DELETE FROM proveedor WHERE idProveedor = ?";
+            String sql = "UPDATE proveedor SET estado = 1 WHERE idProveedor = ?";
             
             PreparedStatement ps = conex.prepareStatement(sql);
             ps.setInt(1, id);
@@ -58,9 +58,9 @@ public class ProveedorData {
             int resultado = ps.executeUpdate();
             
             if (resultado == 1) {
-                JOptionPane.showMessageDialog(null, "El proveedor se eliminó exitosamente.");
+                JOptionPane.showMessageDialog(null, "El proveedor se dió de alta exitosamente.");
             } else {
-                JOptionPane.showMessageDialog(null, "Error al eliminar el proveedor.");
+                JOptionPane.showMessageDialog(null, "Error al dar de alta el proveedor.");
             }
             
             ps.close();

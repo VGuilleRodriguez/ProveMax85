@@ -60,7 +60,7 @@ public class CompraVista extends javax.swing.JPanel {
         btnEliminarProdu = new javax.swing.JButton();
         txtTotal = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        btnHistorial = new javax.swing.JButton();
+        btnLimpiarTabla = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -98,6 +98,7 @@ public class CompraVista extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
             }
         ));
+        table.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(table);
 
         jLabel7.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
@@ -122,14 +123,15 @@ public class CompraVista extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
         jLabel6.setText("Total");
 
-        btnHistorial.setBackground(new java.awt.Color(0, 102, 204));
-        btnHistorial.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
-        btnHistorial.setForeground(java.awt.Color.white);
-        btnHistorial.setText("Historial de compras");
-        btnHistorial.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnHistorial.addActionListener(new java.awt.event.ActionListener() {
+        btnLimpiarTabla.setBackground(new java.awt.Color(0, 102, 204));
+        btnLimpiarTabla.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        btnLimpiarTabla.setForeground(java.awt.Color.white);
+        btnLimpiarTabla.setText("Limpiar tabla");
+        btnLimpiarTabla.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLimpiarTabla.setPreferredSize(new java.awt.Dimension(145, 32));
+        btnLimpiarTabla.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHistorialActionPerformed(evt);
+                btnLimpiarTablaActionPerformed(evt);
             }
         });
 
@@ -285,13 +287,13 @@ public class CompraVista extends javax.swing.JPanel {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(136, Short.MAX_VALUE)
+                .addContainerGap(164, Short.MAX_VALUE)
                 .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnLimpiarTabla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnEliminarProdu)
-                .addContainerGap(137, Short.MAX_VALUE))
+                .addContainerGap(164, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -315,7 +317,7 @@ public class CompraVista extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLimpiarTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminarProdu, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -437,10 +439,11 @@ public class CompraVista extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnEliminarProduActionPerformed
 
-    private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
-        int id = 1;
-        refrescarTabla(id);
-    }//GEN-LAST:event_btnHistorialActionPerformed
+    private void btnLimpiarTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarTablaActionPerformed
+        tableModel.setRowCount(0); // Limpia la tabla.
+        txtCantidad.setText("");
+        txtTotal.setText("");
+    }//GEN-LAST:event_btnLimpiarTablaActionPerformed
 
     private void comboProductoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboProductoMousePressed
         cargarComboProducto();
@@ -453,7 +456,7 @@ public class CompraVista extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCargar;
     private javax.swing.JButton btnEliminarProdu;
-    private javax.swing.JButton btnHistorial;
+    private javax.swing.JButton btnLimpiarTabla;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JComboBox<Producto> comboProducto;
     private javax.swing.JComboBox<Proveedor> comboProveedor;
@@ -499,21 +502,5 @@ public class CompraVista extends javax.swing.JPanel {
             comboProducto.addItem(producto);
         }
     }
-     
-    private void refrescarTabla(int id) {
-        tableModel.setRowCount(0); // Limpia la tabla.
-
-        List<DetalleCompra> lista = new ArrayList<>();
-        lista = detalleData.listarProductosPorCompra(id);
-        
-        for (DetalleCompra producto : lista) {
-            tableModel.addRow(new Object[]{
-                producto.getIdDetalleCompra(),
-                producto.getCantidad(),
-                producto.getPrecioCosto(),
-                producto.getCompra().getIdCompra(),
-                producto.getProducto().getNombreProducto()
-            });
-        }
-    }
+    
 }  
