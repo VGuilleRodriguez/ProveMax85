@@ -36,10 +36,8 @@ public class MenuVista extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
-        tabMenu.setBackground(new java.awt.Color(255, 255, 255));
         tabMenu.setTabPlacement(javax.swing.JTabbedPane.LEFT);
         tabMenu.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
         tabMenu.addTab("Proveedores", new javax.swing.ImageIcon(getClass().getResource("/vista/img/usuario.png")), proveedorVista1); // NOI18N
@@ -48,8 +46,6 @@ public class MenuVista extends javax.swing.JFrame {
         tabMenu.addTab("Detalles", new javax.swing.ImageIcon(getClass().getResource("/vista/img/informacion.png")), detalleCompraVista1); // NOI18N
 
         jPanel1.add(tabMenu, java.awt.BorderLayout.CENTER);
-
-        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel7.setBackground(new java.awt.Color(0, 51, 102));
         jPanel7.setPreferredSize(new java.awt.Dimension(147, 75));

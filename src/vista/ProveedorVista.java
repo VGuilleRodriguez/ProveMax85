@@ -382,7 +382,7 @@ public class ProveedorVista extends javax.swing.JPanel {
             int row = tableProveedor.getSelectedRow();
             int id = (int)tableProveedor.getValueAt(row, 0);
         
-            if (row != -1 && (boolean)tableProveedor.getValueAt(row, 4) == false) {
+            if (row != -1 && (String)tableProveedor.getValueAt(row, 4) == "Inactivo") {
                 ProveedorData provData = new ProveedorData();
                 provData.darAltaProveedor(id);
             } else {
@@ -402,7 +402,7 @@ public class ProveedorVista extends javax.swing.JPanel {
             int row = tableProveedor.getSelectedRow();
             int id = (int)tableProveedor.getValueAt(row, 0);
         
-            if (row != -1 && (boolean)tableProveedor.getValueAt(row, 4) == true) {
+            if (row != -1 && (String)tableProveedor.getValueAt(row, 4) == "Activo") {
                 ProveedorData provData = new ProveedorData();
                 provData.cambiarEstadoProveedor(id);
             } else {
@@ -423,32 +423,38 @@ public class ProveedorVista extends javax.swing.JPanel {
         
         ProveedorData provData = new ProveedorData();
         String textoBuscar = txtBuscar.getText().toLowerCase(); // Convierte el texto de busqueda a minuscula
-        for (Proveedor proveedor : provData.listarProveedor()) {
+        for (Proveedor proveedor : provData.listarProveedor(2)) {
             String razonSocial = proveedor.getRazonSocial().toLowerCase(); // Convierte el texto de la base de datos a minuscula
             if (razonSocial.startsWith(textoBuscar)) {
+                String estado = cambiarEstadoAString(proveedor);
                 tableModel.addRow(new Object[]{
                     proveedor.getIdProveedor(),
                     proveedor.getRazonSocial(),
                     proveedor.getDomicilio(),
                     proveedor.getTelefono(),
-                    proveedor.isEstado()
+                    estado
                 });
             }
         }
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        int codigo = Integer.parseInt(txtCodigo.getText());
-        String RazonSocial =  txtRazonSocial.getText();
-        String Domicilio = txtDomicilio.getText();
-        int Telefono = Integer.parseInt(txtTelefono.getText());
-        boolean estado = checkEstado.isSelected();
+        try {
+            int codigo = Integer.parseInt(txtCodigo.getText());
+            String RazonSocial = txtRazonSocial.getText();
+            String Domicilio = txtDomicilio.getText();
+            int Telefono = Integer.parseInt(txtTelefono.getText());
+            boolean estado = checkEstado.isSelected();
 
-        Proveedor  prov = new Proveedor(codigo, RazonSocial, Domicilio, Telefono, estado);
-        proveData.modificarProveedor(prov);
-        refrescarTabla();
-        btnMostrarProveedores.setSelected(true);
-        limpiarCampos();
+            Proveedor prov = new Proveedor(codigo, RazonSocial, Domicilio, Telefono, estado);
+            proveData.modificarProveedor(prov);
+            refrescarTabla();
+            btnMostrarProveedores.setSelected(true);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "No ha seleccionado ningún proveedor para modificar.");
+        } finally {
+            limpiarCampos();
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnLimpiarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarCamposActionPerformed
@@ -463,13 +469,14 @@ public class ProveedorVista extends javax.swing.JPanel {
             String razonSocial = tableModel.getValueAt(seleccionar, 1).toString();
             String domicilio = tableModel.getValueAt(seleccionar, 2).toString();
             int telefono = (int)tableModel.getValueAt(seleccionar, 3);
-            boolean estado = (boolean) tableModel.getValueAt(seleccionar, 4);
+            String estado = (String) tableModel.getValueAt(seleccionar, 4);
 
             txtCodigo.setText(codigo+"");
             txtRazonSocial.setText(razonSocial);
             txtDomicilio.setText(domicilio);
             txtTelefono.setText(telefono+"");
-            checkEstado.setSelected(estado);
+            checkEstado.setSelected(cambiarEstadoABoolean(estado));
+            cambiarEstadoDelCheck();
         }
     }//GEN-LAST:event_tableProveedorMousePressed
 
@@ -477,12 +484,13 @@ public class ProveedorVista extends javax.swing.JPanel {
         tableModel.setRowCount(0);
         ProveedorData provData = new ProveedorData();
         for (Proveedor proveedor : provData.listarProveedorEstado(1)) {
+            String estado = cambiarEstadoAString(proveedor);
             tableModel.addRow(new Object[]{
                 proveedor.getIdProveedor(),
                 proveedor.getRazonSocial(),
                 proveedor.getDomicilio(),
                 proveedor.getTelefono(),
-                proveedor.isEstado()
+                estado
             });
         }
     }//GEN-LAST:event_btnActivoActionPerformed
@@ -491,12 +499,13 @@ public class ProveedorVista extends javax.swing.JPanel {
         tableModel.setRowCount(0);
         ProveedorData provData = new ProveedorData();
         for (Proveedor proveedor : provData.listarProveedorEstado(0)) {
+            String estado = cambiarEstadoAString(proveedor);
             tableModel.addRow(new Object[]{
                 proveedor.getIdProveedor(),
                 proveedor.getRazonSocial(),
                 proveedor.getDomicilio(),
                 proveedor.getTelefono(),
-                proveedor.isEstado()
+                estado
             });
         }
     }//GEN-LAST:event_btnInactivoActionPerformed
@@ -546,14 +555,45 @@ public class ProveedorVista extends javax.swing.JPanel {
     private void refrescarTabla() {
         tableModel.setRowCount(0); // Limpia la tabla.
         ProveedorData provData = new ProveedorData();
-        for (Proveedor proveedor : provData.listarProveedor()) {
+        for (Proveedor proveedor : provData.listarProveedor(2)) {
+            String estado = cambiarEstadoAString(proveedor);
             tableModel.addRow(new Object[]{
                 proveedor.getIdProveedor(),
                 proveedor.getRazonSocial(),
                 proveedor.getDomicilio(),
                 proveedor.getTelefono(),
-                proveedor.isEstado()
+                estado
             });
+        }
+    }
+    
+    private boolean cambiarEstadoABoolean(String estado) {
+        boolean estadoBool = false;
+        if (estado == "Activo") {
+            estadoBool = true;
+        } else if (estado == "Inactivo") {
+            estadoBool = false;
+        }
+        return estadoBool;
+    }
+    
+    private String cambiarEstadoAString(Proveedor proveedor) {
+        String estado;
+        if (proveedor.isEstado()) {
+            estado = "Activo";
+        } else {
+            estado = "Inactivo";
+        }
+        return estado;
+    }
+    
+    private void cambiarEstadoDelCheck() {
+        if (checkEstado.isSelected()) {
+            checkEstado.setSelected(true);
+            checkEstado.setText("Activo");
+        } else {
+            checkEstado.setSelected(false);
+            checkEstado.setText("Inactivo");
         }
     }
     

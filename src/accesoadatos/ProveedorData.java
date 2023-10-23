@@ -118,10 +118,23 @@ public class ProveedorData {
         return proveedor;
     }
     
-    public List<Proveedor> listarProveedor() {
+    public List<Proveedor> listarProveedor(int estado) {
         List<Proveedor> proveedores = new ArrayList();
         try {
-            String listar = "SELECT * FROM proveedor";
+            String listar = "";
+            switch (estado) {
+                case 0:
+                    listar = "SELECT * FROM proveedor WHERE estado = 0";
+                    break;
+                case 1:
+                    listar = "SELECT * FROM proveedor WHERE estado = 1";
+                    break;
+                case 2:
+                    listar = "SELECT * FROM proveedor";
+                    break;
+                default:
+                    listar = "SELECT * FROM proveedor";
+            }
             
             PreparedStatement ps = conex.prepareStatement(listar);
             ResultSet rs = ps.executeQuery();

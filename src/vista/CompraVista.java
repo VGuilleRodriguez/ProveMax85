@@ -493,7 +493,7 @@ public class CompraVista extends javax.swing.JPanel {
         
         ProveedorData proveData = new ProveedorData();
      
-        for(Proveedor proveedor : proveData.listarProveedor()){
+        for(Proveedor proveedor : proveData.listarProveedor(1)){
             comboProveedor.addItem(proveedor);
         }
     }
