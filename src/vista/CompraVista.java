@@ -9,38 +9,38 @@ import java.sql.Date;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 public class CompraVista extends javax.swing.JPanel {
     
-    private double total;
-    private ProductoData produData;
-    CompraData compraData;
-    DetalleCompraData detalleData;
-    
-    DecimalFormat df = new DecimalFormat("###,###,###.##");
-    
     DefaultTableModel tableModel = new DefaultTableModel(){
         public boolean isCellEditable(int fila, int columna){
             return false;
         }
     };
-            
+    
+    private double total;
+    private ProductoData produData;
+    private CompraData compraData;
+    private DetalleCompraData detalleData;
+    
+    DecimalFormat df = new DecimalFormat("###,###,###.##");
+
     public CompraVista() {
         initComponents();
-        armarCabecera();
-        this.produData = new ProductoData();
+        produData = new ProductoData();
         compraData = new CompraData();
         detalleData = new DetalleCompraData();
-        cargarComboProducto();
-        cargarComboProveedor();
+        
         ((JTextField) this.jDateChooserCompra.getDateEditor()).setEditable(false);
         this.jDateChooserCompra.setDate(Date.valueOf(LocalDate.now(ZoneId.systemDefault())));
-}
+        
+        armarCabecera();
+        cargarComboProveedor();
+        cargarComboProducto();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -72,6 +72,8 @@ public class CompraVista extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         comboProducto = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
+
+        jPanel1.setBackground(new java.awt.Color(237, 230, 219));
 
         btnRegistrar.setBackground(new java.awt.Color(27, 117, 73));
         btnRegistrar.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
@@ -135,9 +137,10 @@ public class CompraVista extends javax.swing.JPanel {
             }
         });
 
-        jSeparator1.setBackground(javax.swing.UIManager.getDefaults().getColor("Panel.background"));
-        jSeparator1.setForeground(java.awt.SystemColor.windowBorder);
+        jSeparator1.setBackground(new java.awt.Color(237, 230, 219));
+        jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
 
+        jPanel2.setBackground(new java.awt.Color(237, 230, 219));
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
         jLabel2.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
@@ -154,11 +157,6 @@ public class CompraVista extends javax.swing.JPanel {
 
         comboProveedor.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
         comboProveedor.setPreferredSize(new java.awt.Dimension(32, 27));
-        comboProveedor.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                comboProveedorMousePressed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -242,11 +240,6 @@ public class CompraVista extends javax.swing.JPanel {
 
         comboProducto.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
         comboProducto.setPreferredSize(new java.awt.Dimension(32, 27));
-        comboProducto.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                comboProductoMousePressed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
@@ -315,14 +308,14 @@ public class CompraVista extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(35, 35, 35)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnLimpiarTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminarProdu, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -345,7 +338,6 @@ public class CompraVista extends javax.swing.JPanel {
     }//GEN-LAST:event_txtCantidadKeyTyped
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-
         if (total == 0 || jDateChooserCompra.getDate() == null) {
             JOptionPane.showMessageDialog(this, "Debe completar todos los campos.", "Error al registrar", HEIGHT);
         } else {
@@ -354,12 +346,12 @@ public class CompraVista extends javax.swing.JPanel {
             LocalDate fecha = jDateChooserCompra.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             
             // Se instancia una compra con los datos tomados de arriba
-            Compra compra = new Compra(proveedor, fecha);
+            Compra compra = new Compra(proveedor, fecha, total);
             
             // Se manda la compra de arriba a la base de datos
             compraData.nuevaCompra(compra);
             
-            /**
+            /*
              * A la compra creada mas arriba como no tiene id porque solo se le
              * paso dos datos, se busca ese id que se genero automaticamente 
              * en la base de datos con el metodo obtenerUltimaCompra() y se le
@@ -392,7 +384,7 @@ public class CompraVista extends javax.swing.JPanel {
             txtCantidad.setText("");
             txtTotal.setText("");
             MenuVista.notificacion(); // Actualiza las notificaciones.
-            DetalleCompraVista.refrescarTabla(); // Actualiza la tabla en la vista DetalleCompra
+            DetalleCompraVista.refrescarTablaDetalle(); // Actualiza la tabla en la vista DetalleCompra
             ProductoVista.refrescarTabla(); // Actualiza la tabla en la vista Producto.
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
@@ -425,8 +417,7 @@ public class CompraVista extends javax.swing.JPanel {
 
     private void btnEliminarProduActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProduActionPerformed
         try {
-            //row: Para guardar la fila seleccionada.
-            int row = table.getSelectedRow();
+            int row = table.getSelectedRow(); // Guarda la fila seleccionada.
 
             //Redondea el total a 2 decimales
             total = Math.round(total * 100.0) / 100.0;
@@ -448,21 +439,13 @@ public class CompraVista extends javax.swing.JPanel {
         txtTotal.setText("");
     }//GEN-LAST:event_btnLimpiarTablaActionPerformed
 
-    private void comboProductoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboProductoMousePressed
-        cargarComboProducto();
-    }//GEN-LAST:event_comboProductoMousePressed
-
-    private void comboProveedorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboProveedorMousePressed
-        cargarComboProveedor();
-    }//GEN-LAST:event_comboProveedorMousePressed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCargar;
     private javax.swing.JButton btnEliminarProdu;
     private javax.swing.JButton btnLimpiarTabla;
     private javax.swing.JButton btnRegistrar;
-    private javax.swing.JComboBox<Producto> comboProducto;
-    private javax.swing.JComboBox<Proveedor> comboProveedor;
+    private static javax.swing.JComboBox<Producto> comboProducto;
+    private static javax.swing.JComboBox<Proveedor> comboProveedor;
     private com.toedter.calendar.JDateChooser jDateChooserCompra;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -488,22 +471,19 @@ public class CompraVista extends javax.swing.JPanel {
         table.setModel(tableModel);
     }
     
-    private void cargarComboProveedor(){
+    protected static void cargarComboProveedor() {
         comboProveedor.removeAllItems(); // Limpia el combo.
-        
         ProveedorData proveData = new ProveedorData();
-     
-        for(Proveedor proveedor : proveData.listarProveedor(1)){
+        for(Proveedor proveedor : proveData.listarProveedor(1)) {
             comboProveedor.addItem(proveedor);
         }
     }
     
-    private void cargarComboProducto(){
+    protected static void cargarComboProducto() {
         comboProducto.removeAllItems(); // Limpia el combo.
-
-        for(Producto producto : produData.listarProducto()){
+        ProductoData produData = new ProductoData();
+        for(Producto producto : produData.listarProducto(1)) {
             comboProducto.addItem(producto);
         }
     }
-    
 }  

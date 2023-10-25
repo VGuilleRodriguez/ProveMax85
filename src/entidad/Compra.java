@@ -7,19 +7,22 @@ public class Compra {
     private int idCompra;
     private Proveedor proveedor;
     private LocalDate fecha;
+    private double total;
 
     public Compra() {
     }
 
-    public Compra(int idCompra, Proveedor proveedor, LocalDate fecha) {
+    public Compra(int idCompra, Proveedor proveedor, LocalDate fecha, double total) {
         this.idCompra = idCompra;
         this.proveedor = proveedor;
         this.fecha = fecha;
+        this.total = total;
     }
 
-    public Compra(Proveedor proveedor, LocalDate fecha) {
+    public Compra(Proveedor proveedor, LocalDate fecha, double total) {
         this.proveedor = proveedor;
         this.fecha = fecha;
+        this.total = total;
     }
 
     public int getIdCompra() {
@@ -46,10 +49,11 @@ public class Compra {
         this.fecha = fecha;
     }
 
-    @Override
-    public String toString() {
-        return "Compra{" + "idCompra=" + idCompra + ", proveedor=" + proveedor + ", fecha=" + fecha + '}';
+    public double getTotal() {
+        return total;
     }
     
-    
+    public void setTotal(double total) {
+        this.total = total;
+    }
 }

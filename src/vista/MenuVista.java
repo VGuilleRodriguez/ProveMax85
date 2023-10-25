@@ -27,17 +27,18 @@ public class MenuVista extends javax.swing.JFrame {
         productoVista1 = new vista.ProductoVista();
         compraVista1 = new vista.CompraVista();
         detalleCompraVista1 = new vista.DetalleCompraVista();
-        jPanel6 = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        panelSuperior = new javax.swing.JPanel();
         lbNotificaciones = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         listNotificacion = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(237, 230, 219));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
+        tabMenu.setBackground(new java.awt.Color(237, 230, 219));
+        tabMenu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(162, 179, 139)));
         tabMenu.setTabPlacement(javax.swing.JTabbedPane.LEFT);
         tabMenu.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
         tabMenu.addTab("Proveedores", new javax.swing.ImageIcon(getClass().getResource("/vista/img/usuario.png")), proveedorVista1); // NOI18N
@@ -47,72 +48,56 @@ public class MenuVista extends javax.swing.JFrame {
 
         jPanel1.add(tabMenu, java.awt.BorderLayout.CENTER);
 
-        jPanel7.setBackground(new java.awt.Color(0, 51, 102));
-        jPanel7.setPreferredSize(new java.awt.Dimension(147, 75));
-
-        jLabel1.setFont(new java.awt.Font("Ubuntu Light", 0, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("ProveMax");
-        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabel1.setPreferredSize(new java.awt.Dimension(124, 15));
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
-        lbNotificaciones.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        lbNotificaciones.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        lbNotificaciones.setForeground(new java.awt.Color(255, 255, 255));
         lbNotificaciones.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbNotificaciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/sobre.png"))); // NOI18N
-        lbNotificaciones.setText("Notificaciones");
+        lbNotificaciones.setToolTipText("Notificaciones");
+        lbNotificaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lbNotificaciones.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbNotificacionesMouseClicked(evt);
             }
         });
 
+        jScrollPane2.setBorder(null);
+
+        listNotificacion.setBackground(new java.awt.Color(238, 238, 238));
         listNotificacion.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+        listNotificacion.setCursor(new java.awt.Cursor(java.awt.Cursor.N_RESIZE_CURSOR));
+        listNotificacion.setSelectionBackground(new java.awt.Color(238, 238, 238));
         jScrollPane2.setViewportView(listNotificacion);
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        javax.swing.GroupLayout panelSuperiorLayout = new javax.swing.GroupLayout(panelSuperior);
+        panelSuperior.setLayout(panelSuperiorLayout);
+        panelSuperiorLayout.setHorizontalGroup(
+            panelSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelSuperiorLayout.createSequentialGroup()
+                .addContainerGap(633, Short.MAX_VALUE)
                 .addComponent(lbNotificaciones)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE))
         );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbNotificaciones, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+        panelSuperiorLayout.setVerticalGroup(
+            panelSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelSuperiorLayout.createSequentialGroup()
+                .addGroup(panelSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lbNotificaciones, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );
 
-        jPanel1.add(jPanel6, java.awt.BorderLayout.PAGE_START);
+        jPanel1.add(panelSuperior, java.awt.BorderLayout.PAGE_START);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1280, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 696, Short.MAX_VALUE)
         );
 
         pack();
@@ -130,13 +115,11 @@ public class MenuVista extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private vista.CompraVista compraVista1;
     private vista.DetalleCompraVista detalleCompraVista1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane2;
     private static javax.swing.JLabel lbNotificaciones;
     private static javax.swing.JList<String> listNotificacion;
+    private javax.swing.JPanel panelSuperior;
     private vista.ProductoVista productoVista1;
     private vista.ProveedorVista proveedorVista1;
     private javax.swing.JTabbedPane tabMenu;

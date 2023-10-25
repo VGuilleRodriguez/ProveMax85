@@ -103,6 +103,31 @@ public class DetalleCompraData {
         return detallecompras;
     }
     
+    public List<DetalleCompra> listarDetallesPorIdCompra(int id) {
+        List<DetalleCompra> detallecompras = new ArrayList();
+        try {
+            String listar = "SELECT * FROM detallecompra WHERE idCompra = "+ id;
+            
+            PreparedStatement ps = conex.prepareStatement(listar);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                detalle = new DetalleCompra();
+                detalle.setIdDetalleCompra(rs.getInt("idDetalleCompra"));
+                detalle.setCantidad(rs.getInt("cantidad"));
+                detalle.setPrecioCosto(rs.getDouble("precioCosto"));
+                detalle.setCompra(compraData.buscarCompra(rs.getInt("idCompra")));
+                detalle.setProducto(productoData.buscarProducto(rs.getInt("idProducto")));
+                detallecompras.add(detalle); // Se agregar la producto creada arriba al arraylist.
+            }
+            
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla producto. " + ex.getMessage());
+        }
+        return detallecompras;
+    }
+    
     public List<DetalleCompra> listarProductosPorCompra(int idCompra) {
         List<DetalleCompra> detallecompras = new ArrayList();
         try {
@@ -155,34 +180,6 @@ public class DetalleCompraData {
             ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla detalle-compra. " + ex.getMessage());
-        }
-        return detallecompras;
-    }
-    
-    public List<DetalleCompra> listarPorProveedor(Proveedor proveedor) {
-        List<DetalleCompra> detallecompras = new ArrayList();
-        try {
-            String listar = "SELECT idDetalleCompra, detallecompra.idCompra, idProducto, cantidad, precioCosto "
-                    + "FROM proveedor JOIN compra ON (compra.idProveedor = proveedor.idProveedor) "
-                    + "JOIN detallecompra ON (detallecompra.idCompra = compra.idCompra) "
-                    + "WHERE proveedor.idProveedor = " + proveedor.getIdProveedor();
-
-            PreparedStatement ps = conex.prepareStatement(listar);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                detalle = new DetalleCompra();
-                detalle.setIdDetalleCompra(rs.getInt("idDetalleCompra"));
-                detalle.setCompra(compraData.buscarCompra(rs.getInt("idCompra")));
-                detalle.setProducto(productoData.buscarProducto(rs.getInt("idProducto")));
-                detalle.setCantidad(rs.getInt("cantidad"));
-                detalle.setPrecioCosto(rs.getDouble("precioCosto"));
-                detallecompras.add(detalle); // Se agregar la producto creada arriba al arraylist.
-            }
-
-            ps.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla proveedor o detalle-compra. " + ex.getMessage());
         }
         return detallecompras;
     }

@@ -129,9 +129,6 @@ public class ProveedorData {
                 case 1:
                     listar = "SELECT * FROM proveedor WHERE estado = 1";
                     break;
-                case 2:
-                    listar = "SELECT * FROM proveedor";
-                    break;
                 default:
                     listar = "SELECT * FROM proveedor";
             }

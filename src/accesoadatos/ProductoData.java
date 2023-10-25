@@ -120,10 +120,20 @@ public class ProductoData {
         return producto;
     }
     
-    public List<Producto> listarProducto() {
+    public List<Producto> listarProducto(int estado) {
         List<Producto> productos = new ArrayList();
         try {
-            String listar = "SELECT * FROM producto";
+            String listar = "";
+            switch (estado) {
+                case 0:
+                    listar = "SELECT * FROM producto WHERE estado = 0";
+                    break;
+                case 1:
+                    listar = "SELECT * FROM producto WHERE estado = 1";
+                    break;
+                default:
+                    listar = "SELECT * FROM producto";
+            }
             
             PreparedStatement ps = conex.prepareStatement(listar);
             ResultSet rs = ps.executeQuery();

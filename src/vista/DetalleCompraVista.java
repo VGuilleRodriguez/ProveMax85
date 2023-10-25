@@ -1,5 +1,6 @@
 package vista;
 
+import accesoadatos.CompraData;
 import accesoadatos.DetalleCompraData;
 import accesoadatos.ProductoData;
 import accesoadatos.ProveedorData;
@@ -7,6 +8,7 @@ import com.raven.datechooser.DateBetween;
 import com.raven.datechooser.DateChooser;
 import com.raven.datechooser.listener.DateChooserAction;
 import com.raven.datechooser.listener.DateChooserAdapter;
+import entidad.Compra;
 import entidad.DetalleCompra;
 import entidad.Producto;
 import entidad.Proveedor;
@@ -15,33 +17,45 @@ import javax.swing.table.DefaultTableModel;
 
 public class DetalleCompraVista extends javax.swing.JPanel {
     
-    DetalleCompraData detalleData;
-    private DateChooser dateChooser;
-    private String fechaDesde, fechaHasta;
-    
-    private static DefaultTableModel tableModel = new DefaultTableModel() {
+    private static DefaultTableModel tableModelCompra = new DefaultTableModel() {
         public boolean isCellEditable(int r, int c) {
             return false;
         }
     };
     
+    private static DefaultTableModel tableModelDetalle = new DefaultTableModel() {
+        public boolean isCellEditable(int r, int c) {
+            return false;
+        }
+    };
+    
+    private CompraData compraData;
+    private DetalleCompraData detalleData;
+    private DateChooser dateChooserCompra, dateChooserDetalle;
+    private String fechaDesde, fechaHasta;
+    
     public DetalleCompraVista() {
         initComponents();
+        compraData = new CompraData();
         detalleData = new DetalleCompraData();
-        dateChooser = new DateChooser();
+        dateChooserCompra = new DateChooser();
+        dateChooserDetalle = new DateChooser();
         
         // Se toma un TextField y se lo asigna como un DateChooser.
-        dateChooser.setTextField(txtDate);
+        dateChooserCompra.setTextField(txtDateCompra);
+        dateChooserDetalle.setTextField(txtDateDetalle);
         
         // Este método dice que el tipo de selección es entre dos fechas.
-        dateChooser.setDateSelectionMode(DateChooser.DateSelectionMode.BETWEEN_DATE_SELECTED);
+        dateChooserCompra.setDateSelectionMode(DateChooser.DateSelectionMode.BETWEEN_DATE_SELECTED);
+        dateChooserDetalle.setDateSelectionMode(DateChooser.DateSelectionMode.BETWEEN_DATE_SELECTED);
         
         // Este método quita un texto que muestra el día actual.
-        dateChooser.setLabelCurrentDayVisible(false);
+        dateChooserCompra.setLabelCurrentDayVisible(false);
+        dateChooserDetalle.setLabelCurrentDayVisible(false);
         
         // El siguiente método lee el evento del calendario al seleccionar las fechas.
         // Y luego carga la tabla con las fechas seleccionadas.
-        dateChooser.addActionDateChooserListener(new DateChooserAdapter() {
+        dateChooserCompra.addActionDateChooserListener(new DateChooserAdapter() {
             @Override
             public void dateBetweenChanged(DateBetween fecha, DateChooserAction action) {
                 
@@ -50,14 +64,38 @@ public class DetalleCompraVista extends javax.swing.JPanel {
                 fechaDesde = df.format(fecha.getFromDate());
                 fechaHasta = df.format(fecha.getToDate());
                 
-                // Se limpia la tabla cada vez que una fecha fue seleccionada.
-                tableModel.setRowCount(0);
+                tableModelCompra.setRowCount(0); // Se limpia la tabla cada vez que una fecha fue seleccionada.
                 
-                buttonGroup1.clearSelection();
+                buttonGroupCompra.clearSelection(); // Se deseleccionan los bótones de compra.
+                
+                // Se carga la tabla con las fechas nuevas seleccionadas.
+                for (Compra compra : compraData.listarEntreFechas(fechaDesde, fechaHasta)) {
+                    tableModelCompra.addRow(new Object[]{
+                        compra.getIdCompra(),
+                        compra.getProveedor(),
+                        compra.getFecha(),
+                        compra.getTotal()
+                    });
+                }//end for
+            }//end dateBetweenChaged metod
+        });//end addActionDateChooserListener
+        
+        dateChooserDetalle.addActionDateChooserListener(new DateChooserAdapter() {
+            @Override
+            public void dateBetweenChanged(DateBetween fecha, DateChooserAction action) {
+                
+                // Se cambia el formato de las fechas para que la base de datos las entienda.
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                fechaDesde = df.format(fecha.getFromDate());
+                fechaHasta = df.format(fecha.getToDate());
+                
+                tableModelDetalle.setRowCount(0); // Se limpia la tabla cada vez que una fecha fue seleccionada.
+                
+                buttonGroupDetalle.clearSelection(); // Se deseleccionan los bótones de detalle.
                 
                 // Se carga la tabla con las fechas nuevas seleccionadas.
                 for (DetalleCompra detalle : detalleData.listarEntreFechas(fechaDesde, fechaHasta)) {
-                    tableModel.addRow(new Object[]{
+                    tableModelDetalle.addRow(new Object[]{
                         detalle.getIdDetalleCompra(),
                         detalle.getCompra().getProveedor(),
                         detalle.getCompra().getFecha(),
@@ -70,42 +108,48 @@ public class DetalleCompraVista extends javax.swing.JPanel {
         });//end addActionDateChooserListener
         
         cargarModeloTabla();
-        refrescarTabla();
+        refrescarTablaCompra();
+        refrescarTablaDetalle();
+        agruparRadioButton();
         cargarComboProveedor();
         cargarComboProducto();
-        agruparRadioButton();
     }//end constructor
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroupCompra = new javax.swing.ButtonGroup();
+        buttonGroupDetalle = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
-        table = new javax.swing.JTable();
+        tableCompra = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tableDetalle = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jSeparator4 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
-        txtBuscarCodigo = new javax.swing.JTextField();
-        jSeparator1 = new javax.swing.JSeparator();
-        btnBuscarCodigo = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        txtDate = new javax.swing.JTextField();
-        jSeparator2 = new javax.swing.JSeparator();
+        jPanel5 = new javax.swing.JPanel();
+        txtDateCompra = new javax.swing.JTextField();
+        jSeparator3 = new javax.swing.JSeparator();
         jPanel3 = new javax.swing.JPanel();
         btnBuscarProveedor = new javax.swing.JLabel();
         comboProveedor = new javax.swing.JComboBox<>();
+        btnListarCompras = new javax.swing.JRadioButton();
+        btnUltimaCompra = new javax.swing.JRadioButton();
+        jPanel2 = new javax.swing.JPanel();
+        txtDateDetalle = new javax.swing.JTextField();
+        jSeparator2 = new javax.swing.JSeparator();
         jPanel4 = new javax.swing.JPanel();
         comboProducto = new javax.swing.JComboBox<>();
         btnBuscarProducto = new javax.swing.JLabel();
-        btnUltimaCompra = new javax.swing.JRadioButton();
         btnListarDetalles = new javax.swing.JRadioButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        btnUltimoDetalleCompra = new javax.swing.JRadioButton();
 
-        table.setModel(new javax.swing.table.DefaultTableModel(
+        setBackground(new java.awt.Color(237, 230, 219));
+
+        tableCompra.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        tableCompra.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -116,89 +160,78 @@ public class DetalleCompraVista extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        table.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(table);
-
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Buscar detalle por código de compra", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 14))); // NOI18N
-
-        txtBuscarCodigo.setBackground(javax.swing.UIManager.getDefaults().getColor("Panel.background"));
-        txtBuscarCodigo.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
-        txtBuscarCodigo.setBorder(null);
-        txtBuscarCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtBuscarCodigoKeyTyped(evt);
+        tableCompra.getTableHeader().setReorderingAllowed(false);
+        tableCompra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tableCompraMousePressed(evt);
             }
         });
+        jScrollPane1.setViewportView(tableCompra);
 
-        jSeparator1.setBackground(javax.swing.UIManager.getDefaults().getColor("Panel.background"));
-        jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
-
-        btnBuscarCodigo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/busqueda_mini.png"))); // NOI18N
-        btnBuscarCodigo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnBuscarCodigo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnBuscarCodigoMouseClicked(evt);
+        tableDetalle.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+        tableDetalle.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        });
+        ));
+        tableDetalle.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(tableDetalle);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jLabel1.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        jLabel1.setText("Compras realizadas");
+
+        jLabel2.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        jLabel2.setText("Detalle de las compras");
+
+        jSeparator4.setBackground(new java.awt.Color(237, 230, 219));
+        jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
+
+        jPanel1.setBackground(new java.awt.Color(162, 179, 139));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+
+        jPanel5.setBackground(new java.awt.Color(162, 179, 139));
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Buscar compra por fecha", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 14), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel5.setForeground(new java.awt.Color(255, 255, 255));
+
+        txtDateCompra.setBackground(new java.awt.Color(162, 179, 139));
+        txtDateCompra.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        txtDateCompra.setForeground(new java.awt.Color(255, 255, 255));
+        txtDateCompra.setBorder(null);
+        txtDateCompra.setPreferredSize(new java.awt.Dimension(326, 28));
+
+        jSeparator3.setBackground(new java.awt.Color(162, 179, 139));
+        jSeparator3.setForeground(new java.awt.Color(255, 255, 255));
+        jSeparator3.setPreferredSize(new java.awt.Dimension(326, 6));
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jSeparator1)
-                    .addComponent(txtBuscarCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBuscarCodigo)
-                .addContainerGap(13, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(btnBuscarCodigo))
-                    .addComponent(txtBuscarCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Buscar detalle por fecha", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 14))); // NOI18N
-
-        txtDate.setBackground(javax.swing.UIManager.getDefaults().getColor("Panel.background"));
-        txtDate.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
-        txtDate.setBorder(null);
-        txtDate.setPreferredSize(new java.awt.Dimension(326, 28));
-
-        jSeparator2.setBackground(javax.swing.UIManager.getDefaults().getColor("Panel.background"));
-        jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
-        jSeparator2.setPreferredSize(new java.awt.Dimension(326, 6));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtDateCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addComponent(txtDateCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Buscar detalle por proveedor", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 14))); // NOI18N
+        jPanel3.setBackground(new java.awt.Color(162, 179, 139));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Buscar compra por proveedor", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 14), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel3.setForeground(new java.awt.Color(255, 255, 255));
 
         btnBuscarProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/busqueda_mini.png"))); // NOI18N
         btnBuscarProveedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -209,11 +242,6 @@ public class DetalleCompraVista extends javax.swing.JPanel {
         });
 
         comboProveedor.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
-        comboProveedor.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                comboProveedorMousePressed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -239,14 +267,68 @@ public class DetalleCompraVista extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Buscar detalle por producto", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 14))); // NOI18N
-
-        comboProducto.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
-        comboProducto.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                comboProductoMousePressed(evt);
+        btnListarCompras.setBackground(new java.awt.Color(162, 179, 139));
+        btnListarCompras.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        btnListarCompras.setForeground(new java.awt.Color(255, 255, 255));
+        btnListarCompras.setSelected(true);
+        btnListarCompras.setText("Mostrar todas las compras");
+        btnListarCompras.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnListarCompras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListarComprasActionPerformed(evt);
             }
         });
+
+        btnUltimaCompra.setBackground(new java.awt.Color(162, 179, 139));
+        btnUltimaCompra.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        btnUltimaCompra.setForeground(new java.awt.Color(255, 255, 255));
+        btnUltimaCompra.setText("Mostrar mi última compra");
+        btnUltimaCompra.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnUltimaCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUltimaCompraActionPerformed(evt);
+            }
+        });
+
+        jPanel2.setBackground(new java.awt.Color(162, 179, 139));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Buscar detalle por fecha", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 14), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel2.setForeground(new java.awt.Color(255, 255, 255));
+
+        txtDateDetalle.setBackground(new java.awt.Color(162, 179, 139));
+        txtDateDetalle.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        txtDateDetalle.setForeground(new java.awt.Color(255, 255, 255));
+        txtDateDetalle.setBorder(null);
+        txtDateDetalle.setPreferredSize(new java.awt.Dimension(326, 28));
+
+        jSeparator2.setBackground(new java.awt.Color(162, 179, 139));
+        jSeparator2.setForeground(new java.awt.Color(255, 255, 255));
+        jSeparator2.setPreferredSize(new java.awt.Dimension(326, 6));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtDateDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addComponent(txtDateDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        jPanel4.setBackground(new java.awt.Color(162, 179, 139));
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Buscar detalle por producto", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 14), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel4.setForeground(new java.awt.Color(255, 255, 255));
+
+        comboProducto.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
 
         btnBuscarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/busqueda_mini.png"))); // NOI18N
         btnBuscarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -280,16 +362,9 @@ public class DetalleCompraVista extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnUltimaCompra.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
-        btnUltimaCompra.setText("Mostrar detalle de mi última compra");
-        btnUltimaCompra.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnUltimaCompra.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUltimaCompraActionPerformed(evt);
-            }
-        });
-
+        btnListarDetalles.setBackground(new java.awt.Color(162, 179, 139));
         btnListarDetalles.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        btnListarDetalles.setForeground(new java.awt.Color(255, 255, 255));
         btnListarDetalles.setSelected(true);
         btnListarDetalles.setText("Mostrar detalle de todas las compras");
         btnListarDetalles.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -299,141 +374,126 @@ public class DetalleCompraVista extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
-        jLabel1.setText("Código de compra");
+        btnUltimoDetalleCompra.setBackground(new java.awt.Color(162, 179, 139));
+        btnUltimoDetalleCompra.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        btnUltimoDetalleCompra.setForeground(new java.awt.Color(255, 255, 255));
+        btnUltimoDetalleCompra.setText("Mostrar detalle de mi última compra");
+        btnUltimoDetalleCompra.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnUltimoDetalleCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUltimoDetalleCompraActionPerformed(evt);
+            }
+        });
 
-        jLabel2.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
-        jLabel2.setText("Fecha de compra");
-
-        jTextField1.setEditable(false);
-        jTextField1.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
-
-        jTextField2.setEditable(false);
-        jTextField2.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
-
-        jTextField3.setEditable(false);
-        jTextField3.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
-
-        jLabel3.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
-        jLabel3.setText("Total de la compra");
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(0, 0, 0))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnListarCompras)
+                    .addComponent(btnUltimaCompra)
+                    .addComponent(btnListarDetalles)
+                    .addComponent(btnUltimoDetalleCompra))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnListarCompras)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnUltimaCompra)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnListarDetalles)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnUltimoDetalleCompra)
+                .addGap(30, 30, 30))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnListarDetalles, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnUltimaCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, 0)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(287, 287, 287)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(297, 297, 297))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(281, 281, 281)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(276, 276, 276))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1))
-                .addContainerGap())
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane2)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnListarDetalles)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnUltimaCompra)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(8, 8, 8)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE))))
+                        .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void comboProductoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboProductoMousePressed
-        cargarComboProducto();
-    }//GEN-LAST:event_comboProductoMousePressed
-
-    private void comboProveedorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboProveedorMousePressed
-        cargarComboProveedor();
-    }//GEN-LAST:event_comboProveedorMousePressed
-
-    private void btnBuscarCodigoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarCodigoMouseClicked
-        tableModel.setRowCount(0);
-        buttonGroup1.clearSelection();
-        
-        try {
-            for (DetalleCompra detalle : detalleData.listarProductosPorCompra(Integer.parseInt(txtBuscarCodigo.getText()))) {
-                tableModel.addRow(new Object[]{
-                    detalle.getIdDetalleCompra(),
-                    detalle.getCompra().getProveedor(),
-                    detalle.getCompra().getFecha(),
-                    detalle.getProducto().getNombreProducto(),
-                    detalle.getCantidad(),
-                    detalle.getPrecioCosto()
-                });
-            }//end for
-        } catch (NumberFormatException ex) {
-            
-        }
-        
-    }//GEN-LAST:event_btnBuscarCodigoMouseClicked
-
     private void btnBuscarProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarProveedorMouseClicked
-        tableModel.setRowCount(0);
-        buttonGroup1.clearSelection();
+        tableModelCompra.setRowCount(0); // Limpia la tabla.
+        buttonGroupCompra.clearSelection(); // Deselecciona los radio button de compra.
         
-        for (DetalleCompra detalle : detalleData.listarPorProveedor((Proveedor) comboProveedor.getSelectedItem())) {
-            tableModel.addRow(new Object[]{
-                detalle.getIdDetalleCompra(),
-                detalle.getCompra().getProveedor(),
-                detalle.getCompra().getFecha(),
-                detalle.getProducto().getNombreProducto(),
-                detalle.getCantidad(),
-                detalle.getPrecioCosto()
+        for (Compra compra : compraData.listarPorProveedor((Proveedor) comboProveedor.getSelectedItem())) {
+            tableModelCompra.addRow(new Object[]{
+                compra.getIdCompra(),
+                compra.getProveedor().getRazonSocial(),
+                compra.getFecha(),
+                compra.getTotal()
             });
         }//end for
     }//GEN-LAST:event_btnBuscarProveedorMouseClicked
 
     private void btnBuscarProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarProductoMouseClicked
-        tableModel.setRowCount(0);
-        buttonGroup1.clearSelection();
+        tableModelDetalle.setRowCount(0); // Limpia la tabla.
+        buttonGroupDetalle.clearSelection(); // Deselecciona los radio button de detalle.
         
         for (DetalleCompra detalle : detalleData.listarPorProducto((Producto) comboProducto.getSelectedItem())) {
-            tableModel.addRow(new Object[]{
+            tableModelDetalle.addRow(new Object[]{
                 detalle.getIdDetalleCompra(),
                 detalle.getCompra().getProveedor(),
                 detalle.getCompra().getFecha(),
@@ -444,19 +504,12 @@ public class DetalleCompraVista extends javax.swing.JPanel {
         }//end for
     }//GEN-LAST:event_btnBuscarProductoMouseClicked
 
-    private void txtBuscarCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarCodigoKeyTyped
-        char caracter = evt.getKeyChar();
-        if ((caracter < '0') || (caracter > '9')){
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtBuscarCodigoKeyTyped
-
-    private void btnUltimaCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUltimaCompraActionPerformed
-        tableModel.setRowCount(0); // Limpia la tabla.
+    private void btnUltimoDetalleCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUltimoDetalleCompraActionPerformed
+        tableModelDetalle.setRowCount(0); // Limpia la tabla.
         
-        if (btnUltimaCompra.isSelected()) {
+        if (btnUltimoDetalleCompra.isSelected()) {
             for (DetalleCompra detalle : detalleData.obtenerUltimaCompra()) {
-                tableModel.addRow(new Object[]{
+                tableModelDetalle.addRow(new Object[]{
                     detalle.getIdDetalleCompra(),
                     detalle.getCompra().getProveedor(),
                     detalle.getCompra().getFecha(),
@@ -465,83 +518,124 @@ public class DetalleCompraVista extends javax.swing.JPanel {
                     detalle.getPrecioCosto()
                 });
             }//end for
-        } else {
-            tableModel.setRowCount(0);
         }
-    }//GEN-LAST:event_btnUltimaCompraActionPerformed
+    }//GEN-LAST:event_btnUltimoDetalleCompraActionPerformed
 
     private void btnListarDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarDetallesActionPerformed
-        tableModel.setRowCount(0); // Limpia la tabla.
+        tableModelDetalle.setRowCount(0); // Limpia la tabla.
         
         if (btnListarDetalles.isSelected()) {
-            refrescarTabla();
-        } else {
-            tableModel.setRowCount(0); // Limpia la tabla.
+            refrescarTablaDetalle();
         }
     }//GEN-LAST:event_btnListarDetallesActionPerformed
 
+    private void tableCompraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCompraMousePressed
+        int seleccionar = tableCompra.getSelectedRow();
+        int idCompra = (int) tableCompra.getValueAt(seleccionar, 0);
+        
+        if (seleccionar != -1) {
+            tableModelDetalle.setRowCount(0);
+            for (DetalleCompra detalle : detalleData.listarDetallesPorIdCompra(idCompra)) {
+                tableModelDetalle.addRow(new Object[]{
+                    detalle.getIdDetalleCompra(),
+                    detalle.getCompra().getProveedor(),
+                    detalle.getCompra().getFecha(),
+                    detalle.getProducto().getNombreProducto(),
+                    detalle.getCantidad(),
+                    detalle.getPrecioCosto()
+                });
+            }//end for
+        }//end if
+    }//GEN-LAST:event_tableCompraMousePressed
+
+    private void btnListarComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarComprasActionPerformed
+        tableModelCompra.setRowCount(0); // Limpia la tabla.
+        
+        if (btnListarCompras.isSelected()) {
+            refrescarTablaCompra();
+        }
+    }//GEN-LAST:event_btnListarComprasActionPerformed
+
+    private void btnUltimaCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUltimaCompraActionPerformed
+        tableModelCompra.setRowCount(0); // Limpia la tabla.
+        
+        if (btnUltimaCompra.isSelected()) {
+            Compra compra = compraData.buscarCompra(compraData.obtenerUltimaCompra());
+            tableModelCompra.addRow(new Object[]{
+                compra.getIdCompra(),
+                compra.getProveedor().getRazonSocial(),
+                compra.getFecha(),
+                compra.getTotal()
+            });
+        }
+    }//GEN-LAST:event_btnUltimaCompraActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel btnBuscarCodigo;
     private javax.swing.JLabel btnBuscarProducto;
     private javax.swing.JLabel btnBuscarProveedor;
+    private javax.swing.JRadioButton btnListarCompras;
     private javax.swing.JRadioButton btnListarDetalles;
     private javax.swing.JRadioButton btnUltimaCompra;
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JComboBox<Producto> comboProducto;
-    private javax.swing.JComboBox<Proveedor> comboProveedor;
+    private javax.swing.JRadioButton btnUltimoDetalleCompra;
+    private javax.swing.ButtonGroup buttonGroupCompra;
+    private javax.swing.ButtonGroup buttonGroupDetalle;
+    private static javax.swing.JComboBox<Producto> comboProducto;
+    private static javax.swing.JComboBox<Proveedor> comboProveedor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTable table;
-    private javax.swing.JTextField txtBuscarCodigo;
-    private javax.swing.JTextField txtDate;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JTable tableCompra;
+    private javax.swing.JTable tableDetalle;
+    private javax.swing.JTextField txtDateCompra;
+    private javax.swing.JTextField txtDateDetalle;
     // End of variables declaration//GEN-END:variables
 
     private void cargarModeloTabla() {
-        tableModel.addColumn("CÓDIGO");
-        tableModel.addColumn("PROVEEDOR");
-        tableModel.addColumn("FECHA");
-        tableModel.addColumn("PRODUCTO");
-        tableModel.addColumn("CANTIDAD");
-        tableModel.addColumn("PRECIO COSTO");
-        table.setModel(tableModel);
-    }
-    
-    private void cargarComboProveedor() {
-        comboProveedor.removeAllItems();
-
-        ProveedorData provData = new ProveedorData();
-
-        for(Proveedor proveedor : provData.listarProveedor(2)){
-            comboProveedor.addItem(proveedor);
-        }
-    }
-    
-    private void cargarComboProducto() {
-        comboProducto.removeAllItems();
+        tableModelDetalle.addColumn("CÓDIGO");
+        tableModelDetalle.addColumn("PROVEEDOR");
+        tableModelDetalle.addColumn("FECHA");
+        tableModelDetalle.addColumn("PRODUCTO");
+        tableModelDetalle.addColumn("CANTIDAD");
+        tableModelDetalle.addColumn("PRECIO COSTO");
+        tableDetalle.setModel(tableModelDetalle);
         
-        ProductoData prodData = new ProductoData();
+        tableModelCompra.addColumn("CÓDIGO");
+        tableModelCompra.addColumn("PROVEEDOR");
+        tableModelCompra.addColumn("FECHA");
+        tableModelCompra.addColumn("TOTAL");
+        tableCompra.setModel(tableModelCompra);
+    }
 
-        for(Producto producto : prodData.listarProducto()){
-            comboProducto.addItem(producto);
-        }
+    protected static void refrescarTablaCompra() {
+        tableModelCompra.setRowCount(0); // Limpia la tabla.
+        CompraData compraData = new CompraData();
+        
+        for (Compra compra : compraData.listarCompras()) {
+            tableModelCompra.addRow(new Object[]{
+                compra.getIdCompra(),
+                compra.getProveedor().getRazonSocial(),
+                compra.getFecha(),
+                compra.getTotal()
+            });
+        }//end for
     }
     
-    protected static void refrescarTabla() {
+    protected static void refrescarTablaDetalle() {
+        tableModelDetalle.setRowCount(0); // Limpia la tabla.
         DetalleCompraData detalleData = new DetalleCompraData();
+        
         for (DetalleCompra detalle : detalleData.listarDetalles()) {
-            tableModel.addRow(new Object[]{
+            tableModelDetalle.addRow(new Object[]{
                 detalle.getIdDetalleCompra(),
                 detalle.getCompra().getProveedor(),
                 detalle.getCompra().getFecha(),
@@ -553,7 +647,28 @@ public class DetalleCompraVista extends javax.swing.JPanel {
     }
     
     private void agruparRadioButton() {
-        buttonGroup1.add(btnUltimaCompra);
-        buttonGroup1.add(btnListarDetalles);
+        buttonGroupCompra.add(btnUltimaCompra);
+        buttonGroupCompra.add(btnListarCompras);
+        
+        buttonGroupDetalle.add(btnUltimoDetalleCompra);
+        buttonGroupDetalle.add(btnListarDetalles);
+    }
+    
+    protected static void cargarComboProveedor() {
+        comboProveedor.removeAllItems(); // Limpia el combo.
+        ProveedorData proveData = new ProveedorData();
+        
+        for(Proveedor proveedor : proveData.listarProveedor(2)){
+            comboProveedor.addItem(proveedor);
+        }
+    }
+    
+    protected static void cargarComboProducto() {
+        comboProducto.removeAllItems(); // Limpia el combo.
+        ProductoData produData = new ProductoData();
+        
+        for(Producto producto : produData.listarProducto(2)) {
+            comboProducto.addItem(producto);
+        }
     }
 }//end class
