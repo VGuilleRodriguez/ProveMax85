@@ -32,7 +32,7 @@ public class ProveedorVista extends javax.swing.JPanel {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jPanel1 = new javax.swing.JPanel();
+        panelLateral = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -52,7 +52,7 @@ public class ProveedorVista extends javax.swing.JPanel {
         btnActivo = new javax.swing.JRadioButton();
         btnInactivo = new javax.swing.JRadioButton();
         jLabel7 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        panelSuperior = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -60,9 +60,9 @@ public class ProveedorVista extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(237, 230, 219));
 
-        jPanel1.setBackground(new java.awt.Color(162, 179, 139));
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        jPanel1.setPreferredSize(new java.awt.Dimension(342, 345));
+        panelLateral.setBackground(new java.awt.Color(162, 179, 139));
+        panelLateral.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        panelLateral.setPreferredSize(new java.awt.Dimension(342, 592));
 
         jLabel1.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -123,8 +123,10 @@ public class ProveedorVista extends javax.swing.JPanel {
         btnLimpiarCampos.setBackground(new java.awt.Color(157, 83, 83));
         btnLimpiarCampos.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
         btnLimpiarCampos.setForeground(new java.awt.Color(255, 255, 255));
+        btnLimpiarCampos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/borrador.png"))); // NOI18N
         btnLimpiarCampos.setText("Limpiar campos");
         btnLimpiarCampos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLimpiarCampos.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         btnLimpiarCampos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimpiarCamposActionPerformed(evt);
@@ -134,7 +136,7 @@ public class ProveedorVista extends javax.swing.JPanel {
         btnRegistrar.setBackground(new java.awt.Color(162, 179, 139));
         btnRegistrar.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
         btnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
-        btnRegistrar.setIcon(new javax.swing.ImageIcon("/home/nicolas/Descargas/agregar-usuario.png")); // NOI18N
+        btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/agregar-usuario.png"))); // NOI18N
         btnRegistrar.setToolTipText("Registrar un nuevo proveedor");
         btnRegistrar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(162, 179, 139)));
         btnRegistrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -148,7 +150,7 @@ public class ProveedorVista extends javax.swing.JPanel {
         btnModificar.setBackground(new java.awt.Color(162, 179, 139));
         btnModificar.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
         btnModificar.setForeground(java.awt.Color.white);
-        btnModificar.setIcon(new javax.swing.ImageIcon("/home/nicolas/Descargas/lapiz-de-usuario.png")); // NOI18N
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/lapiz-de-usuario.png"))); // NOI18N
         btnModificar.setToolTipText("Modificar proveedor");
         btnModificar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(162, 179, 139)));
         btnModificar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -162,7 +164,7 @@ public class ProveedorVista extends javax.swing.JPanel {
         btnBaja.setBackground(new java.awt.Color(162, 179, 139));
         btnBaja.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
         btnBaja.setForeground(java.awt.Color.white);
-        btnBaja.setIcon(new javax.swing.ImageIcon("/home/nicolas/Descargas/quitar-usuario.png")); // NOI18N
+        btnBaja.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/quitar-usuario.png"))); // NOI18N
         btnBaja.setToolTipText("Dar de baja un proveedor");
         btnBaja.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(162, 179, 139)));
         btnBaja.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -176,7 +178,7 @@ public class ProveedorVista extends javax.swing.JPanel {
         btnAlta.setBackground(new java.awt.Color(162, 179, 139));
         btnAlta.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
         btnAlta.setForeground(java.awt.Color.white);
-        btnAlta.setIcon(new javax.swing.ImageIcon("/home/nicolas/Descargas/comprobacion-de-usuario.png")); // NOI18N
+        btnAlta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/comprobacion-de-usuario.png"))); // NOI18N
         btnAlta.setToolTipText("Dar de alta un proveedor");
         btnAlta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(162, 179, 139)));
         btnAlta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -223,18 +225,28 @@ public class ProveedorVista extends javax.swing.JPanel {
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Consultas");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnLimpiarCampos)
-                .addGap(90, 90, 90))
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelLateralLayout = new javax.swing.GroupLayout(panelLateral);
+        panelLateral.setLayout(panelLateralLayout);
+        panelLateralLayout.setHorizontalGroup(
+            panelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLateralLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(panelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnMostrarProveedores, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnActivo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnInactivo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtRazonSocial, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtDomicilio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtTelefono, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLateralLayout.createSequentialGroup()
                         .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -242,34 +254,24 @@ public class ProveedorVista extends javax.swing.JPanel {
                         .addComponent(btnBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnAlta, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtRazonSocial, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtDomicilio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(122, 122, 122)
-                        .addComponent(checkEstado))
-                    .addComponent(btnMostrarProveedores, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnActivo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnInactivo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btnLimpiarCampos)
+                        .addGroup(panelLateralLayout.createSequentialGroup()
+                            .addComponent(jLabel5)
+                            .addGap(122, 122, 122)
+                            .addComponent(checkEstado))))
                 .addGap(50, 50, 50))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        panelLateralLayout.setVerticalGroup(
+            panelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLateralLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAlta, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addGap(3, 3, 3)
                 .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -286,14 +288,14 @@ public class ProveedorVista extends javax.swing.JPanel {
                 .addGap(3, 3, 3)
                 .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(panelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelLateralLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(checkEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLimpiarCampos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnMostrarProveedores)
@@ -301,10 +303,10 @@ public class ProveedorVista extends javax.swing.JPanel {
                 .addComponent(btnActivo)
                 .addGap(4, 4, 4)
                 .addComponent(btnInactivo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(237, 230, 219));
+        panelSuperior.setBackground(new java.awt.Color(237, 230, 219));
 
         jLabel6.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         jLabel6.setText("Buscar por razón social");
@@ -317,25 +319,25 @@ public class ProveedorVista extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(117, Short.MAX_VALUE)
+        javax.swing.GroupLayout panelSuperiorLayout = new javax.swing.GroupLayout(panelSuperior);
+        panelSuperior.setLayout(panelSuperiorLayout);
+        panelSuperiorLayout.setHorizontalGroup(
+            panelSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelSuperiorLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        panelSuperiorLayout.setVerticalGroup(
+            panelSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelSuperiorLayout.createSequentialGroup()
                 .addGap(5, 5, 5)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         tableProveedor.setBackground(new java.awt.Color(237, 230, 219));
@@ -366,26 +368,24 @@ public class ProveedorVista extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelLateral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addComponent(panelSuperior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
+                    .addComponent(panelLateral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
+                        .addComponent(panelSuperior, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1)))
-                .addGap(0, 0, 0))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -587,9 +587,9 @@ public class ProveedorVista extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel panelLateral;
+    private javax.swing.JPanel panelSuperior;
     private javax.swing.JTable tableProveedor;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCodigo;

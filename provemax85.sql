@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 06-10-2023 a las 23:39:18
+-- Servidor: localhost
+-- Tiempo de generación: 25-10-2023 a las 03:44:29
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `provemax85`
 --
-CREATE DATABASE IF NOT EXISTS `provemax85` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `provemax85`;
 
 -- --------------------------------------------------------
 
@@ -32,7 +30,8 @@ USE `provemax85`;
 CREATE TABLE `compra` (
   `idCompra` int(11) NOT NULL,
   `idProveedor` int(11) NOT NULL,
-  `fecha` date NOT NULL
+  `fecha` date NOT NULL,
+  `total` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -64,14 +63,6 @@ CREATE TABLE `producto` (
   `estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `producto`
---
-
-INSERT INTO `producto` (`idProducto`, `nombreProducto`, `descripcion`, `precioActual`, `stock`, `estado`) VALUES
-(1, 'Televisor', '42\" LED', 275000, 6, 1),
-(2, 'PC Escritorio', 'Core I5', 550000, 2, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -87,13 +78,6 @@ CREATE TABLE `proveedor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `proveedor`
---
-
-INSERT INTO `proveedor` (`idProveedor`, `razonSocial`, `domicilio`, `telefono`, `estado`) VALUES
-(1, 'Alfa Vet S.A.', 'Av. San Martin 857', 4536272, 1);
-
---
 -- Índices para tablas volcadas
 --
 
@@ -101,16 +85,13 @@ INSERT INTO `proveedor` (`idProveedor`, `razonSocial`, `domicilio`, `telefono`, 
 -- Indices de la tabla `compra`
 --
 ALTER TABLE `compra`
-  ADD PRIMARY KEY (`idCompra`),
-  ADD UNIQUE KEY `idProveedor` (`idProveedor`);
+  ADD PRIMARY KEY (`idCompra`);
 
 --
 -- Indices de la tabla `detallecompra`
 --
 ALTER TABLE `detallecompra`
-  ADD PRIMARY KEY (`idDetalleCompra`),
-  ADD UNIQUE KEY `idCompra` (`idCompra`,`idProducto`),
-  ADD KEY `idProducto` (`idProducto`);
+  ADD PRIMARY KEY (`idDetalleCompra`);
 
 --
 -- Indices de la tabla `producto`
@@ -144,13 +125,13 @@ ALTER TABLE `detallecompra`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
 --
 ALTER TABLE `proveedor`
-  MODIFY `idProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idProveedor` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas

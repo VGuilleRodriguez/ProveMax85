@@ -31,7 +31,7 @@ public class DetalleCompraVista extends javax.swing.JPanel {
     
     private CompraData compraData;
     private DetalleCompraData detalleData;
-    private DateChooser dateChooserCompra, dateChooserDetalle;
+    private DateChooser dateChooserCompra, dateChooserDetalle, dateChooserMasComprados;
     private String fechaDesde, fechaHasta;
     
     public DetalleCompraVista() {
@@ -40,18 +40,22 @@ public class DetalleCompraVista extends javax.swing.JPanel {
         detalleData = new DetalleCompraData();
         dateChooserCompra = new DateChooser();
         dateChooserDetalle = new DateChooser();
+        dateChooserMasComprados = new DateChooser();
         
         // Se toma un TextField y se lo asigna como un DateChooser.
         dateChooserCompra.setTextField(txtDateCompra);
         dateChooserDetalle.setTextField(txtDateDetalle);
+        dateChooserMasComprados.setTextField(txtDateMasComprados);
         
         // Este método dice que el tipo de selección es entre dos fechas.
         dateChooserCompra.setDateSelectionMode(DateChooser.DateSelectionMode.BETWEEN_DATE_SELECTED);
         dateChooserDetalle.setDateSelectionMode(DateChooser.DateSelectionMode.BETWEEN_DATE_SELECTED);
+        dateChooserMasComprados.setDateSelectionMode(DateChooser.DateSelectionMode.BETWEEN_DATE_SELECTED);
         
         // Este método quita un texto que muestra el día actual.
         dateChooserCompra.setLabelCurrentDayVisible(false);
         dateChooserDetalle.setLabelCurrentDayVisible(false);
+        dateChooserMasComprados.setLabelCurrentDayVisible(false);
         
         // El siguiente método lee el evento del calendario al seleccionar las fechas.
         // Y luego carga la tabla con las fechas seleccionadas.
@@ -81,6 +85,33 @@ public class DetalleCompraVista extends javax.swing.JPanel {
         });//end addActionDateChooserListener
         
         dateChooserDetalle.addActionDateChooserListener(new DateChooserAdapter() {
+            @Override
+            public void dateBetweenChanged(DateBetween fecha, DateChooserAction action) {
+                
+                // Se cambia el formato de las fechas para que la base de datos las entienda.
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                fechaDesde = df.format(fecha.getFromDate());
+                fechaHasta = df.format(fecha.getToDate());
+                
+                tableModelDetalle.setRowCount(0); // Se limpia la tabla cada vez que una fecha fue seleccionada.
+                
+                buttonGroupDetalle.clearSelection(); // Se deseleccionan los bótones de detalle.
+                
+                // Se carga la tabla con las fechas nuevas seleccionadas.
+                for (DetalleCompra detalle : detalleData.listarEntreFechas(fechaDesde, fechaHasta)) {
+                    tableModelDetalle.addRow(new Object[]{
+                        detalle.getIdDetalleCompra(),
+                        detalle.getCompra().getProveedor(),
+                        detalle.getCompra().getFecha(),
+                        detalle.getProducto().getNombreProducto(),
+                        detalle.getCantidad(),
+                        detalle.getPrecioCosto()
+                    });
+                }//end for
+            }//end dateBetweenChaged metod
+        });//end addActionDateChooserListener
+        
+        dateChooserMasComprados.addActionDateChooserListener(new DateChooserAdapter() {
             @Override
             public void dateBetweenChanged(DateBetween fecha, DateChooserAction action) {
                 
@@ -145,6 +176,9 @@ public class DetalleCompraVista extends javax.swing.JPanel {
         btnBuscarProducto = new javax.swing.JLabel();
         btnListarDetalles = new javax.swing.JRadioButton();
         btnUltimoDetalleCompra = new javax.swing.JRadioButton();
+        jPanel8 = new javax.swing.JPanel();
+        txtDateMasComprados = new javax.swing.JTextField();
+        jSeparator7 = new javax.swing.JSeparator();
 
         setBackground(new java.awt.Color(237, 230, 219));
 
@@ -215,10 +249,10 @@ public class DetalleCompraVista extends javax.swing.JPanel {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtDateCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jSeparator3, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
+                    .addComponent(txtDateCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,6 +266,7 @@ public class DetalleCompraVista extends javax.swing.JPanel {
         jPanel3.setBackground(new java.awt.Color(162, 179, 139));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Buscar compra por proveedor", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 14), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel3.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel3.setPreferredSize(new java.awt.Dimension(350, 59));
 
         btnBuscarProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/busqueda_mini.png"))); // NOI18N
         btnBuscarProveedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -250,9 +285,9 @@ public class DetalleCompraVista extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(comboProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(6, 6, 6)
                 .addComponent(btnBuscarProveedor)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -308,25 +343,25 @@ public class DetalleCompraVista extends javax.swing.JPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtDateDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(txtDateDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addComponent(txtDateDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(162, 179, 139));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Buscar detalle por producto", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 14), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel4.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel4.setPreferredSize(new java.awt.Dimension(350, 59));
 
         comboProducto.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
 
@@ -345,7 +380,7 @@ public class DetalleCompraVista extends javax.swing.JPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(comboProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(6, 6, 6)
                 .addComponent(btnBuscarProducto)
                 .addContainerGap())
         );
@@ -385,33 +420,66 @@ public class DetalleCompraVista extends javax.swing.JPanel {
             }
         });
 
+        jPanel8.setBackground(new java.awt.Color(162, 179, 139));
+        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Buscar productos mas comprados por fecha", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Liberation Sans", 0, 14), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel8.setForeground(new java.awt.Color(255, 255, 255));
+
+        txtDateMasComprados.setBackground(new java.awt.Color(162, 179, 139));
+        txtDateMasComprados.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        txtDateMasComprados.setForeground(new java.awt.Color(255, 255, 255));
+        txtDateMasComprados.setBorder(null);
+        txtDateMasComprados.setPreferredSize(new java.awt.Dimension(326, 28));
+
+        jSeparator7.setBackground(new java.awt.Color(162, 179, 139));
+        jSeparator7.setForeground(new java.awt.Color(255, 255, 255));
+        jSeparator7.setPreferredSize(new java.awt.Dimension(326, 6));
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(txtDateMasComprados, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addComponent(txtDateMasComprados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(0, 0, 0))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnListarCompras)
-                    .addComponent(btnUltimaCompra)
-                    .addComponent(btnListarDetalles)
-                    .addComponent(btnUltimoDetalleCompra))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnListarCompras)
+                            .addComponent(btnUltimaCompra)
+                            .addComponent(btnListarDetalles)
+                            .addComponent(btnUltimoDetalleCompra)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 350, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -419,15 +487,17 @@ public class DetalleCompraVista extends javax.swing.JPanel {
                 .addComponent(btnListarCompras)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnUltimaCompra)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnListarDetalles)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnUltimoDetalleCompra)
-                .addGap(30, 30, 30))
+                .addGap(41, 41, 41))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -436,7 +506,7 @@ public class DetalleCompraVista extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -470,7 +540,7 @@ public class DetalleCompraVista extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, 0))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -589,15 +659,24 @@ public class DetalleCompraVista extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator7;
     private javax.swing.JTable tableCompra;
     private javax.swing.JTable tableDetalle;
     private javax.swing.JTextField txtDateCompra;
     private javax.swing.JTextField txtDateDetalle;
+    private javax.swing.JTextField txtDateDetalle1;
+    private javax.swing.JTextField txtDateDetalle2;
+    private javax.swing.JTextField txtDateMasComprados;
     // End of variables declaration//GEN-END:variables
 
     private void cargarModeloTabla() {
