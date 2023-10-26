@@ -262,12 +262,12 @@ public class ProductoData {
             PreparedStatement ps = conex.prepareStatement(sql);
             int exito = ps.executeUpdate();
             
-            if (exito == 1) {
-                mensaje("El stock del producto fue actualizado.");
-
-            } else {
-                mensaje("Error al actualizar el stock del producto.");
-            }
+//            if (exito == 1) {
+//                mensaje("El stock del producto fue actualizado.");
+//
+//            } else {
+//                mensaje("Error al actualizar el stock del producto.");
+//            }
             
             ps.close();
         } catch (SQLException ex) {

@@ -238,4 +238,31 @@ public class DetalleCompraData {
         }
         return detallecompras;
     }
+    
+    public List<DetalleCompra> listarProductoMasCompradoPorFecha(String fechaDesde, String fechaHasta) {
+        List<DetalleCompra> detallecompras = new ArrayList();
+        try {
+            String listar = "SELECT idDetalleCompra, compra.idCompra, idProducto, cantidad, precioCosto "
+                    + "FROM compra JOIN detallecompra ON (detallecompra.idCompra = compra.idCompra) "
+                    + "WHERE fecha BETWEEN '"+ fechaDesde +"' AND '"+ fechaHasta +"' ORDER BY cantidad DESC ";
+            
+            PreparedStatement ps = conex.prepareStatement(listar);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                detalle = new DetalleCompra();
+                detalle.setIdDetalleCompra(rs.getInt("idDetalleCompra"));
+                detalle.setCompra(compraData.buscarCompra(rs.getInt("idCompra")));
+                detalle.setProducto(productoData.buscarProducto(rs.getInt("idProducto")));
+                detalle.setCantidad(rs.getInt("cantidad"));
+                detalle.setPrecioCosto(rs.getDouble("precioCosto"));
+                detallecompras.add(detalle); // Se agregar la producto creada arriba al arraylist.
+            }
+            
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla detalle-compra. " + ex.getMessage());
+        }
+        return detallecompras;
+    }
 }

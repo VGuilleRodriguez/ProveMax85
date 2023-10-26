@@ -125,7 +125,7 @@ public class DetalleCompraVista extends javax.swing.JPanel {
                 buttonGroupDetalle.clearSelection(); // Se deseleccionan los bótones de detalle.
                 
                 // Se carga la tabla con las fechas nuevas seleccionadas.
-                for (DetalleCompra detalle : detalleData.listarEntreFechas(fechaDesde, fechaHasta)) {
+                for (DetalleCompra detalle : detalleData.listarProductoMasCompradoPorFecha(fechaDesde, fechaHasta)){
                     tableModelDetalle.addRow(new Object[]{
                         detalle.getIdDetalleCompra(),
                         detalle.getCompra().getProveedor(),
@@ -591,6 +591,7 @@ public class DetalleCompraVista extends javax.swing.JPanel {
 
     private void comboProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboProveedorActionPerformed
         tableModelCompra.setRowCount(0); // Limpia la tabla.
+        tableModelCompra.setRowCount(0);
         buttonGroupCompra.clearSelection(); // Deselecciona los radio button de compra.
         
         for (Compra compra : compraData.listarPorProveedor((Proveedor) comboProveedor.getSelectedItem())) {
