@@ -89,6 +89,7 @@ public class CompraVista extends javax.swing.JPanel {
             }
         });
 
+        table.setBackground(new java.awt.Color(237, 230, 219));
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -100,6 +101,8 @@ public class CompraVista extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
             }
         ));
+        table.setSelectionBackground(new java.awt.Color(162, 179, 139));
+        table.setSelectionForeground(new java.awt.Color(255, 255, 255));
         table.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(table);
 
@@ -155,6 +158,7 @@ public class CompraVista extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(3, 0, 0, 0);
         jPanel2.add(jLabel2, gridBagConstraints);
 
+        comboProveedor.setBackground(new java.awt.Color(237, 230, 219));
         comboProveedor.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
         comboProveedor.setPreferredSize(new java.awt.Dimension(32, 27));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -238,6 +242,7 @@ public class CompraVista extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(19, 18, 0, 0);
         jPanel2.add(jLabel5, gridBagConstraints);
 
+        comboProducto.setBackground(new java.awt.Color(237, 230, 219));
         comboProducto.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
         comboProducto.setPreferredSize(new java.awt.Dimension(32, 27));
         gridBagConstraints = new java.awt.GridBagConstraints();

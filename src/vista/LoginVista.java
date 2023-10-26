@@ -40,10 +40,10 @@ public class LoginVista extends javax.swing.JFrame {
         setTitle("Inicio de sesión - ProveMax");
         setBackground(new java.awt.Color(102, 102, 102));
 
-        jPanel1.setBackground(new java.awt.Color(0, 51, 102));
+        jPanel1.setBackground(new java.awt.Color(162, 179, 139));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(237, 230, 219));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -54,10 +54,12 @@ public class LoginVista extends javax.swing.JFrame {
         jLabel2.setText("Contraseña:");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, -1, 20));
 
+        txtUsername.setBackground(new java.awt.Color(237, 230, 219));
         txtUsername.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
         txtUsername.setBorder(null);
         jPanel2.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 220, -1));
 
+        txtPassword.setBackground(new java.awt.Color(237, 230, 219));
         txtPassword.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
         txtPassword.setBorder(null);
         jPanel2.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, 220, -1));
@@ -67,14 +69,14 @@ public class LoginVista extends javax.swing.JFrame {
         jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 230, 220, 20));
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/login-img.png"))); // NOI18N
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 220, 130));
+        jLabel3.setIcon(new javax.swing.ImageIcon("/home/nicolas/Descargas/bloquear.png")); // NOI18N
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 220, 130));
 
         jSeparator2.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
         jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, 220, 20));
 
-        btnIngresar.setBackground(new java.awt.Color(0, 51, 102));
+        btnIngresar.setBackground(new java.awt.Color(162, 179, 139));
         btnIngresar.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
         btnIngresar.setForeground(new java.awt.Color(255, 255, 255));
         btnIngresar.setText("Ingresar");

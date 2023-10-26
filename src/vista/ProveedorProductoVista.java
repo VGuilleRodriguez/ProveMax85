@@ -33,7 +33,7 @@ public class ProveedorProductoVista extends javax.swing.JFrame {
         txtBuscar = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         tableProducto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
