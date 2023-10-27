@@ -103,6 +103,29 @@ public class DetalleCompraData {
         return detallecompras;
     }
     
+    public List<DetalleCompra> listarDetallesSet() {
+        List<DetalleCompra> detallecompras = new ArrayList();
+        try {
+            String listar = "SELECT DISTINCT compra.idProveedor, detallecompra.idProducto FROM detallecompra " +
+                            "JOIN compra ON (detallecompra.idCompra = compra.idCompra)";
+            
+            PreparedStatement ps = conex.prepareStatement(listar);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                detalle = new DetalleCompra();
+                detalle.setCompra(compraData.buscarCompraPorProveedor(rs.getInt("compra.idProveedor")));
+                detalle.setProducto(productoData.buscarProducto(rs.getInt("idProducto")));
+                detallecompras.add(detalle); // Se agregar la producto creada arriba al arraylist.
+            }
+            
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla detalle-compra. " + ex.getMessage());
+        }
+        return detallecompras;
+    }
+    
     public List<DetalleCompra> listarDetallesPorIdCompra(int id) {
         List<DetalleCompra> detallecompras = new ArrayList();
         try {

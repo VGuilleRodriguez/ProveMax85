@@ -112,9 +112,8 @@ public class ProveedorProductoVista extends javax.swing.JFrame {
 
         String proveedorBuscar = txtBuscar.getText().toLowerCase(); // Convierte el texto en minuscula.
 
-        for (DetalleCompra detalle : detalleData.listarDetalles()) {
+        for (DetalleCompra detalle : detalleData.listarDetallesSet()) {
             String nombreProveedor = detalle.getCompra().getProveedor().getRazonSocial().toLowerCase(); // Convierte el texto de la base de datos a minuscula.
-
             if (nombreProveedor.startsWith(proveedorBuscar)) {
                 tableModel.addRow(new Object[] {
                     detalle.getProducto().getIdProducto(),

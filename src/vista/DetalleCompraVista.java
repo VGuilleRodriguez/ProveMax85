@@ -164,7 +164,7 @@ public class DetalleCompraVista extends javax.swing.JPanel {
         jSeparator3 = new javax.swing.JSeparator();
         jPanel3 = new javax.swing.JPanel();
         comboProveedor = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
+        btnBuscarProveedor = new javax.swing.JLabel();
         btnListarCompras = new javax.swing.JRadioButton();
         btnUltimaCompra = new javax.swing.JRadioButton();
         jPanel2 = new javax.swing.JPanel();
@@ -172,7 +172,7 @@ public class DetalleCompraVista extends javax.swing.JPanel {
         jSeparator2 = new javax.swing.JSeparator();
         jPanel4 = new javax.swing.JPanel();
         comboProducto = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
+        btnBuscarProducto = new javax.swing.JLabel();
         btnListarDetalles = new javax.swing.JRadioButton();
         btnUltimoDetalleCompra = new javax.swing.JRadioButton();
         jPanel8 = new javax.swing.JPanel();
@@ -277,13 +277,13 @@ public class DetalleCompraVista extends javax.swing.JPanel {
         comboProveedor.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
         comboProveedor.setForeground(new java.awt.Color(255, 255, 255));
 
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/busqueda_mini.png"))); // NOI18N
-        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel3.setPreferredSize(new java.awt.Dimension(26, 26));
-        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnBuscarProveedor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnBuscarProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/busqueda_mini.png"))); // NOI18N
+        btnBuscarProveedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBuscarProveedor.setPreferredSize(new java.awt.Dimension(26, 26));
+        btnBuscarProveedor.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel3MouseClicked(evt);
+                btnBuscarProveedorMouseClicked(evt);
             }
         });
 
@@ -295,7 +295,7 @@ public class DetalleCompraVista extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(comboProveedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnBuscarProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -303,7 +303,7 @@ public class DetalleCompraVista extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -373,13 +373,13 @@ public class DetalleCompraVista extends javax.swing.JPanel {
         comboProducto.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
         comboProducto.setForeground(new java.awt.Color(255, 255, 255));
 
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/busqueda_mini.png"))); // NOI18N
-        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel4.setPreferredSize(new java.awt.Dimension(26, 26));
-        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnBuscarProducto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnBuscarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/busqueda_mini.png"))); // NOI18N
+        btnBuscarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBuscarProducto.setPreferredSize(new java.awt.Dimension(26, 26));
+        btnBuscarProducto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel4MouseClicked(evt);
+                btnBuscarProductoMouseClicked(evt);
             }
         });
 
@@ -391,7 +391,7 @@ public class DetalleCompraVista extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(comboProducto, 0, 266, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnBuscarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -399,7 +399,7 @@ public class DetalleCompraVista extends javax.swing.JPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -607,7 +607,7 @@ public class DetalleCompraVista extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnUltimaCompraActionPerformed
 
-    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+    private void btnBuscarProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarProveedorMouseClicked
         tableModelCompra.setRowCount(0); // Limpia la tabla Compra.
         tableModelDetalle.setRowCount(0); // Limpia la tabla Detalle.
         buttonGroupCompra.clearSelection(); // Deselecciona los radio button de compra.
@@ -620,9 +620,9 @@ public class DetalleCompraVista extends javax.swing.JPanel {
                 compra.getTotal()
             });
         }//end for
-    }//GEN-LAST:event_jLabel3MouseClicked
+    }//GEN-LAST:event_btnBuscarProveedorMouseClicked
 
-    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+    private void btnBuscarProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarProductoMouseClicked
         tableModelDetalle.setRowCount(0); // Limpia la tabla.
         buttonGroupDetalle.clearSelection(); // Deselecciona los radio button de detalle.
         
@@ -636,10 +636,12 @@ public class DetalleCompraVista extends javax.swing.JPanel {
                 detalle.getPrecioCosto()
             });
         }//end for
-    }//GEN-LAST:event_jLabel4MouseClicked
+    }//GEN-LAST:event_btnBuscarProductoMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel btnBuscarProducto;
+    private javax.swing.JLabel btnBuscarProveedor;
     private javax.swing.JRadioButton btnListarCompras;
     private javax.swing.JRadioButton btnListarDetalles;
     private javax.swing.JRadioButton btnUltimaCompra;
@@ -650,8 +652,6 @@ public class DetalleCompraVista extends javax.swing.JPanel {
     private static javax.swing.JComboBox<Proveedor> comboProveedor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

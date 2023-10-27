@@ -70,6 +70,4 @@ public class DetalleCompra {
     public String toString() {
         return "DetalleCompra{" + "idDetalleCompra=" + idDetalleCompra + ", cantidad=" + cantidad + ", precioCosto=" + precioCosto + ", compra=" + compra + ", producto=" + producto + '}';
     }
-
-
 }

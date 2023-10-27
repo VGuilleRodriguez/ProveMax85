@@ -49,27 +49,6 @@ public class CompraData {
         }
     }
     
-    public void eliminarCompra(int id) {
-        try {
-            String sql = "DELETE FROM compra WHERE idCompra = ?";
-            
-            PreparedStatement ps = conex.prepareStatement(sql);
-            ps.setInt(1, id);
-            
-            int resultado = ps.executeUpdate();
-            
-            if (resultado == 1) {
-                JOptionPane.showMessageDialog(null, "La compra se eliminó exitosamente.");
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al eliminar la compra.");
-            }
-            
-            ps.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla compra. " + ex.getMessage());
-        }
-    }
-    
     public Compra buscarCompra(int id) {
         Compra compra = null;
         try {
@@ -84,6 +63,34 @@ public class CompraData {
                 ProveedorData proveedor = new ProveedorData();
                 compra = new Compra();
                 compra.setIdCompra(id); // Setea el id que recibe por parametro
+                compra.setProveedor(proveedor.buscarProveedor(rs.getInt("idProveedor")));
+                compra.setFecha(rs.getDate("fecha").toLocalDate());
+                compra.setTotal(rs.getDouble("total"));
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe la compra.");
+            }
+            
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla compra. " + ex.getMessage());
+        }
+        return compra;
+    }
+    
+    public Compra buscarCompraPorProveedor(int id) {
+        Compra compra = null;
+        try {
+            String busqueda = "SELECT * FROM compra WHERE idProveedor = ?";
+            
+            PreparedStatement ps = conex.prepareStatement(busqueda);
+            ps.setInt(1, id);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                ProveedorData proveedor = new ProveedorData();
+                compra = new Compra();
+                compra.setIdCompra(rs.getInt("idCompra"));
                 compra.setProveedor(proveedor.buscarProveedor(rs.getInt("idProveedor")));
                 compra.setFecha(rs.getDate("fecha").toLocalDate());
                 compra.setTotal(rs.getDouble("total"));
