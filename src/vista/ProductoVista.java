@@ -2,7 +2,12 @@ package vista;
 
 import accesoadatos.ProductoData;
 import entidad.Producto;
+import java.awt.Event;
+import java.awt.event.KeyEvent;
+import javax.swing.InputMap;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 
 public class ProductoVista extends javax.swing.JPanel {
@@ -21,6 +26,12 @@ public class ProductoVista extends javax.swing.JPanel {
         cargarModeloTabla();
         refrescarTabla();
         agruparRadioButton();
+        
+        InputMap map1 = txtPrecioActual.getInputMap(JTextField.WHEN_FOCUSED);
+        map1.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK), "null");
+        
+        InputMap map2 = txtStock.getInputMap(JTextField.WHEN_FOCUSED);
+        map2.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK), "null");
     }
 
     /**
@@ -42,10 +53,8 @@ public class ProductoVista extends javax.swing.JPanel {
         txtDescripcion = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtPrecioActual = new javax.swing.JTextField();
-        checkEstado = new javax.swing.JCheckBox();
         jLabel6 = new javax.swing.JLabel();
         txtStock = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
         btnLimpiarCampos = new javax.swing.JButton();
         btnMostrarProductos = new javax.swing.JRadioButton();
         btnActivo = new javax.swing.JRadioButton();
@@ -114,12 +123,6 @@ public class ProductoVista extends javax.swing.JPanel {
             }
         });
 
-        checkEstado.setBackground(new java.awt.Color(162, 179, 139));
-        checkEstado.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
-        checkEstado.setSelected(true);
-        checkEstado.setText("Activo");
-        checkEstado.setEnabled(false);
-
         jLabel6.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Stock");
@@ -134,10 +137,6 @@ public class ProductoVista extends javax.swing.JPanel {
                 txtStockKeyTyped(evt);
             }
         });
-
-        jLabel9.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Estado");
 
         btnLimpiarCampos.setBackground(new java.awt.Color(162, 179, 139));
         btnLimpiarCampos.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
@@ -189,7 +188,7 @@ public class ProductoVista extends javax.swing.JPanel {
         btnStockMinimo.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
         btnStockMinimo.setForeground(new java.awt.Color(255, 255, 255));
         btnStockMinimo.setText("Mostrar productos con stock mínimo");
-        btnStockMinimo.setToolTipText("Mostrar productos con stock minimo");
+        btnStockMinimo.setToolTipText("Mostrar productos con stock menor a diez");
         btnStockMinimo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnStockMinimoActionPerformed(evt);
@@ -276,10 +275,6 @@ public class ProductoVista extends javax.swing.JPanel {
                     .addComponent(jLabel3)
                     .addComponent(jLabel4)
                     .addComponent(jLabel6)
-                    .addGroup(panelLateralLayout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(18, 18, 18)
-                        .addComponent(checkEstado))
                     .addGroup(panelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(txtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -335,12 +330,6 @@ public class ProductoVista extends javax.swing.JPanel {
                 .addComponent(jLabel6)
                 .addGap(3, 3, 3)
                 .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelLateralLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(checkEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -353,10 +342,11 @@ public class ProductoVista extends javax.swing.JPanel {
                 .addComponent(btnStockMinimo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbProveedorProducto)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(147, Short.MAX_VALUE))
         );
 
         tableProducto.setBackground(new java.awt.Color(237, 230, 219));
+        tableProducto.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
         tableProducto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -549,12 +539,14 @@ public class ProductoVista extends javax.swing.JPanel {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         try {
+            int seleccionar = tableProducto.getSelectedRow();
+            
             int codigo = Integer.parseInt(txtCodigo.getText());
             String nombre = txtNombre.getText();
             String descripcion = txtDescripcion.getText();
             double precio = Double.parseDouble(txtPrecioActual.getText());
             int stock = Integer.parseInt(txtStock.getText());
-            boolean estado = checkEstado.isSelected();
+            boolean estado = cambiarEstadoABoolean((String) tableModel.getValueAt(seleccionar, 5));
 
             Producto produ = new Producto(codigo, nombre, descripcion, precio, stock, estado);
             produData.modificarProducto(produ);
@@ -586,7 +578,6 @@ public class ProductoVista extends javax.swing.JPanel {
             String descripcion = tableModel.getValueAt(seleccionar, 2).toString();
             double precio = (double)tableModel.getValueAt(seleccionar, 3);
             int stock = (int)tableModel.getValueAt(seleccionar, 4);
-            String estado = tableModel.getValueAt(seleccionar, 5).toString();
             
             //Mostramos los datos en los texfields
             txtCodigo.setText(codigo + "");
@@ -594,8 +585,6 @@ public class ProductoVista extends javax.swing.JPanel {
             txtDescripcion.setText(descripcion);
             txtPrecioActual.setText(precio + "");
             txtStock.setText(stock + "");
-            checkEstado.setSelected(cambiarEstadoABoolean(estado));
-            cambiarEstadoDelCheck();
         }
     }//GEN-LAST:event_tableProductoMousePressed
 
@@ -671,7 +660,6 @@ public class ProductoVista extends javax.swing.JPanel {
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JRadioButton btnStockMinimo;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JCheckBox checkEstado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -679,7 +667,6 @@ public class ProductoVista extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbProveedorProducto;
     private javax.swing.JPanel panelLateral;
@@ -740,16 +727,6 @@ public class ProductoVista extends javax.swing.JPanel {
             estado = "Inactivo";
         }
         return estado;
-    }
-    
-    private void cambiarEstadoDelCheck() {
-        if (checkEstado.isSelected()) {
-            checkEstado.setSelected(true);
-            checkEstado.setText("Activo");
-        } else {
-            checkEstado.setSelected(false);
-            checkEstado.setText("Inactivo");
-        }
     }
     
     private void limpiarCampos() {

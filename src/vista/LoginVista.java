@@ -2,6 +2,7 @@ package vista;
 
 import vista.MenuVista;
 import entidad.Login;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -39,6 +40,7 @@ public class LoginVista extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Inicio de sesión - ProveMax");
         setBackground(new java.awt.Color(102, 102, 102));
+        setIconImage(new ImageIcon(getClass().getResource("/vista/img/icono.png")).getImage());
 
         jPanel1.setBackground(new java.awt.Color(162, 179, 139));
         jPanel1.setLayout(new java.awt.GridBagLayout());

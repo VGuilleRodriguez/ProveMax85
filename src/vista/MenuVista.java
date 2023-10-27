@@ -1,6 +1,7 @@
 package vista;
 
 import accesoadatos.ProductoData;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 public class MenuVista extends javax.swing.JFrame {
@@ -33,6 +34,8 @@ public class MenuVista extends javax.swing.JFrame {
         listNotificacion = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("ProveMax");
+        setIconImage(new ImageIcon(getClass().getResource("/vista/img/icono.png")).getImage());
 
         jPanel1.setBackground(new java.awt.Color(237, 230, 219));
         jPanel1.setLayout(new java.awt.BorderLayout());
@@ -93,7 +96,7 @@ public class MenuVista extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1280, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

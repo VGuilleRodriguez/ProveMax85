@@ -18,7 +18,7 @@ public class Proveedor {
         this.telefono = telefono;
         this.estado = estado;
     }
-
+    
     public Proveedor(String razonSocial, String domicilio, int telefono, boolean estado) {
         this.razonSocial = razonSocial;
         this.domicilio = domicilio;

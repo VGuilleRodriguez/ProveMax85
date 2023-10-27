@@ -2,7 +2,12 @@ package vista;
 
 import accesoadatos.ProveedorData;
 import entidad.Proveedor;
+import java.awt.Event;
+import java.awt.event.KeyEvent;
+import javax.swing.InputMap;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 
 public class ProveedorVista extends javax.swing.JPanel {
@@ -20,6 +25,9 @@ public class ProveedorVista extends javax.swing.JPanel {
         cargarModeloTabla();
         refrescarTabla();
         agruparRadioButton();
+        
+        InputMap map1 = txtTelefono.getInputMap(JTextField.WHEN_FOCUSED);
+        map1.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK), "null");
     }
 
     /**
@@ -41,8 +49,6 @@ public class ProveedorVista extends javax.swing.JPanel {
         txtDomicilio = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        checkEstado = new javax.swing.JCheckBox();
         btnLimpiarCampos = new javax.swing.JButton();
         btnRegistrar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
@@ -109,16 +115,6 @@ public class ProveedorVista extends javax.swing.JPanel {
                 txtTelefonoKeyTyped(evt);
             }
         });
-
-        jLabel5.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Estado");
-
-        checkEstado.setBackground(new java.awt.Color(162, 179, 139));
-        checkEstado.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
-        checkEstado.setSelected(true);
-        checkEstado.setText("Activo");
-        checkEstado.setEnabled(false);
 
         btnLimpiarCampos.setBackground(new java.awt.Color(162, 179, 139));
         btnLimpiarCampos.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
@@ -238,10 +234,6 @@ public class ProveedorVista extends javax.swing.JPanel {
                     .addComponent(jLabel3)
                     .addComponent(jLabel4)
                     .addGroup(panelLateralLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(checkEstado))
-                    .addGroup(panelLateralLayout.createSequentialGroup()
                         .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -287,11 +279,7 @@ public class ProveedorVista extends javax.swing.JPanel {
                 .addComponent(jLabel4)
                 .addGap(3, 3, 3)
                 .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
-                .addGroup(panelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(checkEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnMostrarProveedores)
@@ -485,19 +473,21 @@ public class ProveedorVista extends javax.swing.JPanel {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         try {
-            int codigo = Integer.parseInt(txtCodigo.getText());
-            String RazonSocial = txtRazonSocial.getText();
-            String Domicilio = txtDomicilio.getText();
-            int Telefono = Integer.parseInt(txtTelefono.getText());
-            boolean estado = checkEstado.isSelected();
+            int seleccionar = tableProveedor.getSelectedRow();
 
-            Proveedor prov = new Proveedor(codigo, RazonSocial, Domicilio, Telefono, estado);
+            int codigo = Integer.parseInt(txtCodigo.getText());
+            String razonSocial = txtRazonSocial.getText();
+            String domicilio = txtDomicilio.getText();
+            int telefono = Integer.parseInt(txtTelefono.getText());
+            boolean estado = cambiarEstadoABoolean((String) tableModel.getValueAt(seleccionar, 4));
+
+            Proveedor prov = new Proveedor(codigo, razonSocial, domicilio, telefono, estado);
             proveData.modificarProveedor(prov);
-            
+
             refrescarTabla();
             limpiarCampos();
             btnMostrarProveedores.setSelected(true);
-            
+
             // Actualiza los ComboBox de las otras vistas
             CompraVista.cargarComboProveedor();
             DetalleCompraVista.cargarComboProveedor();
@@ -518,14 +508,11 @@ public class ProveedorVista extends javax.swing.JPanel {
             String razonSocial = tableModel.getValueAt(seleccionar, 1).toString();
             String domicilio = tableModel.getValueAt(seleccionar, 2).toString();
             int telefono = (int)tableModel.getValueAt(seleccionar, 3);
-            String estado = (String) tableModel.getValueAt(seleccionar, 4);
 
             txtCodigo.setText(codigo + "");
             txtRazonSocial.setText(razonSocial);
             txtDomicilio.setText(domicilio);
             txtTelefono.setText(telefono + "");
-            checkEstado.setSelected(cambiarEstadoABoolean(estado));
-            cambiarEstadoDelCheck();
         }
     }//GEN-LAST:event_tableProveedorMousePressed
 
@@ -573,12 +560,10 @@ public class ProveedorVista extends javax.swing.JPanel {
     private javax.swing.JRadioButton btnMostrarProveedores;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JCheckBox checkEstado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
@@ -634,16 +619,6 @@ public class ProveedorVista extends javax.swing.JPanel {
             estado = "Inactivo";
         }
         return estado;
-    }
-    
-    private void cambiarEstadoDelCheck() {
-        if (checkEstado.isSelected()) {
-            checkEstado.setSelected(true);
-            checkEstado.setText("Activo");
-        } else {
-            checkEstado.setSelected(false);
-            checkEstado.setText("Inactivo");
-        }
     }
     
     private void limpiarCampos() {

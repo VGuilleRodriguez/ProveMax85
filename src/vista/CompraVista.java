@@ -5,12 +5,16 @@ import accesoadatos.DetalleCompraData;
 import accesoadatos.ProductoData;
 import accesoadatos.ProveedorData;
 import entidad.*;
+import java.awt.Event;
+import java.awt.event.KeyEvent;
 import java.sql.Date;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import javax.swing.InputMap;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 
 public class CompraVista extends javax.swing.JPanel {
@@ -40,6 +44,9 @@ public class CompraVista extends javax.swing.JPanel {
         armarCabecera();
         cargarComboProveedor();
         cargarComboProducto();
+        
+        InputMap map1 = txtCantidad.getInputMap(JTextField.WHEN_FOCUSED);
+        map1.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK), "null");
     }
 
     /**
@@ -90,6 +97,7 @@ public class CompraVista extends javax.swing.JPanel {
         });
 
         table.setBackground(new java.awt.Color(237, 230, 219));
+        table.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
