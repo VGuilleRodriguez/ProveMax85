@@ -389,7 +389,8 @@ public class CompraVista extends javax.swing.JPanel {
             txtCantidad.setText("");
             txtTotal.setText("");
             MenuVista.notificacion(); // Actualiza las notificaciones.
-            DetalleCompraVista.refrescarTablaDetalle(); // Actualiza la tabla en la vista DetalleCompra
+            DetalleCompraVista.refrescarTablaCompra(); // Actualiza la tabla Compra en la vista DetalleCompra
+            DetalleCompraVista.refrescarTablaDetalle(); // Actualiza la tabla Detalle en la vista DetalleCompra
             ProductoVista.refrescarTabla(); // Actualiza la tabla en la vista Producto.
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed

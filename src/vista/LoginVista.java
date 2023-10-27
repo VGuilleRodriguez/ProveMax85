@@ -69,7 +69,7 @@ public class LoginVista extends javax.swing.JFrame {
         jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 230, 220, 20));
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon("/home/nicolas/Descargas/bloquear.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/bloquear.png"))); // NOI18N
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 220, 130));
 
         jSeparator2.setBackground(new java.awt.Color(0, 0, 0));

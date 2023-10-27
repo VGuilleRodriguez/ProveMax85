@@ -257,17 +257,18 @@ public class ProductoData {
     
     public void actualizarStock(int idProducto, int cantidad) {
         try {
-            String sql = "UPDATE producto SET stock = "+ cantidad +" WHERE idProducto = "+ idProducto;
+            String sql = "UPDATE producto SET stock = stock + "+ cantidad +" WHERE idProducto = "+ idProducto;
 
             PreparedStatement ps = conex.prepareStatement(sql);
             int exito = ps.executeUpdate();
             
-//            if (exito == 1) {
-//                mensaje("El stock del producto fue actualizado.");
-//
-//            } else {
-//                mensaje("Error al actualizar el stock del producto.");
-//            }
+            /*
+            if (exito == 1) {
+                mensaje("El stock del producto fue actualizado.");
+            } else {
+                mensaje("Error al actualizar el stock del producto.");
+            }
+            */
             
             ps.close();
         } catch (SQLException ex) {

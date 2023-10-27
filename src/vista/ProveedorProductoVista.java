@@ -1,7 +1,7 @@
 package vista;
 
-import accesoadatos.ProductoData;
-import entidad.Producto;
+import accesoadatos.DetalleCompraData;
+import entidad.DetalleCompra;
 import javax.swing.table.DefaultTableModel;
 
 public class ProveedorProductoVista extends javax.swing.JFrame {
@@ -12,10 +12,11 @@ public class ProveedorProductoVista extends javax.swing.JFrame {
         }
     };
     
-    ProductoData produData = new ProductoData();
+    DetalleCompraData detalleData = new DetalleCompraData();
     
     public ProveedorProductoVista() {
         initComponents();
+        cargarModeloTabla();
     }
 
     /**
@@ -34,7 +35,12 @@ public class ProveedorProductoVista extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Buscar productos por proveedor");
 
+        jPanel1.setBackground(new java.awt.Color(237, 230, 219));
+
+        tableProducto.setBackground(new java.awt.Color(237, 230, 219));
+        tableProducto.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
         tableProducto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -46,6 +52,9 @@ public class ProveedorProductoVista extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tableProducto.setSelectionBackground(new java.awt.Color(162, 179, 139));
+        tableProducto.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        tableProducto.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tableProducto);
 
         txtBuscar.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
@@ -101,18 +110,18 @@ public class ProveedorProductoVista extends javax.swing.JFrame {
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
         tableModel.setRowCount(0); // Limpia la tabla.
 
-        String productoBuscar = txtBuscar.getText().toLowerCase(); // Convierte el texto en minuscula.
+        String proveedorBuscar = txtBuscar.getText().toLowerCase(); // Convierte el texto en minuscula.
 
-        for (Producto producto : produData.listarProducto(2)) {
-            String nombreProducto = producto.getNombreProducto().toLowerCase(); // Convierte el texto de la base de datos a minuscula.
+        for (DetalleCompra detalle : detalleData.listarDetalles()) {
+            String nombreProveedor = detalle.getCompra().getProveedor().getRazonSocial().toLowerCase(); // Convierte el texto de la base de datos a minuscula.
 
-            if (nombreProducto.startsWith(productoBuscar)) {
+            if (nombreProveedor.startsWith(proveedorBuscar)) {
                 tableModel.addRow(new Object[] {
-                    producto.getIdProducto(),
-                    producto.getNombreProducto(),
-                    producto.getDescripcion(),
-                    //producto.getRazonSocial(),
-                    //producto.getTelefono()
+                    detalle.getProducto().getIdProducto(),
+                    detalle.getProducto().getNombreProducto(),
+                    detalle.getProducto().getDescripcion(),
+                    detalle.getCompra().getProveedor().getRazonSocial(),
+                    detalle.getCompra().getProveedor().getTelefono()
                 });
             }
         }
@@ -134,6 +143,4 @@ public class ProveedorProductoVista extends javax.swing.JFrame {
         tableModel.addColumn("TELÉFONO");
         tableProducto.setModel(tableModel);
     }
-    
-    
 }
